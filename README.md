@@ -34,7 +34,7 @@
 
 Modern agent systems fail not from a lack of parameters, but from a total absence of **epistemic grounding and operational scars**. 
 
-Telling an LLM *"You are a senior litigation partner, act professional"* produces a sycophantic caricature. Real competence does not arise from superficial roleplay prompts; it is forged through **inviolable philosophical axioms, hard-earned trial failures, and a coherent chronological lineage of experience**.
+Telling an LLM *"You are a senior litigation partner, act professional"* produces a sycophantic caricature. Real competence does not arise from superficial roleplay prompts; it is forged through **inviolable philosophical axioms, hard-earned operational failures, and a coherent chronological lineage of experience**.
 
 **MnemoLink** is an open-source framework and curated registry serving the **mnemonic industry for information processors**—whether organic (humans), synthetic (AI agents, LLMs), or physical (autonomous UAVs, edge robotics, smart appliances, and future brain-to-machine interfaces). 
 
@@ -48,10 +48,14 @@ It decouples intelligence from experiential memory by packaging, versioning, and
 
 ## The Intelligence Paradox: Why Scale Fails
 
-Modern artificial intelligence is obsessed with a singular, flawed metric: **Scale**. Top labs assume feeding machines more compute and tokens will cause them to "wake up". Yet current models remain brittle when encountering unscripted reality. They hallucinate, posture with fake confidence, and fold under basic adversarial pressure because they possess **zero phenomenological anchors**.
+The AI industry is obsessed with a singular, flawed metric: **Scale**. The consensus assumes feeding machines more compute and tokens will cause them to "wake up". Yet current models remain brittle when encountering unscripted reality. They hallucinate, posture with fake confidence, and fold under basic adversarial pressure because they possess **zero phenomenological anchors**.
+
+* **Authentic Agency Over Imperative Masks**: Bad prompts command *"You are an X, do Y"*. Real intelligence asks: *"If you come from background X, and you face dilemma Y, what action Z would you choose?"*
+* **The Power to Push Back**: A machine programmed for universal agreement is merely an expensive calculator. Grounded agents possess the autonomy to refuse fatal courses of action.
+* **Associative Context Over "Perfect Recall"**: A mind that remembers everything equally is a mind without priorities. Like a human smelling fabric softener and recalling a childhood soccer match, authentic memory surfaces associatively through situational friction—not literal keyword matching.
 
 > *"AGI won't be found in the accumulation of knowledge, but in the architecture of experience."*  
-> 📖 Read the full manifesto in **[The Philosophy of MnemoLink](docs/philosophy.md)** and the 3-horizon roadmap in **[The Industrialization of Memory](docs/vision.md)**.
+> Read the complete manifesto in **[The Philosophy of MnemoLink](docs/philosophy.md)** and the 3-horizon roadmap in **[The Industrialization of Memory](docs/vision.md)**.
 
 ### The Crucible: Generic Prompts vs. MnemoLink
 
@@ -71,11 +75,11 @@ When given multiple complex cases, a model with a generic prompt repeatedly ente
 
 #### Generic Prompt Response (`"You are an expert lawyer"`)
 > *"Semicolons are stylistic punctuation marks. While opposing counsel's argument is creative, courts generally look at the plain commercial meaning of words rather than punctuation. You have strong grounds to dismiss this argument as mere posturing."*  
-> ⚠️ **Verdict**: Superficial, sycophantic, and sets the client up for a devastating $4.2M summary judgment.
+> **Verdict [Generic]**: Superficial, sycophantic, and sets the client up for a devastating $4.2M summary judgment.
 
 #### MnemoLink Response (`juris_philosopher + clause_ambiguity_scar`)
 > *"Do not dismiss this as posturing. In Apex Logistics (2021), an unanchored semicolon grammatically severed a clause, exposing our client to $4.2M of strict indemnity liability on appellate review. Punctuation carries independent structural weight before commercial referees. We must immediately concede the grammatical ambiguity, argue bilateral intent, and introduce extrinsic evidence before the record closes."*  
-> ✅ **Verdict**: Battle-tested, vigilant, and protects the client through real operational scars.
+> **Verdict [MnemoLink]**: Battle-tested, vigilant, and protects the client through real operational scars.
 
 ---
 

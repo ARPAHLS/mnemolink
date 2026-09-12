@@ -20,6 +20,18 @@ flowchart LR
 
 ---
 
+## Sovereign Intelligence: Your Digital Footprint as Capital
+
+In an era of centralized server farms and rented cloud compute, real intelligence does not live inside a closed corporate browser tab.
+
+Your operational judgment, industry track record, ethical red lines, and problem-solving reflexes constitute your primary capital. Leaving this intelligence unanchored surrenders it to digital feudalism.
+
+MnemoLink provides the open, typed specification to capture, version, and own this intelligence locally:
+- **Portable Sovereignty**: Mnemonic products exist as declarative, human-readable files that run on local hardware, edge appliances, or private clusters without external telemetry.
+- **Sovereign Digital Twins**: Domain experts and enterprises can serialize decades of institutional precedent into sovereign assets that operate autonomously on their behalf.
+
+---
+
 ## Horizon 1: AI Agents & Digital Knowledge Workers *(Available Today)*
 
 Modern agentic engineering spends 80% of its effort trying to steer models using imperative prompt strings: *"You are an attorney, don't miss clause details"*.
@@ -27,10 +39,8 @@ Modern agentic engineering spends 80% of its effort trying to steer models using
 In Horizon 1, MnemoLink transforms how agents are constructed:
 
 * **Experience Packs (Skillware for Context)**: You do not deploy a generic "smart" AI; you equip an agent with the specific childhood, operational crucible, and career trajectory required to solve your domain problem.
-* **Battle-Tested Operational Scars**: A legal agent does not guess contractual risk; it operates with the visceral memory of a $4.2M arbitration lost over a misplaced semicolon.
-* **Sovereign Digital Twins**: Individuals and institutions package their core values, ethical taboos, and procedural precedents into portable, versioned mnemonic modules that act reliably on their behalf in the digital economy.
-
-Instead of endlessly tweaking prompt pipelines, engineering teams assemble modular mnemonic bundles that work out of the box across Anthropic Claude, OpenAI, Google Gemini, local Ollama nodes, and multi-agent simulation rooms.
+* **Associative Context Over Literal Matching**: Rather than relying on rigid keyword search across millions of tokens, memories surface associatively through situational friction and high-stakes patterns.
+* **The Power to Push Back**: Grounded agents do not blindly obey contradictory instructions with sycophantic apologies. Equipped with real operational scars, they evaluate whether a proposed action leads to disaster and actively steer the operator toward safety.
 
 ---
 
@@ -65,12 +75,12 @@ Information processing is not confined to silicon. The ultimate recipient and cr
 As non-invasive and high-bandwidth Brain-Computer Interfaces (BCIs) mature, the typed, standardized schemas developed in MnemoLink will provide the bridge between digital representations and organic neurochemistry.
 
 ### 1. Memory Restoration in Cognitive Decline (Alzheimer's & Dementia)
-* **The Clinical Tragedy**: In neurodegenerative conditions such as Alzheimer's disease or traumatic brain injury, the brain loses the synaptic pathways required to access episodic memory. The individual's sense of self dissolves not because the memories never occurred, but because the retrieval indexing is broken.
+* **The Clinical Need**: In neurodegenerative conditions such as Alzheimer's disease or traumatic brain injury, the brain loses the synaptic pathways required to access episodic memory. The individual's sense of self dissolves not because the memories never occurred, but because the retrieval indexing is broken.
 * **The Mnemonic Solution**: Standardized, high-fidelity mnemonic products serve as an external cognitive scaffolding. Through neural interfaces, patients can re-anchor their sense of identity—recalling their most cherished personal memories, family histories, and foundational biographical sequences with sensory and emotional clarity.
 
 ### 2. Trauma Decoupling & Psychological Healing
 * Human memory often couples vital operational lessons with debilitating emotional trauma.
-* By structuring memories into declarative context, sensory triggers, and distilled cognitive lessons, mnemonic protocols offer clinicians a way to help patients retain the hard-won wisdom of life events while decoupling the autonomic stress response.
+* By structuring memories into declarative context, sensory triggers, and distilled cognitive lessons, mnemonic protocols offer a path to retain the hard-won wisdom of life events while decoupling the autonomic stress response.
 
 ### 3. Accelerated Experiential Learning: Downloading the Crucible
 * **The Human Limitation**: Mastering neurosurgery, deep-sea salvage, or supersonic test aviation currently requires 25 to 35 years of manual repetition.
@@ -80,19 +90,19 @@ As non-invasive and high-bandwidth Brain-Computer Interfaces (BCIs) mature, the 
 
 ## Neuro-Secure Protocols: Verifying Representational Integrity
 
-As memory becomes an industrial, tradeable product, security transitions from *data encryption* to **experiential provenance**:
+As memory becomes an industrial, tradeable product, security transitions from simple data encryption to **experiential provenance**:
 
-* **Who is the machine representing?**
-* **Are the implanted memories authentic and uncorrupted?**
-* **Has an adversarial actor injected poisoned bias into an agent's foundational persona?**
+* Who is the machine representing?
+* Are the implanted memories authentic and uncorrupted?
+* Has an adversarial actor injected poisoned bias into an agent's foundational persona?
 
-ARPA is developing [Neuro-Secure Protocols](https://doi.org/10.5281/zenodo.17674502) and Reality Recorders to cryptographically sign, verify, and sandbox every mnemonic product. Every scar, prior, and lineage carries an immutable chain of custody.
+Mnemonic systems require neuro-secure protocols to cryptographically sign, verify, and sandbox every mnemonic product. Every scar, prior, and lineage must carry an immutable chain of custody.
 
 ---
 
 ## The Question for Leaders: Are You Building a Librarian or a Leader?
 
-The artificial intelligence FOMO should not be about missing the next incremental parameter release or waiting for a closed-source API to get 2% better at multi-hop math. The real issue is that most of what is being built today is functionally hollow.
+The artificial intelligence race should not be about waiting for the next closed-source API to get 2% better at multi-hop math. The real issue is that most of what is being built today is functionally hollow.
 
 If your strategy is merely accumulating more data into an ever-expanding library, you are building a legacy architecture that will be rendered obsolete the moment an experientially grounded, resilient agent enters the room.
 
