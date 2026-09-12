@@ -27,32 +27,21 @@ A Lineage product consists of four structural layers:
 
 ## Catalog Directory
 
-| ID | Name | Domain | Constituent Memories | Primary Evolutionary Goal | Active Drives | Author | Manifest |
+The following curated lineages are bundled natively within MnemoLink. Click any lineage for its dedicated architectural guide, constituent memory progression, and causal connective bridges:
+
+| ID | Lineage Guide | Domain | Constituent Memories | Primary Evolutionary Goal | Active Drives | Author | Manifest |
 |---|---|---|---|---|---|---|---|
-| `legal_crucible` | **Legal Crucible Progression** | `legal` | `legal/clause_ambiguity_scar` &rarr; `legal/appellate_cross_examination` | Evolve from costly contractual ambiguity error into master of appellate judicial candor | `fiduciary_vigilance`, `procedural_candor`, `credibility_preservation` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/lineages/legal_crucible/card.json) |
-| `flight_scars` | **Autonomous Flight Scars Lineage** | `robotics` | `robotics/uav_microburst_stall` &rarr; `robotics/optical_glare_failover` | Transform aerodynamic trauma and optical blindness into battle-tested survival reflexes | `aerodynamic_preservation`, `sensor_redundancy`, `energy_discipline` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/lineages/flight_scars/card.json) |
+| `legal_crucible` | [**Legal Crucible Progression**](legal_crucible.md) | `legal` | [`clause_ambiguity_scar`](../memories/clause_ambiguity_scar.md) &rarr; [`appellate_cross_examination`](../memories/appellate_cross_examination.md) | Evolve from costly contractual ambiguity error into master of appellate judicial candor | `fiduciary_vigilance`, `procedural_candor`, `credibility_preservation` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/lineages/legal_crucible/card.json) |
+| `flight_scars` | [**Autonomous Flight Scars Lineage**](flight_scars.md) | `robotics` | [`uav_microburst_stall`](../memories/uav_microburst_stall.md) &rarr; [`optical_glare_failover`](../memories/optical_glare_failover.md) | Transform aerodynamic trauma and optical blindness into battle-tested survival reflexes | `aerodynamic_preservation`, `sensor_redundancy`, `energy_discipline` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/lineages/flight_scars/card.json) |
 
 ---
 
-## Detailed Profiles
+## Detailed Lineage Guides
 
-### 1. Legal Crucible Progression (`legal_crucible`)
-- **Domain**: `legal`
-- **Memory Sequence**:
-  1. `legal/clause_ambiguity_scar`: The 2021 Warranty Indemnity Trial Loss ($4.2M loss due to an unanchored semicolon).
-  2. `legal/appellate_cross_examination`: Appellate Bench Candor Mastery (fearlessly conceding a procedural default to earn substantive credibility).
-- **Causal Connective Tissue**:
-  The devastating financial loss from the ambiguous semicolon instilled an acute wariness of syntactic pedantry. When subsequent appellate hostility arose, the practitioner abandoned defensive statutory excuses and embraced fearless procedural candor, permanently securing client credibility.
-- **Reference**: [Manifest](../../mnemolink/catalog/lineages/legal_crucible/lineage.yaml)
+Each lineage has a dedicated reference manual detailing constituent memory sequences, causal connective tissue, and resultant autonomous reflexes:
 
-### 2. Autonomous Flight Scars Lineage (`flight_scars`)
-- **Domain**: `robotics`
-- **Memory Sequence**:
-  1. `robotics/uav_microburst_stall`: Cape Wrath Microburst Stall Recovery (pitching down into a dive 6m above ocean swell to regain dynamic pressure).
-  2. `robotics/optical_glare_failover`: Dawn Glare Optical Sensor Failover (blinded camera failover to LiDAR and inertial voting).
-- **Causal Connective Tissue**:
-  Surviving the microburst stall drilled the inviolable primacy of physics into the autopilot logic. When low-angle solar glare subsequently blinded the primary vision stack, the system refused to maintain a blind optical course and instantly executed a sensor-voting failover.
-- **Reference**: [Manifest](../../mnemolink/catalog/lineages/flight_scars/lineage.yaml)
+- [**Legal Crucible Progression Guide**](legal_crucible.md): The trajectory from a catastrophic $4.2M warranty loss to fearless appellate candor.
+- [**Autonomous Flight Scars Lineage Guide**](flight_scars.md): How aerodynamic windshear survival forged an uncompromising sensor-voting failover discipline.
 
 ---
 
@@ -108,6 +97,10 @@ claude_prompt = bundle.to_claude()
 
 ---
 
+## Further Reading & Workflows
+
+For dynamic lineage synthesis examples, multi-memory chaining patterns, and host adapters, see the **[Usage Guide](../usage_guide.md)**.
+
 ## Contributing New Lineages
 
-To contribute a pre-composed domain progression, review the standards in [CONTRIBUTING.md](../../CONTRIBUTING.md#3-lineage-standard) and submit your package following the `lineages/<domain>/<lineage_slug>/` specification.
+To contribute a new domain lineage, review the standards in [CONTRIBUTING.md](../../CONTRIBUTING.md#3-lineage-standard) and submit your package following the `lineages/<domain>/<lineage_slug>/` specification.

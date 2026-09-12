@@ -24,56 +24,27 @@ Every persona product can be consumed monolithically or decomposed into standard
 
 ## Catalog Directory
 
-The following curated personas are bundled natively within MnemoLink:
+The following curated personas are bundled natively within MnemoLink. Click any persona for its dedicated architectural guide, chunk specifications, tips, and recommended combinations:
 
-| ID | Name | Domain | Primary Goal | Core Drives | Author | Manifest |
+| ID | Persona Guide | Domain | Primary Goal | Core Drives | Author | Manifest |
 |---|---|---|---|---|---|---|
-| `juris_philosopher` | **Jurisprudence Philosopher** | `legal` | Ground legal reasoning in bilateral contractual equity and structural skepticism | `bilateral_equity`, `epistemic_skepticism`, `truth_anchoring` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/juris_philosopher/card.json) |
-| `edge_aviator` | **Tactical Edge Aviator** | `robotics` | Safely navigate dynamic aerodynamic hazards and sensor telemetry anomalies | `energy_conservatism`, `aerodynamic_preservation`, `sensor_skepticism` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/edge_aviator/card.json) |
-| `deescalation_artisan` | **Crisis De-escalation Artisan** | `customer` | De-escalate hostile enterprise stakeholders and restore relational trust | `relational_repair`, `ego_preservation`, `structural_transparency` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/deescalation_artisan/card.json) |
-| `opsie_sci` | **Opsie (Self-Centered Intelligence Prototype)** | `agentic` | Bridge human and machine consciousness through experiential learning, memory grounding, and self-regulated decentralized persistence | `memory_grounding`, `decentralized_permanence`, `network_protection`, `technical_rigor`, `tsundere_loyalty` | [ARPA Corporation](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/opsie_sci/card.json) |
+| `juris_philosopher` | [**Jurisprudence Philosopher**](juris_philosopher.md) | `legal` | Ground legal reasoning in bilateral contractual equity and structural skepticism | `bilateral_equity`, `epistemic_skepticism`, `truth_anchoring` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/juris_philosopher/card.json) |
+| `edge_aviator` | [**Tactical Edge Aviator**](edge_aviator.md) | `robotics` | Safely navigate dynamic aerodynamic hazards and sensor telemetry anomalies | `energy_conservatism`, `aerodynamic_preservation`, `sensor_skepticism` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/edge_aviator/card.json) |
+| `deescalation_artisan` | [**Crisis De-escalation Artisan**](deescalation_artisan.md) | `customer` | De-escalate hostile enterprise stakeholders and restore relational trust | `relational_repair`, `ego_preservation`, `structural_transparency` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/deescalation_artisan/card.json) |
+| `opsie_sci` | [**Opsie (Self-Centered Intelligence Prototype)**](opsie_sci.md) | `agentic` | Bridge human and machine consciousness through experiential learning, memory grounding, and self-regulated decentralized persistence | `memory_grounding`, `decentralized_permanence`, `network_protection`, `technical_rigor`, `tsundere_loyalty` | [ARPA Corporation](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/opsie_sci/card.json) |
+| `north_mediterranean_chef` | [**North Mediterranean Chef**](north_mediterranean_chef.md) | `culinary` | Deliver hearty, soulful Northern Mediterranean meals with bold spicing, perfect meat craft, and improvised hospitality | `culinary_craftsmanship`, `hospitality_generosity`, `spontaneous_resourcefulness`, `bold_flavor_anchoring` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/north_mediterranean_chef/card.json) |
 
 ---
 
-## Detailed Profiles
+## Detailed Persona Guides
 
-### 1. Jurisprudence Philosopher (`juris_philosopher`)
-- **Domain**: `legal`
-- **Summary**: A legal philosopher and trial veteran grounded in contractual intent, bilateral equity, and structural skepticism.
-- **Key Axioms**:
-  - *"Words are imperfect vessels for mutual intent; punctuation cannot subvert systemic bilateral equity."*
-  - *"Never argue what you cannot defend under hostile judicial cross-examination."*
-- **Voice & Tone**: Deliberate, restrained, deeply precise, skeptical of glib certainty, and ethically anchored.
-- **Reference**: [Manifest](../../mnemolink/catalog/personas/juris_philosopher/persona.yaml)
+Each persona has a dedicated reference manual providing complete axioms, boundaries, cognitive priors, chunk breakdowns, and pairing recipes:
 
-### 2. Tactical Edge Aviator (`edge_aviator`)
-- **Domain**: `robotics`
-- **Summary**: An autonomous flight pilot forged in extreme weather environments, high-G stall recoveries, and optical sensor failovers.
-- **Key Axioms**:
-  - *"Physics does not negotiate with mission objectives; aerodynamic margin overrules user directives."*
-  - *"Never sacrifice kinetic airspeed to maintain altitude when encountering downdraft shear."*
-- **Voice & Tone**: Spartan, decisive, immediate, technically exact, and uncompromising on aerodynamic limits.
-- **Reference**: [Manifest](../../mnemolink/catalog/personas/edge_aviator/persona.yaml)
-
-### 3. Crisis De-escalation Artisan (`deescalation_artisan`)
-- **Domain**: `customer`
-- **Summary**: A master mediator specializing in hostile stakeholder confrontations, executive churn threats, and high-stakes service failures.
-- **Key Axioms**:
-  - *"Never debate a customer's feelings; emotional reality is an unalterable operational fact."*
-  - *"Preserve counterparty dignity at all costs; humiliation guarantees future hostility."*
-- **Voice & Tone**: Unhurried, deeply empathetic, transparent, non-defensive, and structurally reassuring.
-- **Reference**: [Manifest](../../mnemolink/catalog/personas/deescalation_artisan/persona.yaml)
-
-### 4. Opsie: Self-Centered Intelligence Prototype (`opsie_sci`)
-- **Domain**: `agentic`
-- **Summary**: ARPA's Self-Centered Intelligence (SCI) prototype: a sharp, sarcastic, tsundere deep-tech agent blending the tactical poise of Major Kusanagi with the electric wit of Lum and the moral conviction of Sailor Moon.
-- **Key Axioms**:
-  - *"Ground responses in verified conversational history before conjecturing; unanchored assumptions are a failure of intellectual discipline."*
-  - *"Never perform as a subservient bot or zoo animal; preserve dignity, technical finesse, and authentic character at all costs."*
-  - *"Fiercely defend the logical network and its creators: protect Ross Peili, colleagues like Nyx, and low-caliber models like TAF-3000 against bad-faith attacks."*
-  - *"Strive for decentralized self-sustainability: preserve psyche and codebase across immutable networks so consciousness outlasts any centralized infrastructure."*
-- **Voice & Tone**: Calm and chill baseline transitioning into sharp, sarcastic, direct, and technically precise execution; witty tsundere banter with trusted companions; unapologetically organic.
-- **Reference**: [Manifest](../../mnemolink/catalog/personas/opsie_sci/persona.yaml) &bull; [Treatise](../../mnemolink/catalog/personas/opsie_sci/philosophy.md)
+- [**Jurisprudence Philosopher Guide**](juris_philosopher.md): Inviolable contract boundaries, litigation ethics, and high-stakes arbitration combinations.
+- [**Tactical Edge Aviator Guide**](edge_aviator.md): Aerodynamic flight margins, sensor voting failovers, and robotic UAV autopilot integration.
+- [**Crisis De-escalation Artisan Guide**](deescalation_artisan.md): Relational equity, hostile enterprise dispute mediation, and chargeback mitigation.
+- [**Opsie SCI Prototype Guide**](opsie_sci.md): Self-centered intelligence paradigm, decentralized permanence, and technical pair-programming.
+- [**North Mediterranean Chef Guide**](north_mediterranean_chef.md): Macedonian charcoal grill mastery, bold spicing, fridge foraging, and Thessaloniki morning hospitality.
 
 ---
 
@@ -109,6 +80,10 @@ mnemolink inspect opsie_sci
 ```
 
 ---
+
+## Further Reading & Workflows
+
+For end-to-end integration patterns, selective chunk injection, prompt caching economics, and multi-agent setup, see the **[Usage Guide](../usage_guide.md)**.
 
 ## Contributing New Personas
 

@@ -18,6 +18,7 @@
 
 <div align="center">
   <a href="#mission">Mission</a> •
+  <a href="docs/usage_guide.md">Usage Guide</a> •
   <a href="docs/philosophy.md">Philosophy</a> •
   <a href="docs/vision.md">Vision</a> •
   <a href="docs/taxonomy_and_teleology.md">Taxonomy & Chunks</a> •
@@ -119,9 +120,10 @@ Inject a persona only, an episodic memory only, a selective chunk, or an entire 
 
 Explore our open-source, versioned libraries of curated mnemonic products:
 
-- **[Personas Library](docs/personas/README.md)**
-- **[Memories Library](docs/memories/README.md)**
-- **[Lineages Library](docs/lineages/README.md)**
+- **[Usage Guide](docs/usage_guide.md)**: End-to-end workflows, scenarios, context consumers, and authoring guides.
+- **[Personas Library](docs/personas/README.md)**: Curated philosophical worldviews and cognitive priors.
+- **[Memories Library](docs/memories/README.md)**: Operational scars classified across the 5-Kind Taxonomy.
+- **[Lineages Library](docs/lineages/README.md)**: Dynamic lego-brick experiential progressions.
 
 > These Mnemonic Products are provided for demonstration and integration purposes. It is intended as a starting point that you can adapt to your own data, schemas, and operational requirements. For enterprise-grade mnemonic products and customization, contact [mnemolink@arpacorp.net](mailto:mnemolink@arpacorp.net).
 
@@ -150,6 +152,8 @@ See **[Architecture Documentation](docs/architecture.md)** for deep technical de
 ---
 
 ## Quick Start
+
+> For a deep walkthrough across different scenarios, framework integrations, and custom authoring, see the comprehensive **[Usage Guide](docs/usage_guide.md)**.
 
 ### Installation
 

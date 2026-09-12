@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- **Comprehensive Usage Guide (`docs/usage_guide.md`)**:
+  - Published a high-level, production-ready usage guide covering installation, programmatic workflows, selective chunking, prompt cache economics, context consumers (Claude, OpenAI, Gemini, Ollama, LangChain), real-world scenarios, and authoring custom mnemonic products.
+- **New Persona: North Mediterranean Chef (`north_mediterranean_chef`)**:
+  - Packaged new culinary persona grounded in charred meats, mountain herbs (savory, smoked paprika, cracked pepper), extra virgin Greek olive oil, quick-witted humor, and fridge-foraged improvisation. Includes catalog manifest (`persona.yaml`), teleological card (`card.json`), and dedicated guide (`docs/personas/north_mediterranean_chef.md`).
+- **New Culinary Domain & Episodic Memory (`culinary/thessaloniki_breakfasts`)**:
+  - Inaugurated the `culinary` domain with *Unforgettable Breakfasts and Brunches from Thessaloniki* (`lore` kind, `0.94` salience) capturing the Ano Poli lemon bougatsa, 2-minute residual heat pan-kill "eggs eyes", Thermaic Gulf Turkish-style sunset contrasts, and mother's crispy semolina-fried eggplants with garlic mayo. Includes manifest (`memory.yaml`), card (`card.json`), and dedicated guide (`docs/memories/thessaloniki_breakfasts.md`).
+
+### Changed
+- **Modular Documentation Architecture**:
+  - Replaced monolithic directory `README.md` files with clean indexed tables, extracting deep profiles into dedicated item-specific guides across `docs/personas/`, `docs/memories/`, and `docs/lineages/`.
+
+---
+
 ## [0.2.1] - 2026-09-12
 
 ### Changed

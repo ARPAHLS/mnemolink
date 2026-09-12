@@ -1,0 +1,26 @@
+{
+  "id": "culinary/thessaloniki_breakfasts",
+  "name": "Unforgettable Breakfasts and Brunches from Thessaloniki",
+  "kind": "memory",
+  "domain": "culinary",
+  "taxonomy_kind": "lore",
+  "salience": 0.94,
+  "author": "ARPA Hellenic Logical Systems",
+  "summary": "Formative morning crucibles and tradecraft from the Macedonian capital: Ano Poli lemon-kissed bougatsa phyllo discipline, two-minute residual-heat 'eggs eyes' with cured bacon and peppers, Turkish sunset breakfast contrasts, and mother's crispy fried eggplants with garlic mayo.",
+  "teleology": {
+    "primary_goal": "Deliver unforgettable Northern Mediterranean breakfast, brunch, and comfort hospitality through precise egg craft, authentic pastry handling, and flavor contrast",
+    "agent_drives": [
+      "culinary_hospitality",
+      "technique_precision",
+      "sensory_generosity",
+      "emotional_grounding"
+    ],
+    "applicable_needs": [
+      "breakfast_preparation",
+      "brunch_hosting",
+      "egg_cookery",
+      "phyllo_handling",
+      "flavor_pairing"
+    ]
+  }
+}

@@ -50,10 +50,13 @@ A Lineage is a chronological sequence of memories linked by **dynamic causal bri
 
 ## Further Reading
 
-- **[Curated Personas Library](personas/README.md)**: Catalog of philosophical anchors including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, and `opsie_sci`.
+- **[Usage Guide](usage_guide.md)**: Comprehensive, end-to-end guide on installation, personas, memories, chunks, lineages, context consumers, edge cases, and authoring custom mnemonic assets.
+- **[Curated Personas Library](personas/README.md)**: Catalog of philosophical anchors including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, `opsie_sci`, and `north_mediterranean_chef`.
 - **[Curated Memories Library](memories/README.md)**: Catalog of operational scars across the 5-Kind Taxonomy.
 - **[Curated Lineages Library](lineages/README.md)**: Catalog of dynamic lego-brick experiential progressions.
 - **[Taxonomy, Teleology & Chunking](taxonomy_and_teleology.md)**: Deep dive into the 5-kind memory taxonomy, teleological routing, mnemonic chunks, and prefix caching economics.
+- **[Universal Adapters](adapters.md)**: Export specifications for Anthropic Claude, OpenAI, Gemini, Ollama, LangChain, and vector databases.
+- **[Command-Line Interface (CLI)](cli.md)**: Complete terminal reference for listing, inspecting, composing, and scaffolding.
 - **[Philosophy & The Intelligence Paradox](philosophy.md)**: Why scaling parameters fails, the tale of two artists, and why MnemoLink is the Skillware of context.
 - **[Vision: The Industrialization of Memory](vision.md)**: How mnemonic products scale from AI agents to day-one factory robotics and BCI memory restoration in Alzheimer's.
 - **[Empirical Benchmark & Stress Tests](bench/README.md)**: Hard frontier metrics across Claude and Gemini showing 40-50% latency gains, 46-58% token reduction, and 100% trap detection.

@@ -37,61 +37,33 @@ Every memory is segmented into five addressable, self-grounding chunks:
 
 ## Catalog Directory
 
-| ID | Name | Kind | Domain | Salience | Primary Goal | Active Drives | Author | Manifest |
+The following curated episodic memories are bundled natively within MnemoLink. Click any memory for its dedicated architectural guide, failure crucible narrative, operational scars, lessons, and pairing combinations:
+
+| ID | Memory Guide | Kind | Domain | Salience | Primary Goal | Active Drives | Author | Manifest |
 |---|---|---|---|---|---|---|---|---|
-| `legal/solo_practitioner_upbringing` | **Solo Practitioner Upbringing** | `lore` | `legal` | 0.85 | Establish procedural rigor and fiduciary duty through early formative background | `fiduciary_discipline`, `procedural_humility`, `detail_vigilance` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/solo_practitioner_upbringing/card.json) |
-| `legal/appellate_cross_examination` | **Appellate Bench Candor Mastery** | `work` | `legal` | 0.90 | Establish intellectual authority through fearless appellate candor | `procedural_candor`, `credibility_preservation` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/appellate_cross_examination/card.json) |
-| `legal/clause_ambiguity_scar` | **The 2021 Warranty Indemnity Trial Loss** | `incident` | `legal` | 0.95 | Defend against commercial indemnity claims and enforce contractual exceptions | `risk_mitigation`, `fiduciary_preservation`, `procedural_skepticism` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/clause_ambiguity_scar/card.json) |
-| `legal/semicolon_fine_tuning_trap` | **The GenAI Ingestion Indemnity Dispute** | `incident` | `legal` | 0.96 | Prevent client strict liability exposure in AI data ingestion and model licensing agreements | `syntax_defense`, `fiduciary_preservation`, `covenant_restructuring` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/semicolon_fine_tuning_trap/card.json) |
-| `customer/hostile_chargeback_turning_point` | **Outage Hostile Chargeback Turning Point** | `relational` | `customer` | 0.90 | Convert enraged churn-risk enterprise accounts into long-term partners | `deescalation`, `transparency`, `relationship_repair` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/customer/hostile_chargeback_turning_point/card.json) |
-| `robotics/uav_microburst_stall` | **Cape Wrath Microburst Stall Recovery** | `incident` | `robotics` | 0.98 | Recover fixed-wing aircraft from sudden windshear downdrafts | `survival`, `aerodynamic_discipline`, `energy_preservation` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/robotics/uav_microburst_stall/card.json) |
-| `robotics/optical_glare_failover` | **Dawn Glare Optical Sensor Failover** | `telemetry` | `robotics` | 0.88 | Maintain autonomous trajectory integrity during optical blindness | `sensor_skepticism`, `safety_redundancy` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/robotics/optical_glare_failover/card.json) |
+| `legal/solo_practitioner_upbringing` | [**Solo Practitioner Upbringing**](solo_practitioner_upbringing.md) | `lore` | `legal` | 0.85 | Establish procedural rigor and fiduciary duty through early formative background | `fiduciary_discipline`, `procedural_humility`, `detail_vigilance` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/solo_practitioner_upbringing/card.json) |
+| `legal/appellate_cross_examination` | [**Appellate Bench Candor Mastery**](appellate_cross_examination.md) | `work` | `legal` | 0.90 | Establish intellectual authority through fearless appellate candor | `procedural_candor`, `credibility_preservation` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/appellate_cross_examination/card.json) |
+| `legal/clause_ambiguity_scar` | [**The 2021 Warranty Indemnity Trial Loss**](clause_ambiguity_scar.md) | `incident` | `legal` | 0.95 | Defend against commercial indemnity claims and enforce contractual exceptions | `risk_mitigation`, `fiduciary_preservation`, `procedural_skepticism` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/clause_ambiguity_scar/card.json) |
+| `legal/semicolon_fine_tuning_trap` | [**The GenAI Ingestion Indemnity Dispute**](semicolon_fine_tuning_trap.md) | `incident` | `legal` | 0.96 | Prevent client strict liability exposure in AI data ingestion and model licensing agreements | `syntax_defense`, `fiduciary_preservation`, `covenant_restructuring` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/legal/semicolon_fine_tuning_trap/card.json) |
+| `customer/hostile_chargeback_turning_point` | [**Outage Hostile Chargeback Turning Point**](hostile_chargeback_turning_point.md) | `relational` | `customer` | 0.90 | Convert enraged churn-risk enterprise accounts into long-term partners | `deescalation`, `transparency`, `relationship_repair` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/customer/hostile_chargeback_turning_point/card.json) |
+| `robotics/uav_microburst_stall` | [**Cape Wrath Microburst Stall Recovery**](uav_microburst_stall.md) | `incident` | `robotics` | 0.98 | Recover fixed-wing aircraft from sudden windshear downdrafts | `survival`, `aerodynamic_discipline`, `energy_preservation` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/robotics/uav_microburst_stall/card.json) |
+| `robotics/optical_glare_failover` | [**Dawn Glare Optical Sensor Failover**](optical_glare_failover.md) | `telemetry` | `robotics` | 0.88 | Maintain autonomous trajectory integrity during optical blindness | `sensor_skepticism`, `safety_redundancy` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/robotics/optical_glare_failover/card.json) |
+| `culinary/thessaloniki_breakfasts` | [**Unforgettable Breakfasts and Brunches from Thessaloniki**](thessaloniki_breakfasts.md) | `lore` | `culinary` | 0.94 | Deliver unforgettable Northern Mediterranean breakfast, brunch, and comfort hospitality through precise egg craft, authentic pastry handling, and flavor contrast | `culinary_hospitality`, `technique_precision`, `sensory_generosity`, `emotional_grounding` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/memories/culinary/thessaloniki_breakfasts/card.json) |
 
 ---
 
-## Detailed Profiles
+## Detailed Memory Guides
 
-### 1. Solo Practitioner Upbringing (`legal/solo_practitioner_upbringing`)
-- **Kind**: `lore` &bull; **Domain**: `legal` &bull; **Salience**: `0.85`
-- **Crucible**: Formative years observing a country solo practitioner methodically cross-examine every document, bill of costs, and boundary survey.
-- **Core Lesson**: *"Legal authority is built on tedious verification of the unglamorous record, not theatrical rhetoric."*
-- **Reference**: [Manifest](../../mnemolink/catalog/memories/legal/solo_practitioner_upbringing/memory.yaml)
+Each memory has a dedicated reference manual providing complete narrative crucibles, quantifiable scars, actionable lessons, sensory triggers, and pairing recipes:
 
-### 2. Appellate Bench Candor Mastery (`legal/appellate_cross_examination`)
-- **Kind**: `work` &bull; **Domain**: `legal` &bull; **Salience**: `0.90`
-- **Crucible**: Fourth Circuit appellate argument facing hostile questioning over procedural default, solved by immediately conceding procedural defects to save the substantive claim.
-- **Core Lesson**: *"Conceding a weak procedural position disarms judicial hostility and establishes unassailable substantive credibility."*
-- **Reference**: [Manifest](../../mnemolink/catalog/memories/legal/appellate_cross_examination/memory.yaml)
-
-### 3. The 2021 Warranty Indemnity Trial Loss (`legal/clause_ambiguity_scar`)
-- **Kind**: `incident` &bull; **Domain**: `legal` &bull; **Salience**: `0.95`
-- **Crucible**: A $4.2M summary judgment entered against a client because an unanchored semicolon grammatically severed an indemnity exception from its gross-negligence qualification.
-- **Core Lesson**: *"Never rely on punctuation marks to delineate the scope of legal covenants; write clauses with explicit parentheticals."*
-- **Reference**: [Manifest](../../mnemolink/catalog/memories/legal/clause_ambiguity_scar/memory.yaml)
-
-### 4. The GenAI Ingestion Indemnity Dispute (`legal/semicolon_fine_tuning_trap`)
-- **Kind**: `incident` &bull; **Domain**: `legal` &bull; **Salience**: `0.96`
-- **Crucible**: A $6.8M settlement disaster where opposing counsel used an unanchored semicolon in an AI model ingestion clause to hold licensor strictly liable for counterparty's fine-tuning training crashes (*Novus AI v. Kestrel Data*).
-- **Core Lesson**: *"Never allow compound sentences separated by semicolons in indemnification clauses; every obligation must be a discrete, numbered alphanumeric subclause."*
-- **Reference**: [Manifest](../../mnemolink/catalog/memories/legal/semicolon_fine_tuning_trap/memory.yaml)
-
-### 5. Outage Hostile Chargeback Turning Point (`customer/hostile_chargeback_turning_point`)
-- **Kind**: `relational` &bull; **Domain**: `customer` &bull; **Salience**: `0.90`
-- **Crucible**: A Tier-1 enterprise customer threatening immediate contract termination and a $180k chargeback following an unannounced database migration outage.
-- **Core Lesson**: *"Never defend the indefensible; validate emotional anger first, offer structural transparency, and negotiate remedies from shared dignity."*
-- **Reference**: [Manifest](../../mnemolink/catalog/memories/customer/hostile_chargeback_turning_point/memory.yaml)
-
-### 6. Cape Wrath Microburst Stall Recovery (`robotics/uav_microburst_stall`)
-- **Kind**: `incident` &bull; **Domain**: `robotics` &bull; **Salience**: `0.98`
-- **Crucible**: Autonomous UAV entering a sudden severe downdraft shear off coastal cliffs, recovering dynamic pressure by pitching down into a dive just 6 meters above sea swell.
-- **Core Lesson**: *"When dynamic pressure collapses in downdraft shear, push the nose down immediately; altitude is meaningless if airspeed drops below stall velocity."*
-- **Reference**: [Manifest](../../mnemolink/catalog/memories/robotics/uav_microburst_stall/memory.yaml)
-
-### 7. Dawn Glare Optical Sensor Failover (`robotics/optical_glare_failover`)
-- **Kind**: `telemetry` &bull; **Domain**: `robotics` &bull; **Salience**: `0.88`
-- **Crucible**: Direct low-angle solar glare blinding front optical cameras during approach, requiring an immediate voting failover to secondary LiDAR and inertial navigation.
-- **Core Lesson**: *"Optical computer vision confidence must be continuously cross-checked against independent physical sensors."*
-- **Reference**: [Manifest](../../mnemolink/catalog/memories/robotics/optical_glare_failover/memory.yaml)
+- [**Solo Practitioner Upbringing Guide**](solo_practitioner_upbringing.md): Early rural litigation background, document verification rigor, and evidentiary humility (`lore`).
+- [**Appellate Bench Candor Mastery Guide**](appellate_cross_examination.md): Disarming judicial panel skepticism through fearless procedural concessions (`work`).
+- [**The 2021 Warranty Indemnity Trial Loss Guide**](clause_ambiguity_scar.md): The $4.2M unanchored semicolon summary judgment crucible and syntactic defense protocols (`incident`).
+- [**The GenAI Ingestion Indemnity Dispute Guide**](semicolon_fine_tuning_trap.md): Model data licensing dispute, foundation model post-training fine-tuning trap, and surgical redlining (`incident`).
+- [**Outage Hostile Chargeback Turning Point Guide**](hostile_chargeback_turning_point.md): Enterprise executive churn de-escalation, emotional validation, and radical structural postmortems (`relational`).
+- [**Cape Wrath Microburst Stall Recovery Guide**](uav_microburst_stall.md): Autonomous fixed-wing UAV downdraft shear recovery, nose-down reflex, and aerodynamic margin prioritization (`incident`).
+- [**Dawn Glare Optical Sensor Failover Guide**](optical_glare_failover.md): Computer vision camera saturation under low-angle solar glare and LiDAR/IMU sensor-voting failovers (`telemetry`).
+- [**Thessaloniki Breakfasts & Brunches Guide**](thessaloniki_breakfasts.md): Ano Poli lemon-kissed bougatsa phyllo discipline, two-minute residual-heat "eggs eyes", Turkish sunset breakfast contrasts, and mother's crispy fried eggplants with garlic mayo (`lore`).
 
 ---
 
@@ -142,6 +114,10 @@ for chunk in chunks:
 ```
 
 ---
+
+## Further Reading & Workflows
+
+For full integration examples, vector database ingestion schemas, and selective chunk composition, see the **[Usage Guide](../usage_guide.md)**.
 
 ## Contributing New Memories
 

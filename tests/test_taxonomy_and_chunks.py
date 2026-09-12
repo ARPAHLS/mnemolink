@@ -164,3 +164,45 @@ def test_opsie_sci_persona_resolution_and_chunks():
     # Verify teleological discovery of opsie
     opsie_cards = find_cards(drives=["memory_grounding"])
     assert any(c.id == "opsie_sci" for c in opsie_cards)
+
+
+def test_north_mediterranean_chef_and_thessaloniki_breakfasts():
+    """Verify that north_mediterranean_chef and thessaloniki_breakfasts load and compose cleanly."""
+    chef = load_persona("north_mediterranean_chef")
+    assert chef.id == "north_mediterranean_chef"
+    assert chef.domain == "culinary"
+    assert any("Never insult the fire" in a for a in chef.axioms)
+    assert any("Extra virgin Greek olive oil" in a for a in chef.axioms)
+
+    chunks = chef.to_chunks()
+    assert len(chunks) >= 4
+    chunk_types = {c.chunk_type for c in chunks}
+    assert "philosophy" in chunk_types
+    assert "axiom" in chunk_types
+    assert "boundary" in chunk_types
+
+    # Load culinary memory
+    mem = load_memory("culinary/thessaloniki_breakfasts")
+    assert mem.id == "culinary/thessaloniki_breakfasts"
+    assert mem.domain == "culinary"
+    assert mem.memory_type == "lore"
+    assert mem.salience == 0.94
+    assert any("Tattered Phyllo" in s for s in mem.operational_scars)
+    assert any("120 seconds" in item for item in mem.lessons_learned)
+
+    # Compose bundle
+    bundle = compose(
+        persona="north_mediterranean_chef",
+        memories=["culinary/thessaloniki_breakfasts"],
+    )
+    rendered = bundle.render_markdown()
+    assert "North Mediterranean Chef" in rendered
+    assert "Unforgettable Breakfasts and Brunches from Thessaloniki" in rendered
+    assert "Ano Poli Bougatsa" in rendered
+
+    # Teleological discovery
+    chef_cards = find_cards(drives=["culinary_craftsmanship"])
+    assert any(c.id == "north_mediterranean_chef" for c in chef_cards)
+
+    mem_cards = find_cards(needs=["egg_cookery"])
+    assert any(c.id == "culinary/thessaloniki_breakfasts" for c in mem_cards)
