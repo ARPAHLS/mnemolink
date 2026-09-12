@@ -23,6 +23,7 @@ from mnemolink import (
 )
 
 console = Console()
+err_console = Console(stderr=True)
 
 PASTEL_PINK = "#efcefa"
 PASTEL_BLUE = "#bae6fd"
@@ -94,9 +95,8 @@ def cmd_inspect(args):
                 item = load_lineage(ident)
                 kind = "Lineage"
             except Exception:
-                console.print(
-                    f"[bold red]Error:[/] Could not resolve '{ident}' across search hierarchy.",
-                    file=sys.stderr,
+                err_console.print(
+                    f"[bold red]Error:[/] Could not resolve '{ident}' across search hierarchy."
                 )
                 sys.exit(1)
 
@@ -266,9 +266,8 @@ def cmd_new(args):
             yaml.dump(manifest, sort_keys=False), encoding="utf-8"
         )
     else:
-        console.print(
-            f"[bold red]Unknown kind '{kind}'. Choose from persona, memory, or lineage.[/]",
-            file=sys.stderr,
+        err_console.print(
+            f"[bold red]Unknown kind '{kind}'. Choose from persona, memory, or lineage.[/]"
         )
         sys.exit(1)
 
