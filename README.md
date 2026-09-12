@@ -31,7 +31,7 @@
 
 ---
 
-> *"Don't dictate behavior—seed the experiential, episodic, and philosophical foundation."*
+The cleanest way to seed the experiential, episodic, and philosophical foundations your agents need.
 
 ## Mission
 
@@ -43,13 +43,15 @@ Telling an LLM *"You are a senior litigation partner, act professional"* produce
 
 It decouples intelligence from experiential memory by packaging, versioning, and dynamically assembling three core mnemonic products:
 
-1. **Persona**: The foundational philosophical worldview, cognitive priors, and inviolable axioms that govern perception from within.
-2. **Memory**: Episodic crucibles classified across a **5-Kind Taxonomy** (`lore`, `work`, `incident`, `relational`, `telemetry`), tagged with an explicit **Teleological Layer** (`goals`, `drives`, `needs`), and atomized into addressable **Mnemobit Chunks** (`story`, `scars`, `lessons`, `triggers`, `reflection`).
-3. **Lineage**: Dynamic "lego-brick" narrative chaining that bridges discrete memories into an authentic, coherent tower of personal history.
+| Product | Description |
+| :--- | :--- |
+| **Persona** | The foundational philosophical worldview, cognitive priors, and inviolable axioms that govern perception from within. |
+| **Memory** | Episodic crucibles classified across a **5-Kind Taxonomy** (`lore`, `work`, `incident`, `relational`, `telemetry`), tagged with an explicit **Teleological Layer** (`goals`, `drives`, `needs`), and atomized into addressable **Mnemonic Chunks** (`story`, `scars`, `lessons`, `triggers`, `reflection`). |
+| **Lineage** | Dynamic "lego-brick" narrative chaining that bridges discrete memories into an authentic, coherent tower of personal history. |
 
 ---
 
-## The Intelligence Paradox: Why Scale Fails
+## Why Scale Fails
 
 The AI industry is obsessed with a singular, flawed metric: **Scale**. The consensus assumes feeding machines more compute and tokens will cause them to "wake up". Yet current models remain brittle when encountering unscripted reality. They hallucinate, posture with fake confidence, and fold under basic adversarial pressure because they possess **zero phenomenological anchors**.
 
@@ -57,14 +59,13 @@ The AI industry is obsessed with a singular, flawed metric: **Scale**. The conse
 * **The Power to Push Back**: A machine programmed for universal agreement is merely an expensive calculator. Grounded agents possess the autonomy to refuse fatal courses of action.
 * **Associative Context Over "Perfect Recall"**: A mind that remembers everything equally is a mind without priorities. Like a human smelling fabric softener and recalling a childhood soccer match, authentic memory surfaces associatively through situational friction—not literal keyword matching.
 
-> *"AGI won't be found in the accumulation of knowledge, but in the architecture of experience."*  
-> Read the complete manifesto in **[The Philosophy of MnemoLink](docs/philosophy.md)** and the 3-horizon roadmap in **[The Industrialization of Memory](docs/vision.md)**.
+Read **[The Philosophy of MnemoLink](docs/philosophy.md)** and the 3-horizon roadmap in **[The Industrialization of Memory](docs/vision.md)**.
 
-### The Crucible: Generic Prompts vs. MnemoLink
+### Generic Prompts vs. MnemoLink
 
 When given multiple complex cases, a model with a generic prompt repeatedly enters through the exact same theoretical door, relying strictly on pre-training averages. A model equipped with MnemoLink adapts dynamically—activating specific experiential scars, philosophical priors, and historical lineages.
 
-| Dimension | Generic Prompt (`"You are a lawyer..."`) | MnemoLink (`Persona + Memories + Lineage`) |
+| Dimension | Generic Prompt | MnemoLink |
 | :--- | :--- | :--- |
 | **Cognitive Engine** | Flat statistical pattern-matching from pre-training | Experiential scars + foundational philosophy |
 | **Case 1: Punctuation Trap** | Treats semicolon as mere style; offers generic boilerplate reassurance. | **Flags catastrophic risk**: Relies on memory of a $4.2M trial loss over an unanchored semicolon. |
@@ -103,34 +104,25 @@ In empirical stress-testing against **Anthropic Claude** (`claude-sonnet-4-5-202
 
 ```mermaid
 flowchart LR
-    A[Pick Persona] --> B[Pick Memories] --> C[Build Lineage] --> D[Inject into Any Model]
+    P[Persona] --> ML[MnemoLink]
+    M[Memory] --> ML
+    L[Lineage] --> ML
+    ML --> C[Any Context Consumer]
 ```
 
-1. **Discover**: Resolves personas, memories, and lineages across a 3-tier hierarchy (`Project Local` $\to$ `User Cache ~/.mnemolink` $\to$ `Bundled Catalog`).
-2. **Assemble (Legos)**: Takes discrete memories and automatically synthesizes associative bridges and causal transitions into a unified backstory.
-3. **Inject**: Formats natively for Anthropic Claude, OpenAI, Google Gemini, Ollama, ARPA Rooms, or Skillware.
+Inject a persona only, an episodic memory only, a selective chunk, or an entire causal lineage. MnemoLink resolves, validates, and packages your experiential context for any LLM, agent framework, local model, or API.
 
 ---
 
 ## Curated Mnemonic Libraries
 
-Explore our open-source, versioned library of curated mnemonic products:
+Explore our open-source, versioned libraries of curated mnemonic products:
 
-- **[Personas Library](docs/personas/README.md)**: Foundational philosophical worldviews and inviolable axioms:
-  - `juris_philosopher` (Legal philosophy, bilateral equity, appellate candor)
-  - `edge_aviator` (Tactical fixed-wing UAV flight, extreme aerodynamics, sensor skepticism)
-  - `deescalation_artisan` (Enterprise crisis mediation, dignity preservation, non-defensiveness)
-  - `opsie_sci` (ARPA's Self-Centered Intelligence prototype, deep tech, mnemonic computer, tsundere loyalty)
-- **[Memories Library](docs/memories/README.md)**: Battle-tested operational scars classified across the **5-Kind Taxonomy**:
-  - `legal/solo_practitioner_upbringing` (`lore` -- country law office diligence)
-  - `legal/appellate_cross_examination` (`work` -- Fourth Circuit procedural candor)
-  - `legal/clause_ambiguity_scar` (`incident` -- $4.2M loss from unanchored semicolon)
-  - `customer/hostile_chargeback_turning_point` (`relational` -- outage chargeback de-escalation)
-  - `robotics/uav_microburst_stall` (`incident` -- coastal cliff dive recovery)
-  - `robotics/optical_glare_failover` (`telemetry` -- dawn glare sensor voting failover)
-- **[Lineages Library](docs/lineages/README.md)**: Chained experiential progressions with dynamic causal bridges:
-  - `legal_crucible` (Drafting loss &rarr; appellate credibility)
-  - `flight_scars` (Aerodynamic stall &rarr; optical sensor failover)
+- **[Personas Library](docs/personas/README.md)**
+- **[Memories Library](docs/memories/README.md)**
+- **[Lineages Library](docs/lineages/README.md)**
+
+> These Mnemonic Products are provided for demonstration and integration purposes. It is intended as a starting point that you can adapt to your own data, schemas, and operational requirements. For enterprise-grade mnemonic products and customization, contact [mnemolink@arpacorp.net](mailto:mnemolink@arpacorp.net).
 
 ---
 
@@ -163,8 +155,6 @@ See **[Architecture Documentation](docs/architecture.md)** for deep technical de
 ```bash
 pip install mnemolink
 ```
-
-*(For optional LiteLLM inference and benchmark evaluations, install with `pip install "mnemolink[all]"`)*
 
 ### 5-Line Python Usage
 
@@ -204,7 +194,7 @@ lineage = mnemolink.build_lineage(
 print(lineage.cumulative_narrative)
 ```
 
-### Selective Mnemobit Chunk Injection (Prefix Cache Optimized)
+### Selective Mnemonic Chunk Injection (Prefix Cache Optimized)
 
 Inject only the specific operational scars or actionable lessons needed for a task while preserving LLM prefix prompt caching:
 
@@ -265,47 +255,28 @@ for card in cards:
 
 ## Command-Line Interface (CLI)
 
-MnemoLink includes a pastel CLI for browsing, inspecting, composing, and benchmarking:
+MnemoLink includes a command-line interface for browsing, inspecting, composing, and benchmarking:
 
 ```bash
-# List all registered mnemonic products across all discovery tiers
+# Browse catalog products
 mnemolink list
-
-# Filter by product kind or domain
-mnemolink list --kind persona
-mnemolink list --domain legal
 
 # Inspect deep philosophical axioms and operational scars
 mnemolink inspect juris_philosopher
-mnemolink inspect legal/clause_ambiguity_scar
 
 # Compose on the command line and export to target format
 mnemolink compose -p edge_aviator -m robotics/uav_microburst_stall -f claude
-mnemolink compose -p juris_philosopher -m legal/clause_ambiguity_scar -f modelfile -o Modelfile
-
-# Scaffold a new community mnemonic package
-mnemolink new persona quantum_physicist
-mnemolink new memory aerospace_rudder_jam
-
-# Run the simulation harness & resilience benchmark
-mnemolink bench --mock
 ```
+
+For the complete CLI reference, commands, and options, see **[CLI Documentation](docs/cli.md)**.
 
 ---
 
-## Universal Model Adapters
+## Universal Adapters
 
-| Target Host | Method | Output Format | Use Case |
-| :--- | :--- | :--- | :--- |
-| **Anthropic Claude** | `bundle.to_claude()` | XML `<mnemonic_matrix>` prompt | Direct Claude 3.5 Sonnet system prompts |
-| **OpenAI / LiteLLM** | `bundle.to_openai()` | `[{"role": "system", ...}]` | ChatGPT, LiteLLM routers, Azure OpenAI |
-| **Google GenAI** | `bundle.to_gemini()` | Clean markdown instruction string | Gemini 2.0 Flash / Pro `system_instruction` |
-| **Ollama Local** | `bundle.to_ollama()` | System text string | Local privacy-first inference on edge appliances |
-| **Ollama Modelfile**| `bundle.to_modelfile()`| `FROM ... \n SYSTEM """..."""` | Baking mnemonics directly into custom GGUF models |
-| **ARPA Rooms** | `bundle.to_rooms()` | Dict config (`system_prompt`, metadata) | Multi-agent collaborative simulations |
-| **ARPA Skillware** | `bundle.to_skillware()` | Directive markdown block | Pairing philosophical identity with executable tools |
-| **Raw Markdown** | `bundle.to_raw()` | Unadorned Markdown text | Any agentic framework (LangChain, CrewAI, AutoGen) |
-| **Vector DBs / RAG** | `bundle.to_chunks()` | List of `MemoryChunk` objects | Ingesting into Pinecone, Qdrant, Chroma, Weaviate |
+MnemoLink natively adapts assembled context into any context consumer—whether frontier LLM APIs (Claude, OpenAI, Gemini), local inference runtimes (Ollama), multi-agent platforms (ARPA Rooms, CrewAI, LangChain), or capability layers (ARPA Skillware).
+
+For implementation recipes and export formats, see **[Adapters Documentation](docs/adapters.md)**.
 
 ---
 
@@ -320,7 +291,7 @@ MnemoLink is an integral pillar of the **ARPA Hellenic Logical Systems** open-so
 
 ---
 
-## Comparison: MnemoLink vs. Alternatives
+## Comparison
 
 For a rigorous analysis against **Mem0**, **Letta / MemGPT**, **Zep**, **Character Card V2**, and **LangChain Memory**, see **[COMPARISON.md](COMPARISON.md)**.
 
@@ -332,14 +303,14 @@ We welcome community contributions of novel personas, battle-tested operational 
 
 ---
 
-## License & Citation
+## Citing
 
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
+If you use MnemoLink in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**) or the concept DOI. That DOI is stable across releases. For reproducibility, also record the **MnemoLink version** you used (PyPI or Git tag, for example `0.2.0`).
 
 ```bibtex
 @software{peilivanidis2026mnemolink,
   author       = {Peilivanidis, Vladimiros and ARPA Hellenic Logical Systems},
-  title        = {MnemoLink: Mnemonic Products Framework for Information Processors},
+  title        = {MnemoLink: Curated, injectable personas and artificial memories for AI agents.},
   year         = 2026,
   publisher    = {GitHub},
   url          = {https://github.com/ARPAHLS/mnemolink}

@@ -26,7 +26,7 @@ class MnemonicBundle:
     """Compiled mnemonic context containing a Persona, episodic Memories, and a Lineage.
 
     Supports both monolithic context assembly (prefix-caching optimized)
-    and selective chunk-level context consumption (Mnemobits).
+    and selective chunk-level context consumption (mnemonic chunks).
     """
 
     def __init__(
@@ -46,7 +46,7 @@ class MnemonicBundle:
         return bool(self.persona or self.memories or self.lineage)
 
     def to_chunks(self) -> List[MemoryChunk]:
-        """Export all constituents of this bundle as atomic MemoryChunks (Mnemobits).
+        """Export all constituents of this bundle as atomic MemoryChunks (mnemonic chunks).
 
         Suitable for direct insertion into vector databases, semantic graph layers,
         or custom RAG pipelines.

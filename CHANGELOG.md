@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.1] - 2026-09-12
+
+### Changed
+- **Terminology Normalization (Mnemonic Chunks)**:
+  - Formally standardized all terminology from experimental "mnemobits" to "mnemonic chunks" across core domain models (`MemoryChunk`), adapters, schemas, tests, and documentation.
+- **Documentation Decluttering & Refinement**:
+  - Streamlined `README.md` with a clean, tabular presentation of the three core products (Persona, Memory, Lineage).
+  - Redesigned the "How It Works" diagram to showcase multi-input parallel ingestion (`Persona`, `Memory`, `Lineage` &rarr; `MnemoLink` &rarr; `Any Context Consumer`).
+  - Decoupled extensive subcommands and integration recipes into dedicated documentation guides: `docs/cli.md` and `docs/adapters.md`.
+  - Added enterprise demonstration and customization disclaimer across curated library indexes.
+- **Removed Third-Party Middleware Dependencies**:
+  - Purged LiteLLM installation notes and references from core documentation and quickstart guides, establishing that MnemoLink operates consumer-agnostically.
+- **Citation Metadata Harmonization**:
+  - Standardized `CITATION.cff` and `README.md` citing sections to match ARPA software standards with concept DOI compatibility for Zenodo indexing.
+- **Roadmap Expansion**:
+  - Added interactive terminal menu experience (`mnemolink` bare launch without arguments) to Phase 2 in `0_local_drafts/ROADMAP_AND_EVALUATION.md`.
+
+---
+
 ## [0.2.0] - 2026-09-12
 
 ### Added
@@ -16,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Teleological Layer (`card.json`)**:
   - Introduced `Teleology` model (`primary_goal`, `agent_drives`, `applicable_needs`) to all catalog card manifests and memory definitions.
   - Added programmatic discovery via `mnemolink.find_cards()` for teleological asset filtering without vector DB overhead.
-- **Mnemobit Chunk Topology & Selective Context Consumption**:
+- **Mnemonic Chunk Topology & Selective Context Consumption**:
   - Atomized `MemoryProduct` into standardized chunks: `story`, `scars`, `lessons`, `triggers`, and `reflection`.
   - Atomized `PersonaProduct` into `identity`, `axioms`, `boundaries`, and `philosophy` (with pinned axioms and boundaries).
   - Added `mnemolink.compose(memory_specs=[...])` for selective chunk injection, allowing hosts to inject only specific chunks (e.g. `scars` and `lessons`) while preserving prompt prefix cache hits.

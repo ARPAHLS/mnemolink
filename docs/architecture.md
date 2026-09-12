@@ -5,7 +5,7 @@
 MnemoLink is built on five foundational architectural pillars:
 1. **Hierarchical 3-Tier Resolution Engine** (`MnemonicResolver`)
 2. **Dynamic Lego Lineage Builder** (`LineageBuilder`)
-3. **Standardized Mnemobit Chunking & Semantic Bridge** (`MemoryChunk`, `to_chunks`)
+3. **Standardized Mnemonic Chunking & Semantic Bridge** (`MemoryChunk`, `to_chunks`)
 4. **Teleological Routing & Manifest Layer** (`Teleology`, `find_cards`)
 5. **Universal Model & Host Adapters with Prefix Caching Optimization** (`MnemonicBundle`)
 
@@ -47,11 +47,11 @@ The `LineageBuilder` takes any arbitrary list of `MemoryProduct`s and:
 
 ---
 
-## 3. Standardized Mnemobit Chunking & Semantic Bridge
+## 3. Standardized Mnemonic Chunking & Semantic Bridge
 
 MnemoLink does not seek to replace vector databases, graph stores, or agentic frameworks (such as LangChain, LlamaIndex, or AutoGen). Instead, it provides the standardized, high-salience context layer that feeds them.
 
-Every `MemoryProduct` can be atomized into five standard **Mnemobit Chunks**:
+Every `MemoryProduct` can be atomized into five standard **Mnemonic Chunks**:
 - `story`: The episodic chronology and narrative setting.
 - `scars`: Visceral financial, physical, or operational damage incurred.
 - `lessons`: Imperative operational axioms learned from the crucible.

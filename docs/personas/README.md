@@ -8,7 +8,7 @@ Personas serve as the **Static Invariant Anchor** in the prompt hierarchy. Becau
 
 ---
 
-## Persona Anatomy & Mnemobit Chunks
+## Persona Anatomy & Mnemonic Chunks
 
 Every persona product can be consumed monolithically or decomposed into standardized addressable chunks:
 

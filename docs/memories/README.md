@@ -24,7 +24,7 @@ Every episodic memory in the library is classified into one of five functional k
 
 ---
 
-## Mnemobit Chunk Topology
+## Mnemonic Chunk Topology
 
 Every memory is segmented into five addressable, self-grounding chunks:
 - **`story`**: Narrative chronology, scenario, and background setting.
@@ -97,7 +97,7 @@ Every memory is segmented into five addressable, self-grounding chunks:
 
 ## Programmatic Usage
 
-### Selective Mnemobit Chunk Injection (Prefix Cache Friendly)
+### Selective Mnemonic Chunk Injection (Prefix Cache Friendly)
 ```python
 import mnemolink
 

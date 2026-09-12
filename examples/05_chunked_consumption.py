@@ -13,7 +13,7 @@ import mnemolink
 
 def demonstrate_monolithic_vs_selective():
     print("=" * 70)
-    print("SCENARIO 1: Monolithic vs. Selective Mnemobit Chunk Injection")
+    print("SCENARIO 1: Monolithic vs. Selective Mnemonic Chunk Injection")
     print("=" * 70)
 
     # 1. Monolithic injection: loads entire persona and entire memory debriefs

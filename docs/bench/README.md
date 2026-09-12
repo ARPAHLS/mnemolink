@@ -131,4 +131,4 @@ pytest tests/test_bench.py -v
 ## Further Reading
 - **[Curated Personas](../personas/README.md)**: Explore the cognitive anchors powering grounded responses.
 - **[Curated Memories](../memories/README.md)**: Browse episodic crucibles and operational scars.
-- **[Taxonomy & Chunks](../taxonomy_and_teleology.md)**: Details on mnemobits, prefix caching, and teleological routing.
+- **[Taxonomy & Chunks](../taxonomy_and_teleology.md)**: Details on mnemonic chunks, prefix caching, and teleological routing.

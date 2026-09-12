@@ -41,7 +41,7 @@ A Persona is not a theatrical character card. It is an **epistemological anchor*
 A Memory is a discrete episodic crucible categorized across a **5-Kind Taxonomy** (`lore`, `work`, `incident`, `relational`, `telemetry`). Explore curated crucibles in the **[Memories Library](memories/README.md)**.
 - *Example*: `legal/clause_ambiguity_scar` (an `incident` memory) encodes the vivid memory of losing a $4.2M arbitration because an unanchored semicolon in an indemnity clause was interpreted as strict liability. The agent does not avoid vague punctuation because an instruction says so; it avoids it because it has a visceral operational scar.
 
-Every memory is further atomized into discrete **Mnemobit Chunks** (`story`, `scars`, `lessons`, `triggers`, `reflection`) and tagged with a **Teleological Layer** (`primary_goal`, `agent_drives`, `applicable_needs`) for algorithmic retrieval and vector database ingestion.
+Every memory is further atomized into discrete **Mnemonic Chunks** (`story`, `scars`, `lessons`, `triggers`, `reflection`) and tagged with a **Teleological Layer** (`primary_goal`, `agent_drives`, `applicable_needs`) for algorithmic retrieval and vector database ingestion.
 
 ### 3. Lineage
 A Lineage is a chronological sequence of memories linked by **dynamic causal bridges**. Like interlocking lego bricks, the `LineageBuilder` identifies how memory A shaped the mindset that navigated memory B, producing a cumulative tower of background context that guides decisions organically without brittle if-else logic. Explore pre-composed lineages in the **[Lineages Library](lineages/README.md)**.
@@ -53,7 +53,7 @@ A Lineage is a chronological sequence of memories linked by **dynamic causal bri
 - **[Curated Personas Library](personas/README.md)**: Catalog of philosophical anchors including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, and `opsie_sci`.
 - **[Curated Memories Library](memories/README.md)**: Catalog of operational scars across the 5-Kind Taxonomy.
 - **[Curated Lineages Library](lineages/README.md)**: Catalog of dynamic lego-brick experiential progressions.
-- **[Taxonomy, Teleology & Chunking](taxonomy_and_teleology.md)**: Deep dive into the 5-kind memory taxonomy, teleological routing, mnemobit chunks, and prefix caching economics.
+- **[Taxonomy, Teleology & Chunking](taxonomy_and_teleology.md)**: Deep dive into the 5-kind memory taxonomy, teleological routing, mnemonic chunks, and prefix caching economics.
 - **[Philosophy & The Intelligence Paradox](philosophy.md)**: Why scaling parameters fails, the tale of two artists, and why MnemoLink is the Skillware of context.
 - **[Vision: The Industrialization of Memory](vision.md)**: How mnemonic products scale from AI agents to day-one factory robotics and BCI memory restoration in Alzheimer's.
 - **[Empirical Benchmark & Stress Tests](bench/README.md)**: Hard frontier metrics across Claude and Gemini showing 40-50% latency gains, 46-58% token reduction, and 100% trap detection.

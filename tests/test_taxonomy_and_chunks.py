@@ -129,7 +129,7 @@ def test_teleology_card_filtering():
 
 
 def test_bundle_to_chunks():
-    """Verify that MnemonicBundle exports all constituent Mnemobits."""
+    """Verify that MnemonicBundle exports all constituent mnemonic chunks."""
     bundle = compose(
         persona="juris_philosopher",
         memories=["legal/clause_ambiguity_scar"],

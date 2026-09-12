@@ -1,34 +1,47 @@
+# Citation metadata for ARPAHLS/mnemolink.
+# Validate: pip install cffconvert && cffconvert -i CITATION.cff -f apalike
 cff-version: 1.2.0
-message: "If you use MnemoLink in your research, robotics, or agent systems, please cite it as below."
-authors:
-  - family-names: "Peilivanidis"
-    given-names: "Vladimiros"
-    affiliation: "ARPA Hellenic Logical Systems"
-  - name: "ARPA Hellenic Logical Systems"
-title: "Curated personas, artificial memories, and dynamic lego lineages for AI agents, UAVs, robotics, appliances, and BMIs."
-version: 0.2.0
-date-released: 2026-09-12
-url: "https://github.com/ARPAHLS/mnemolink"
-repository-code: "https://github.com/ARPAHLS/mnemolink"
-keywords:
-  - "agentic-workflow"
-  - "agents"
-  - "ai"
-  - "artificial-memories"
-  - "autonomous-agents"
-  - "background-stories"
-  - "digital-twin"
-  - "llm"
-  - "local-ai"
-  - "memory"
-  - "memory-management"
-  - "personas"
-  - "prompt-engineering"
-  - "prompt-injection"
-  - "robotics"
-  - "synthetic-memories"
-  - "uavs"
+message: >-
+  If you use this software, please cite it using the metadata below.
+  Also record the MnemoLink version you used (PyPI or Git tag) for reproducibility.
+type: software
+title: "MnemoLink: Curated, injectable personas and artificial memories for AI agents."
+abstract: >-
+  MnemoLink is an open-source Python framework and curated registry for modular,
+  injectable personas, episodic memories, and dynamic lego lineages for AI agents,
+  UAVs, robotics, appliances, and BMIs. It decouples experiential context from weights,
+  providing standardized 5-kind memory taxonomy, teleological discovery, and prefix-cache-friendly
+  mnemonic chunks.
+version: "0.2.1"
+date-released: "2026-09-12"
 license: MIT
-contact:
-  - email: "mnemolink@arpacorp.net"
-    name: "ARPA Hellenic Logical Systems"
+repository-code: "https://github.com/ARPAHLS/mnemolink"
+url: "https://github.com/ARPAHLS/mnemolink"
+authors:
+  - family-names: Peilivanidis
+    given-names: Vladimiros
+    alias: Ross Peili
+    email: vpeilivanidis@gmail.com
+    affiliation: "ARPA Hellenic Logical Systems"
+    website: "https://github.com/rosspeili"
+  - name: "ARPA Hellenic Logical Systems"
+    email: mnemolink@arpacorp.net
+    website: "https://arpacorp.net"
+keywords:
+  - agentic-workflow
+  - agents
+  - ai
+  - artificial-memories
+  - autonomous-agents
+  - background-stories
+  - digital-twin
+  - llm
+  - local-ai
+  - memory
+  - memory-management
+  - personas
+  - prompt-engineering
+  - prompt-injection
+  - robotics
+  - synthetic-memories
+  - uavs

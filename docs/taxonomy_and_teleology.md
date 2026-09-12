@@ -5,7 +5,7 @@
 High-stakes autonomous intelligence requires more than monolithic prompt dumps. When an agent enters an operational theater—whether litigating cross-border liabilities, piloting an autonomous aircraft through sudden shear, or mediating a hostile stakeholder confrontation—it requires context that is:
 1. **Taxonomically Rigorous**: Categorized according to the nature of human and operational experience.
 2. **Teleologically Directed**: Aligned with the agent's active goals, intrinsic drives, and immediate situational needs.
-3. **Chunk-Addressable (Mnemobits)**: Decomposable into discrete, self-grounding experiential units that can be injected selectively or ingested into external semantic layers (vector databases, knowledge graphs, episodic caches).
+3. **Chunk-Addressable (Mnemonic Chunks)**: Decomposable into discrete, self-grounding experiential units that can be injected selectively or ingested into external semantic layers (vector databases, knowledge graphs, episodic caches).
 4. **Cache-Friendly**: Structured to exploit prefix prompt caching in modern frontier LLMs (Anthropic Claude, OpenAI, Google Gemini), slashing inference latency and token overhead.
 
 ---
@@ -79,11 +79,11 @@ for card in matching_cards:
 
 ---
 
-## Standardized Mnemobit Chunk Topology
+## Standardized Mnemonic Chunk Topology
 
-When an LLM or autonomous system faces tight context windows, injecting an entire memory file (with full debriefs, historical backstories, and debrief narratives) wastes tokens. Often, the host runtime only needs the **actionable lessons** or the **sensory triggers**.
+While monolithic memory products provide rich, holistic narratives, production agents often operate under tight context budgets or require specific operational guidance without autobiographical backstory.
 
-MnemoLink breaks every `MemoryProduct` into five standardized mnemobit chunks:
+MnemoLink breaks every `MemoryProduct` into five standardized mnemonic chunks:
 
 ```
 +-------------------------------------------------------------------------+

@@ -1,7 +1,7 @@
 """Typed domain models for MnemoLink mnemonic products.
 
 Defines schemas for Personas, Memories, Lineages, CatalogCards,
-Teleology (goals & drives), and atomic MemoryChunks (Mnemobits).
+Teleology (goals & drives), and atomic MemoryChunks (mnemonic chunks).
 """
 
 from __future__ import annotations
@@ -35,7 +35,7 @@ class Teleology(BaseModel):
 
 
 class MemoryChunk(BaseModel):
-    """An atomic, addressable chunk of mnemonic context (a Mnemobit).
+    """An atomic, addressable chunk of mnemonic context (a mnemonic chunk).
 
     Enables granular retrieval, semantic indexing (vector DBs, RAG),
     and selective context injection without monolithic prompt bloat.

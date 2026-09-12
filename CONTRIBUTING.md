@@ -75,7 +75,7 @@ All submissions must include a `card.json` containing:
   - `primary_goal`: Strategic purpose of this mnemonic product.
   - `agent_drives`: List of intrinsic drives activated (e.g. `risk_mitigation`, `bilateral_equity`, `survival`).
   - `applicable_needs`: List of task contexts where this should be retrieved (e.g. `contract_drafting`, `stall_recovery`).
-- `chunks`: List of mnemobit chunks available for selective retrieval (`story`, `scars`, `lessons`, `triggers`, `reflection`).
+- `chunks`: List of mnemonic chunks available for selective retrieval (`story`, `scars`, `lessons`, `triggers`, `reflection`).
 
 ---
 
