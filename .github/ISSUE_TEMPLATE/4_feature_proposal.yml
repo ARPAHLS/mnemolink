@@ -1,0 +1,69 @@
+name: "Feature Proposal"
+description: "Propose an enhancement or architectural addition to the MnemoLink core framework"
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping shape the future of MnemoLink. Please provide a clear architectural breakdown of the proposed capability.
+
+  - type: input
+    id: feature_title
+    attributes:
+      label: Feature Title
+      description: Concise summary of the proposed enhancement.
+      placeholder: e.g. Dynamic Token Budget Compression in Adapters
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Primary Component Area
+      description: Where does this feature belong?
+      options:
+        - "Core Engine (API & Assembly)"
+        - "Lego Lineage Synthesizer"
+        - "Universal Model Adapters (Claude, OpenAI, Gemini, Ollama, Rooms)"
+        - "Hierarchical Discovery Engine"
+        - "Command-Line Interface (CLI)"
+        - "Benchmarking & Simulation Suite"
+        - "Security, Linting & Verification"
+        - "Documentation & Examples"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem_statement
+    attributes:
+      label: Problem Statement & Motivation
+      description: What limitation or friction does this feature solve?
+      placeholder: Describe the current limitation or problem...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution & Architecture
+      description: How should this feature be implemented? Include code snippets or schemas if applicable.
+      placeholder: Describe the architectural approach, data models, or API changes...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives_considered
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative implementations or existing workarounds considered.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other background, research papers, or context.
+    validations:
+      required: false

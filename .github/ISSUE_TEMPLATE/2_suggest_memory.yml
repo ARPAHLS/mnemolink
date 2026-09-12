@@ -1,0 +1,99 @@
+name: "Suggest New Memory"
+description: "Propose an episodic memory scar, costly failure debrief, or sensory crucible"
+title: "[Memory]: "
+labels: ["memory", "catalog"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing an experiential Memory. In MnemoLink, a Memory is a concrete operational scar etched from a costly error or edge case, providing authentic reflexive instinct rather than rule-following.
+
+  - type: input
+    id: memory_name
+    attributes:
+      label: Memory Name
+      description: Descriptive title of the crucible or debrief.
+      placeholder: e.g. Clause Ambiguity Arbitration Loss, UAV Microburst Stall Recovery
+    validations:
+      required: true
+
+  - type: input
+    id: memory_slug
+    attributes:
+      label: Suggested ID / Slug
+      description: Format: domain/slug (e.g., legal/clause_ambiguity_scar, robotics/uav_microburst_stall).
+      placeholder: domain/memory_slug
+    validations:
+      required: true
+
+  - type: input
+    id: domain
+    attributes:
+      label: Primary Domain
+      description: Domain or operational field.
+      placeholder: e.g. legal, robotics, aerospace, customer, finance, security
+    validations:
+      required: true
+
+  - type: textarea
+    id: operational_scars
+    attributes:
+      label: Operational Scars & Costly Errors
+      description: What went wrong? What was the financial, physical, or strategic damage?
+      placeholder: |
+        - Lost $4.2M arbitration due to ...
+        - Airframe incurred structural stress after ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: episode_debrief
+    attributes:
+      label: Visceral Episode Debrief
+      description: First-person narrative recounting the sensory and operational texture of the event.
+      placeholder: Describe the sequence of events, the friction encountered, and the turning point...
+    validations:
+      required: true
+
+  - type: textarea
+    id: sensory_context
+    attributes:
+      label: Sensory Context & Trigger Conditions
+      description: Environmental indicators, friction signals, or telemetry triggers that should activate this memory.
+      placeholder: |
+        - Sudden drop in airspeed without throttle reduction
+        - Opposing counsel invoking strict grammatical construction
+    validations:
+      required: true
+
+  - type: textarea
+    id: lessons_learned
+    attributes:
+      label: Reflexive Lessons Learned
+      description: What instinctive counter-actions or vigilance protocols did this event instill?
+      placeholder: |
+        - Concede ambiguity immediately and introduce extrinsic evidence
+        - Dive to regain dynamic pressure rather than pulling back on the yoke
+    validations:
+      required: true
+
+  - type: dropdown
+    id: salience
+    attributes:
+      label: Operational Salience Level
+      description: Severity and priority weight of this memory.
+      options:
+        - "Critical (0.9 - 1.0): Fatal damage or catastrophic loss"
+        - "High (0.7 - 0.89): Major financial, legal, or mission impact"
+        - "Moderate (0.4 - 0.69): Significant delay or sub-optimal outcome"
+        - "Reflective (0.1 - 0.39): Formative minor lesson or behavioral calibration"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other relevant documentation, telemetry data, or case precedents.
+    validations:
+      required: false

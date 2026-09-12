@@ -1,0 +1,82 @@
+name: "Bug Report"
+description: "Report an unexpected error, incorrect behavior, or regression in MnemoLink"
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue. Please provide actionable reproduction steps so we can investigate and resolve it promptly.
+
+  - type: input
+    id: bug_summary
+    attributes:
+      label: Bug Summary
+      description: Clear, one-line summary of the defect.
+      placeholder: e.g. LineageBuilder raises IndexError when memory has empty lessons
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which area of the framework is misbehaving?
+      options:
+        - "Core Engine (compose, load)"
+        - "Lego Lineage Synthesizer"
+        - "Universal Model Adapters"
+        - "Hierarchical Discovery Engine"
+        - "Command-Line Interface (CLI)"
+        - "Benchmark Harness"
+        - "Catalog Data Manifests"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: Steps to Reproduce
+      description: Exact Python code or CLI commands to trigger the issue.
+      placeholder: |
+        1. Run `mnemolink compose ...`
+        2. Execute `bundle.to_claude()`
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+      placeholder: Describe the expected output or behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual Behavior & Error Traceback
+      description: Paste any error messages, logs, or stack traces.
+      placeholder: Paste traceback here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Context
+      description: Relevant runtime details (e.g., Operating System, Python runtime environment, shell, target provider/model). Keep flexible; do not worry about rigid version formatting.
+      placeholder: e.g. Windows 11, Python 3.13 venv, Ollama local / Claude 3.5 Sonnet
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other logs, context, or related issues.
+    validations:
+      required: false

@@ -1,0 +1,59 @@
+- name: "bug"
+  color: "fca5a5"
+  description: "Something isn't working as intended"
+
+- name: "enhancement"
+  color: "ddd6fe"
+  description: "New feature, adapter, or capability"
+
+- name: "documentation"
+  color: "fef08a"
+  description: "Improvements or additions to documentation"
+
+- name: "good first issue"
+  color: "bef264"
+  description: "Good for newcomers to pick up"
+
+- name: "help wanted"
+  color: "a7f3d0"
+  description: "Extra attention or domain expertise needed"
+
+- name: "persona"
+  color: "7dd3fc"
+  description: "Archetype persona proposals and manifests"
+
+- name: "memory"
+  color: "86efac"
+  description: "Episodic memory scars and debriefs"
+
+- name: "lineage"
+  color: "c7d2fe"
+  description: "Lego-brick narrative chaining and backstories"
+
+- name: "catalog"
+  color: "99f6e4"
+  description: "Curated registry additions and updates"
+
+- name: "security"
+  color: "fecaca"
+  description: "Security, linting, anti-poisoning, and integrity"
+
+- name: "adapters"
+  color: "bae6fd"
+  description: "Model and framework adapters"
+
+- name: "robotics"
+  color: "fed7aa"
+  description: "Industrial vision, UAVs, and physical embodiment"
+
+- name: "cli"
+  color: "e2e8f0"
+  description: "Terminal interface and developer tools"
+
+- name: "question"
+  color: "fbcfe8"
+  description: "Questions, feedback, or general discussions"
+
+- name: "wontfix"
+  color: "e5e7eb"
+  description: "This will not be worked on"
