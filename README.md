@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
   <a href="https://pypi.org/project/mnemolink/"><img src="https://img.shields.io/pypi/v/mnemolink?style=flat-square&color=bbf7d0" alt="PyPI Version"></a>
-  <a href="https://doi.org/10.5281/zenodo.22727029"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.22727029.svg" alt="DOI"></a>
+  <a href="https://doi.org/10.5281/zenodo.22727029"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22727029-c7d2fe?style=flat-square" alt="DOI"></a>
 </div>
 
 <br/>
@@ -306,7 +306,7 @@ We welcome community contributions of novel personas, battle-tested operational 
 
 ## Citing
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22727029.svg)](https://doi.org/10.5281/zenodo.22727029)
+<a href="https://doi.org/10.5281/zenodo.22727029"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22727029-c7d2fe?style=flat-square" alt="DOI 10.5281/zenodo.22727029"></a>
 
 If you use MnemoLink in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**) or the Zenodo concept DOI above. That DOI is stable across releases. For reproducibility, also record the **MnemoLink version** you used (PyPI or Git tag, for example `0.2.1`).
 
