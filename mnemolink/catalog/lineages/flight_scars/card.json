@@ -1,0 +1,10 @@
+{
+  "id": "flight_scars",
+  "name": "Autonomous Edge Flight Scars",
+  "kind": "lineage",
+  "domain": "tactical_uav",
+  "version": "1.0.0",
+  "summary": "A chained progression of aerodynamic emergencies and sensor blindness instilling an instinctual flight survival reflex.",
+  "tags": ["robotics", "uav", "flight_scars", "autonomy"],
+  "author": "ARPA Hellenic Logical Systems"
+}

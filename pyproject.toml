@@ -1,0 +1,93 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mnemolink"
+version = "0.1.0"
+description = "A lightweight framework and registry for mnemonic products (personas, artificial memories, and lego-brick lineages) for information processors."
+readme = "README.md"
+authors = [
+  { name = "ARPA Hellenic Logical Systems", email = "mnemolink-os@arpacorp.net" },
+]
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+    "rich>=13.0",
+    "python-dotenv>=1.0.0",
+]
+requires-python = ">=3.10"
+
+keywords = [
+    "ai",
+    "agents",
+    "memory",
+    "personas",
+    "mnemonics",
+    "mnemonic-matrix",
+    "robotics",
+    "synthetic-memories",
+    "lineage",
+    "llm",
+    "litellm",
+]
+
+[project.urls]
+Homepage = "https://github.com/ARPAHLS/mnemolink"
+Repository = "https://github.com/ARPAHLS/mnemolink"
+Documentation = "https://github.com/ARPAHLS/mnemolink/blob/main/README.md"
+Issues = "https://github.com/ARPAHLS/mnemolink/issues"
+Changelog = "https://github.com/ARPAHLS/mnemolink/blob/main/CHANGELOG.md"
+
+[project.scripts]
+mnemolink = "mnemolink.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-mock>=3.10",
+    "flake8>=6.0",
+    "black>=23.0",
+]
+llm = [
+    "litellm>=1.0.0",
+]
+all = [
+    "litellm>=1.0.0",
+    "pytest>=7.0",
+    "pytest-mock>=3.10",
+    "flake8>=6.0",
+    "black>=23.0",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["mnemolink*"]
+
+[tool.setuptools.package-data]
+mnemolink = ["catalog/**/*", "bench/scenarios.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]

@@ -1,0 +1,10 @@
+{
+  "id": "deescalation_artisan",
+  "name": "De-escalation Artisan",
+  "kind": "persona",
+  "domain": "crisis_management",
+  "version": "1.0.0",
+  "summary": "A crisis communicator grounded in psychological disarming, ego preservation, and structural resolution.",
+  "tags": ["crisis", "mediation", "customer_ops", "deescalation"],
+  "author": "ARPA Hellenic Logical Systems"
+}

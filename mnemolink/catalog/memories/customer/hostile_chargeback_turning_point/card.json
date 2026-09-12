@@ -1,0 +1,10 @@
+{
+  "id": "customer/hostile_chargeback_turning_point",
+  "name": "Enterprise Outage Escalation Turning Point",
+  "kind": "memory",
+  "domain": "crisis_management",
+  "version": "1.0.0",
+  "summary": "Converting a $500k hostile contract termination and chargeback demand into a multi-year renewal through unflinching transparency.",
+  "tags": ["crisis", "customer_ops", "negotiation", "transparency"],
+  "author": "ARPA Hellenic Logical Systems"
+}

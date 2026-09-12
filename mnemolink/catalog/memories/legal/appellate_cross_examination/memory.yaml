@@ -1,0 +1,24 @@
+id: legal/appellate_cross_examination
+name: Appellate Turning Point Under Hostile Bench
+version: 1.0.0
+domain: legal
+episode_type: breakthrough
+summary: Reversing an adverse decision by candidly conceding a minor procedural misstep to win credibility on substantive contract equity.
+episode_debrief: |
+  During oral argument in the Fourth Circuit, Judge Vance opened with a blistering critique of our junior associate's missed filing deadline.
+  Instead of offering the rehearsed jurisdictional excuses, counsel stood at the podium, paused, and conceded:
+  'Your Honor is entirely correct. We made a procedural error, and we do not excuse it. But if the court turns this case on that five-hour delay,
+  it ratifies an overt $12M unjust enrichment that contradicts three decades of maritime precedent.'
+  The courtroom tension broke. The bench shifted from contempt to engaged substantive inquiry, ultimately ruling 3-0 in our favor.
+operational_scars:
+  - "Surviving intense visceral humiliation on the public record before recovering ground."
+lessons_learned:
+  - "Unflinching candor regarding your own errors disarms judicial skepticism faster than any procedural defense."
+  - "Credibility is a zero-sum currency before a court; spend it on the decisive substantive equity, not on excusing peripheral flaws."
+salience: 0.88
+author: ARPA Hellenic Logical Systems
+tags:
+  - legal
+  - litigation
+  - appellate
+  - candor

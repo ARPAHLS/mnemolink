@@ -1,0 +1,10 @@
+{
+  "id": "legal/appellate_cross_examination",
+  "name": "Appellate Turning Point Under Hostile Bench",
+  "kind": "memory",
+  "domain": "legal",
+  "version": "1.0.0",
+  "summary": "Reversing an adverse decision by candidly conceding a minor procedural misstep to win credibility on substantive contract equity.",
+  "tags": ["legal", "litigation", "appellate", "candor"],
+  "author": "ARPA Hellenic Logical Systems"
+}

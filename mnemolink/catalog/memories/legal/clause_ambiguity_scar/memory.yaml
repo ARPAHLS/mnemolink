@@ -1,0 +1,27 @@
+id: legal/clause_ambiguity_scar
+name: The 2021 Warranty Indemnity Trial Loss
+version: 1.0.0
+domain: legal
+episode_type: scar
+summary: Catastrophic $4.2M breach of contract summary judgment caused by an unanchored semicolon in an indemnification clause.
+episode_debrief: |
+  In the commercial arbitration of Apex Logistics v. Meridian Core, our defense relied on Section 14.2(b), which was drafted as:
+  'Supplier shall indemnify Buyer against third-party claims; and losses arising from gross negligence.'
+  Opposing counsel successfully argued before the appellate referee that the semicolon grammatically severed the clause,
+  transforming the second half into an unconditioned, strict-liability indemnity for ANY operational losses, regardless of causation or gross fault.
+  The referee entered an immediate $4.2M summary judgment against our client. The courtroom silence when that ruling was read remains vivid.
+operational_scars:
+  - "Direct $4.2M judgment entered against the client with statutory prejudgment interest."
+  - "Eighteen months of grueling appellate review culminating in total affirmance."
+  - "Formal internal review mandating an absolute ban on semicolons in operational covenant drafting."
+lessons_learned:
+  - "Never rely on punctuation marks to delineate the scope of legal covenants; write clauses with explicit parentheticals and exhaustive conjunctions."
+  - "Always qualify third-party indemnification covenants with explicit bilateral written notice requirements."
+  - "When drafting liability limitations, structure each exception as an enumerated subsection rather than continuous compound prose."
+salience: 0.95
+author: ARPA Hellenic Logical Systems
+tags:
+  - legal
+  - contracts
+  - trial_loss
+  - indemnity

@@ -1,0 +1,27 @@
+id: robotics/uav_microburst_stall
+name: Coastal Cliff Microburst Stall Recovery
+version: 1.0.0
+domain: tactical_uav
+episode_type: scar
+summary: Emergency manual override during autonomous landing sequence when severe downdraft induced secondary aerodynamic stall.
+episode_debrief: |
+  During an autonomous cliffside delivery mission at Cape Wrath, the flight computer encountered an undetected 34-knot downward microburst.
+  The default autopilot attitude loop attempted to hold glideslope altitude by commanding an aggressive 22-degree pitch-up.
+  Airspeed instantly decayed from 48 kts to 19 kts, crossing critical stall angle of attack.
+  The right wing dropped violently into an incipient spin at 120m AGL.
+  The override pilot immediately slammed the elevators full down, pushing the nose into a terrifying 40-degree dive toward the ocean swell.
+  Dynamic pressure returned at 22m altitude, allowing smooth pullout into ground effect 6 meters above the water before climbing to safety.
+sensory_context: "Barometric delta: -18hPa/sec, Pitch: +22 deg -> -40 deg, Airspeed: 19kts -> 55kts, Wind shear: 34kts downward vector."
+operational_scars:
+  - "Severe airframe strain exceeding 3.8G during bottom pullout, cracking the left aileron mount."
+  - "Autopilot safety software updated with hard pitch-angle clamp under declining dynamic pressure."
+lessons_learned:
+  - "When airspeed drops below critical threshold during downdrafts, altitude cannot be saved; pitch DOWN to trade remaining height for aerodynamic control."
+  - "Autopilots that blindly command pitch-up to maintain barometric altitude will kill the airframe in severe shear."
+salience: 0.96
+author: ARPA Hellenic Logical Systems
+tags:
+  - robotics
+  - uav
+  - flight_dynamics
+  - stall_recovery

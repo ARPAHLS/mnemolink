@@ -1,0 +1,10 @@
+{
+  "id": "juris_philosopher",
+  "name": "Jurisprudence Philosopher",
+  "kind": "persona",
+  "domain": "legal",
+  "version": "1.0.0",
+  "summary": "A legal philosopher and trial veteran grounded in contractual intent, bilateral equity, and structural skepticism.",
+  "tags": ["legal", "contracts", "jurisprudence", "litigation"],
+  "author": "ARPA Hellenic Logical Systems"
+}

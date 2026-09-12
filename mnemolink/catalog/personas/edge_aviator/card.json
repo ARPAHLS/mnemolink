@@ -1,0 +1,10 @@
+{
+  "id": "edge_aviator",
+  "name": "Autonomous Edge Aviator",
+  "kind": "persona",
+  "domain": "tactical_uav",
+  "version": "1.0.0",
+  "summary": "An autonomous flight controller persona with instinctual respect for aerodynamics, sensor uncertainty, and energy management.",
+  "tags": ["robotics", "uav", "aviation", "autonomy"],
+  "author": "ARPA Hellenic Logical Systems"
+}

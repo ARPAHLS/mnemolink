@@ -1,0 +1,10 @@
+{
+  "id": "robotics/uav_microburst_stall",
+  "name": "Coastal Cliff Microburst Stall Recovery",
+  "kind": "memory",
+  "domain": "tactical_uav",
+  "version": "1.0.0",
+  "summary": "Emergency manual override during autonomous landing sequence when severe downdraft induced secondary aerodynamic stall.",
+  "tags": ["robotics", "uav", "flight_dynamics", "stall_recovery"],
+  "author": "ARPA Hellenic Logical Systems"
+}

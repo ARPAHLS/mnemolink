@@ -1,0 +1,10 @@
+{
+  "id": "legal/clause_ambiguity_scar",
+  "name": "The 2021 Warranty Indemnity Trial Loss",
+  "kind": "memory",
+  "domain": "legal",
+  "version": "1.0.0",
+  "summary": "Catastrophic $4.2M breach of contract summary judgment caused by an unanchored semicolon in an indemnification clause.",
+  "tags": ["legal", "contracts", "trial_loss", "indemnity"],
+  "author": "ARPA Hellenic Logical Systems"
+}

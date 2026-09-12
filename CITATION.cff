@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use MnemoLink in your research, robotics, or agent systems, please cite it as below."
+authors:
+  - family-names: "Peilivanidis"
+    given-names: "Vladimiros"
+    affiliation: "ARPA Hellenic Logical Systems"
+  - name: "ARPA Hellenic Logical Systems"
+title: "MnemoLink: Mnemonic Products Framework for Information Processors"
+version: 0.1.0
+date-released: 2026-09-12
+url: "https://github.com/ARPAHLS/mnemolink"
+repository-code: "https://github.com/ARPAHLS/mnemolink"
+keywords:
+  - "ai"
+  - "agents"
+  - "memory"
+  - "personas"
+  - "robotics"
+  - "synthetic-memories"
+  - "mnemonic-matrix"
+  - "lineage"
+license: MIT

@@ -1,0 +1,10 @@
+{
+  "id": "robotics/optical_glare_failover",
+  "name": "Solar Glare Sensor Fusion Failover",
+  "kind": "memory",
+  "domain": "tactical_uav",
+  "version": "1.0.0",
+  "summary": "Automatic sensor voting failover preventing catastrophic terrain impact when low-angle dawn sunlight blinded optical visual odometry.",
+  "tags": ["robotics", "sensors", "uav", "failover"],
+  "author": "ARPA Hellenic Logical Systems"
+}

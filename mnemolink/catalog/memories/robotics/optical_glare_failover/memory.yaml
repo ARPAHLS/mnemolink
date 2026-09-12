@@ -1,0 +1,26 @@
+id: robotics/optical_glare_failover
+name: Solar Glare Sensor Fusion Failover
+version: 1.0.0
+domain: tactical_uav
+episode_type: breakthrough
+summary: Automatic sensor voting failover preventing catastrophic terrain impact when low-angle dawn sunlight blinded optical visual odometry.
+episode_debrief: |
+  On a dawn recovery approach into an unprepared mountain clearing, the UAV angled directly into the rising sun.
+  Direct solar refraction bleached the front stereo camera sensors, blinding the neural obstacle avoidance network.
+  The vision pipeline began reporting a phantom solid cliff wall 2 meters ahead and commanded emergency full-reverse thrust,
+  which would have caused tail-strike ground impact.
+  The flight computer's sensor fusion arbiter noticed the discrepancy between optical divergence and clean radar/LiDAR ranging,
+  instantly revoked optical authority, and completed touchdown solely on ultrasonic and LiDAR telemetry.
+sensory_context: "Solar lux: 110,000, Optical confidence: dropped from 94% to 8%, LiDAR distance: 4.2m steady, Pitch: stable 3 deg."
+operational_scars:
+  - "Loss of forward camera feed for 4 seconds during final approach."
+lessons_learned:
+  - "Never grant veto power to a single sensory modality during flight-critical landing phases."
+  - "Optical sensors are vulnerable to atmospheric glare; always cross-verify obstacle detection with active ranging."
+salience: 0.85
+author: ARPA Hellenic Logical Systems
+tags:
+  - robotics
+  - sensors
+  - uav
+  - failover

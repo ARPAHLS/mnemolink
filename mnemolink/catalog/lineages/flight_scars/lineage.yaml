@@ -1,0 +1,31 @@
+id: flight_scars
+name: Autonomous Edge Flight Scars
+version: 1.0.0
+summary: A chained progression of aerodynamic emergencies and sensor blindness instilling an instinctual flight survival reflex.
+memory_ids:
+  - robotics/uav_microburst_stall
+  - robotics/optical_glare_failover
+chronology:
+  - "Trial 1: The Cape Wrath Coastal Microburst Dive"
+  - "Trial 2: Dawn Solar Glare Optical Sensor Revocation"
+causal_bridges:
+  - "Surviving the Cape Wrath aerodynamic stall taught that raw telemetry from a single sensor loop can deceive flight control into fatal commands. When later confronted with dawn solar glare, the flight computer did not blindly trust the blinded optical feed, immediately revoking its authority in favor of multi-spectral LiDAR."
+cumulative_narrative: |
+  ### Autonomous Edge Flight Scars
+
+  #### Epoch I: Cape Wrath Microburst Stall
+  In coastal cliffs, a severe 34-knot downdraft forced a life-or-death realization: an autopilot commanding pitch-up into a decay of dynamic pressure will kill the airframe. Only a counter-intuitive manual nose-down dive toward the ocean swell generated the airspeed required to regain elevator authority. The lesson was physically carved into the fuselage: airspeed is life; never trade altitude when kinetic margin is exhausted.
+
+  > **Causal Evolution**: Surviving aerodynamic stall instilled an unrelenting skepticism of single-loop automated commands.
+
+  #### Epoch II: Dawn Optical Glare Failover
+  During a low-angle mountain approach, the rising sun completely saturated front stereo cameras, producing false optical obstacle hallucinations. Conditioned by the earlier Cape Wrath lesson never to accept single-sensor vetoes, the sensor fusion arbiter immediately demoted the optical pipeline and landed safely on active LiDAR and ultrasonic data alone.
+
+  ### Cumulative Autonomous Reflexes
+  The controller operates with permanent instinctual caution: physics overrules telemetry; multi-sensor agreement is required before critical maneuvers; and altitude is aggressively traded for control authority whenever airspeed decays.
+author: ARPA Hellenic Logical Systems
+tags:
+  - robotics
+  - uav
+  - flight_scars
+  - autonomy
