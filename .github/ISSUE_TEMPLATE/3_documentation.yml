@@ -1,0 +1,61 @@
+name: "Documentation"
+description: "Suggest improvements, report errors, or propose new guides for MnemoLink documentation"
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for improving the MnemoLink documentation, guides, or narrative clarity.
+
+  - type: input
+    id: docs_title
+    attributes:
+      label: Summary
+      description: Brief summary of the documentation change or gap.
+      placeholder: e.g. Add guide for integrating MnemoLink with local ROS2 nodes
+    validations:
+      required: true
+
+  - type: dropdown
+    id: docs_area
+    attributes:
+      label: Documentation Area
+      description: Which part of the documentation is affected?
+      options:
+        - "README.md"
+        - "Philosophy (docs/philosophy.md)"
+        - "Vision & Horizons (docs/vision.md)"
+        - "Architecture & Internals (docs/architecture.md)"
+        - "Getting Started & Tutorials"
+        - "Catalog & Community Contribution Standards"
+        - "API Reference / Docstrings"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of the Change or Gap
+      description: What is missing, inaccurate, or in need of deeper explanation?
+      placeholder: Describe the suggested changes, additions, or corrections...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_content
+    attributes:
+      label: Proposed Content / Outline
+      description: If you have draft text, an outline, or code examples, share them here.
+      placeholder: Draft text or examples...
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other background or links to related code.
+    validations:
+      required: false

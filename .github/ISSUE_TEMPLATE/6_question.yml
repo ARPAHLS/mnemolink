@@ -1,0 +1,35 @@
+name: "Question & Discussion"
+description: "Ask a question about MnemoLink architecture, integration, or concepts"
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about MnemoLink, mnemonic architecture, or how to integrate with your host system? Ask here.
+
+  - type: input
+    id: question_topic
+    attributes:
+      label: Topic
+      description: Brief summary of your question.
+      placeholder: e.g. How to use custom local storage paths with MnemonicResolver
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Question Details
+      description: Provide context, what you are attempting to achieve, and any relevant code or logs.
+      placeholder: Share details here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other background or links.
+    validations:
+      required: false

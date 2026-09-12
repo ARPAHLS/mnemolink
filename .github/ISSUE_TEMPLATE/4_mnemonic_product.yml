@@ -1,0 +1,88 @@
+name: "Mnemonic Product"
+description: "Propose a new Persona (philosophical worldview) or Memory (operational scar) for the catalog"
+title: "[Product]: "
+labels: ["catalog"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing a Mnemonic Product to the registry. MnemoLink distinguishes between:
+        - **Persona**: An epistemological anchor defining axioms, priors, and inviolable boundaries.
+        - **Memory**: An episodic scar etched from costly operational errors and sensory friction.
+
+  - type: dropdown
+    id: product_type
+    attributes:
+      label: Product Kind
+      description: What kind of mnemonic product are you proposing?
+      options:
+        - "Persona (Worldview, Epistemic Axioms, Cognitive Priors, Boundaries)"
+        - "Episodic Memory (Operational Scars, Failure Debrief, Lessons Learned)"
+    validations:
+      required: true
+
+  - type: input
+    id: product_name
+    attributes:
+      label: Product Name
+      description: Human-readable name.
+      placeholder: e.g. Maritime Arbitrator, Optical Glare Sensor Failover
+    validations:
+      required: true
+
+  - type: input
+    id: product_slug
+    attributes:
+      label: Suggested ID / Slug
+      description: Lowercase alphanumeric slug (e.g., maritime_arbitrator or robotics/optical_glare_failover).
+      placeholder: e.g. domain/slug or persona_slug
+    validations:
+      required: true
+
+  - type: input
+    id: domain
+    attributes:
+      label: Primary Domain
+      description: Operational category (e.g., legal, robotics, aerospace, mediation, security, medical).
+      placeholder: e.g. aerospace
+    validations:
+      required: true
+
+  - type: textarea
+    id: core_substance
+    attributes:
+      label: Core Substance
+      description: |
+        - If Persona: Core philosophical worldview, inviolable axioms, and boundaries.
+        - If Memory: Operational scars, episode debrief, and costly errors incurred.
+      placeholder: Detail the philosophical bedrock or the concrete failure debrief...
+    validations:
+      required: true
+
+  - type: textarea
+    id: triggers_and_instincts
+    attributes:
+      label: Triggers, Reflexes, or Priors
+      description: |
+        - If Persona: Cognitive priors, instinctive skepticism, and what it unconditionally refuses to do.
+        - If Memory: Sensory context, environmental friction triggers, and reflexive lessons learned.
+      placeholder: Detail how this product reacts instinctively to environmental friction...
+    validations:
+      required: true
+
+  - type: textarea
+    id: target_use_cases
+    attributes:
+      label: Target Use Cases & Processors
+      description: Where will this product be deployed (e.g., LLM litigation agents, UAV autopilots, factory robot arms)?
+      placeholder: e.g. Autonomous drone navigation under severe wind shear...
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other references, precedents, telemetry logs, or notes.
+    validations:
+      required: false

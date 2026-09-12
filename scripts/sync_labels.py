@@ -14,7 +14,7 @@ import urllib.request
 from pathlib import Path
 import yaml
 
-REPO = "ARPAHLS/mnemolink"
+REPO = os.getenv("GITHUB_REPOSITORY", "ARPAHLS/mnemolink")
 LABELS_FILE = Path(__file__).parent.parent / ".github" / "labels.yml"
 
 

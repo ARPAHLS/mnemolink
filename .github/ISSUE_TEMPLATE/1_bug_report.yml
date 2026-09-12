@@ -1,0 +1,81 @@
+name: "Bug Report"
+description: "Report an unexpected error, incorrect behavior, or regression in MnemoLink"
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue. Please provide actionable reproduction details so we can isolate and fix the defect.
+
+  - type: input
+    id: bug_summary
+    attributes:
+      label: Summary
+      description: A concise description of the issue.
+      placeholder: e.g. LineageBuilder raises KeyError when encountering empty lesson lists
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which area of the framework is misbehaving?
+      options:
+        - "Core Engine (compose, load, resolver)"
+        - "Lego Lineage Synthesizer"
+        - "Universal Model Adapters (Claude, OpenAI, Gemini, Ollama, Rooms)"
+        - "Catalog Registry & Manifests"
+        - "Command-Line Interface (CLI)"
+        - "Benchmarking & Simulation Suite"
+        - "Other / General"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: Steps to Reproduce
+      description: Code snippet, CLI command, or sequence of actions to trigger the bug.
+      placeholder: |
+        1. Call `ml.compose(...)` with ...
+        2. Execute `bundle.to_claude()`
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: e.g. The bundle should render valid system prompt XML without errors
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual Behavior & Traceback
+      description: Error messages, console logs, or full stack trace.
+      placeholder: Paste terminal output or traceback here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating System, Python runtime environment, and target models or libraries if relevant. Keep it flexible.
+      placeholder: e.g. Linux / macOS / Windows, Python 3.11, local Ollama / Claude API
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other background, related issues, or screenshots.
+    validations:
+      required: false

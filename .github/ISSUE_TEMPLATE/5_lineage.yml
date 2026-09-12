@@ -1,0 +1,64 @@
+name: "Lineage"
+description: "Propose a dynamic lineage connecting memories into an evolutionary backstory"
+title: "[Lineage]: "
+labels: ["lineage", "catalog"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for proposing a Lineage. In MnemoLink, a Lineage bridges discrete memories chronologically into a coherent tower of backstory, generating causal bridges between earlier errors and subsequent reflexes.
+
+  - type: input
+    id: lineage_name
+    attributes:
+      label: Lineage Name
+      description: Descriptive title for this evolutionary journey.
+      placeholder: e.g. Extreme Weather Flight Scars, High-Stakes Arbitration Crucible
+    validations:
+      required: true
+
+  - type: input
+    id: lineage_slug
+    attributes:
+      label: Suggested ID / Slug
+      description: Lowercase identifier with underscores.
+      placeholder: e.g. flight_scars, legal_crucible
+    validations:
+      required: true
+
+  - type: textarea
+    id: memory_ids
+    attributes:
+      label: Included Memory IDs
+      description: Ordered list of memory slugs.
+      placeholder: |
+        - robotics/uav_microburst_stall
+        - robotics/optical_glare_failover
+    validations:
+      required: true
+
+  - type: textarea
+    id: causal_bridges
+    attributes:
+      label: Causal Connective Bridges
+      description: How did surviving earlier scars alter the assumptions and vigilance in subsequent events?
+      placeholder: Describe the causal progression and associative links...
+    validations:
+      required: true
+
+  - type: textarea
+    id: cumulative_narrative
+    attributes:
+      label: Cumulative Reflex & Backstory
+      description: What composite intuition or worldview does this lineage forge in an information processor?
+      placeholder: Describe the resultant instincts...
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other notes, domain background, or references.
+    validations:
+      required: false

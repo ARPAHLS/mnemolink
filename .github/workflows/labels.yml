@@ -1,0 +1,33 @@
+name: Sync Labels
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - ".github/labels.yml"
+      - ".github/workflows/labels.yml"
+      - "scripts/sync_labels.py"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  sync:
+    name: Synchronize Labels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run sync_labels.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/sync_labels.py

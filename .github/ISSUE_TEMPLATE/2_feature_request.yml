@@ -1,54 +1,54 @@
 name: "Feature Proposal"
-description: "Propose an enhancement or architectural addition to the MnemoLink core framework"
+description: "Propose a new capability, adapter, architectural improvement, or core feature"
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping shape the future of MnemoLink. Please provide a clear architectural breakdown of the proposed capability.
+        Thank you for helping shape the future of MnemoLink. Please describe the problem and your proposed architecture.
 
   - type: input
     id: feature_title
     attributes:
       label: Feature Title
-      description: Concise summary of the proposed enhancement.
-      placeholder: e.g. Dynamic Token Budget Compression in Adapters
+      description: A concise summary of the proposed enhancement.
+      placeholder: e.g. Dynamic Token Budget Optimization for Model Adapters
     validations:
       required: true
 
   - type: dropdown
     id: component
     attributes:
-      label: Primary Component Area
+      label: Primary Component
       description: Where does this feature belong?
       options:
-        - "Core Engine (API & Assembly)"
+        - "Core Engine & Assembly"
         - "Lego Lineage Synthesizer"
-        - "Universal Model Adapters (Claude, OpenAI, Gemini, Ollama, Rooms)"
+        - "Universal Model Adapters"
         - "Hierarchical Discovery Engine"
-        - "Command-Line Interface (CLI)"
+        - "CLI & Developer Tooling"
         - "Benchmarking & Simulation Suite"
         - "Security, Linting & Verification"
-        - "Documentation & Examples"
+        - "Other"
     validations:
       required: true
 
   - type: textarea
     id: problem_statement
     attributes:
-      label: Problem Statement & Motivation
+      label: Problem & Motivation
       description: What limitation or friction does this feature solve?
-      placeholder: Describe the current limitation or problem...
+      placeholder: Describe the current bottleneck, limitation, or operational need...
     validations:
       required: true
 
   - type: textarea
     id: proposed_solution
     attributes:
-      label: Proposed Solution & Architecture
-      description: How should this feature be implemented? Include code snippets or schemas if applicable.
-      placeholder: Describe the architectural approach, data models, or API changes...
+      label: Proposed Solution
+      description: How should this be implemented? Include code snippets, schemas, or design notes if applicable.
+      placeholder: Describe the architectural approach or API changes...
     validations:
       required: true
 
@@ -64,6 +64,6 @@ body:
     id: additional_context
     attributes:
       label: Additional Context
-      description: Any other background, research papers, or context.
+      description: Any other background, references, or notes.
     validations:
       required: false

@@ -3,6 +3,6 @@ contact_links:
   - name: Security Disclosures
     url: https://github.com/ARPAHLS/mnemolink/blob/main/SECURITY.md
     about: Please report potential vulnerabilities privately to security@arpacorp.net
-  - name: General Inquiries & Feedback
+  - name: General Inquiries & Proposals
     url: mailto:input@arpacorp.net
-    about: Send high-level feedback, domain ideas, or inquiries to ARPA
+    about: Send high-level feedback, partnerships, or domain proposals to ARPA
