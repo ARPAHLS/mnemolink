@@ -101,7 +101,9 @@ def cmd_inspect(args):
                 sys.exit(1)
 
     domain_label = getattr(item, "domain", "N/A")
-    meta_info = f"[cyan]Domain:[/] {domain_label} | [dim]v{item.version} | {item.author}[/]"
+    meta_info = (
+        f"[cyan]Domain:[/] {domain_label} | [dim]v{item.version} | {item.author}[/]"
+    )
     console.print(
         Panel(
             f"[bold {PASTEL_PINK}]{item.name}[/] [dim]({kind}: {item.id})[/]\n"
@@ -154,9 +156,7 @@ def cmd_inspect(args):
                 + "\n".join(f"  ? {mid}" for mid in item.memory_ids)
                 + "\n\n"
                 f"[bold {PASTEL_MINT}]Chronology Progression:[/]\n"
-                + "\n".join(
-                    f"  {idx+1}. {c}" for idx, c in enumerate(item.chronology)
-                )
+                + "\n".join(f"  {idx+1}. {c}" for idx, c in enumerate(item.chronology))
                 + "\n\n"
                 f"[bold {PASTEL_BLUE}]Cumulative Backstory:[/]\n"
                 f"{item.cumulative_narrative.strip()}",
