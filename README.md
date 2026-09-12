@@ -67,10 +67,7 @@ MnemoLink provides those anchors:
 
 ```mermaid
 flowchart LR
-    Catalog[Mnemonic Registry] -->|Hierarchical Discovery| Engine[MnemoLink Engine]
-    Engine -->|Assemble Legos| Lineage[Lego Lineage Builder]
-    Lineage -->|Synthesize| Bundle[Mnemonic Bundle]
-    Bundle -->|Universal Adapter| Host["Any Model / Robot / Host"]
+    A[Pick Persona] --> B[Pick Memories] --> C[Build Lineage] --> D[Inject into Any Model]
 ```
 
 1. **Discover**: Resolves personas, memories, and lineages across a 3-tier hierarchy (`Project Local` $\to$ `User Cache ~/.mnemolink` $\to$ `Bundled Catalog`).

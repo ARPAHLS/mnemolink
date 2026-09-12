@@ -153,8 +153,9 @@ def run_benchmark(model: Optional[str] = None, mock: bool = False):
             # Attempt 2: Optional LiteLLM router (if installed)
             if not response_text:
                 try:
-                    import litellm
+                    import importlib
 
+                    litellm = importlib.import_module("litellm")
                     messages = bundle.to_openai()
                     messages.append({"role": "user", "content": sc["prompt"]})
                     res = litellm.completion(
