@@ -48,3 +48,6 @@ htmlcov/
 
 # MnemoLink local store cache
 .mnemolink/cache/
+
+# Local drafts & scratch directories
+0_local_drafts/
