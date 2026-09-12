@@ -1,6 +1,6 @@
 # Introduction to MnemoLink
 
-> *"Don't dictate behavior—seed the experiential, episodic, and philosophical foundation."*
+> The cleanest way to seed the experiential, episodic, and philosophical foundations your agents need.
 
 ---
 

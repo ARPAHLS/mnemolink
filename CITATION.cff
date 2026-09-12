@@ -1,8 +1,10 @@
 # Citation metadata for ARPAHLS/mnemolink.
+# Prefer the Zenodo concept DOI under identifiers; keep version in methods text.
 # Validate: pip install cffconvert && cffconvert -i CITATION.cff -f apalike
 cff-version: 1.2.0
 message: >-
   If you use this software, please cite it using the metadata below.
+  Prefer the Zenodo concept DOI (10.5281/zenodo.22727029).
   Also record the MnemoLink version you used (PyPI or Git tag) for reproducibility.
 type: software
 title: "MnemoLink: Curated, injectable personas and artificial memories for AI agents."
@@ -45,3 +47,7 @@ keywords:
   - robotics
   - synthetic-memories
   - uavs
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22727029
+    description: Concept DOI (all versions)

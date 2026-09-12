@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
   <a href="https://pypi.org/project/mnemolink/"><img src="https://img.shields.io/pypi/v/mnemolink?style=flat-square&color=bbf7d0" alt="PyPI Version"></a>
+  <a href="https://doi.org/10.5281/zenodo.22727029"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.22727029.svg" alt="DOI"></a>
 </div>
 
 <br/>
@@ -305,15 +306,18 @@ We welcome community contributions of novel personas, battle-tested operational 
 
 ## Citing
 
-If you use MnemoLink in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**) or the concept DOI. That DOI is stable across releases. For reproducibility, also record the **MnemoLink version** you used (PyPI or Git tag, for example `0.2.0`).
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22727029.svg)](https://doi.org/10.5281/zenodo.22727029)
+
+If you use MnemoLink in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**) or the Zenodo concept DOI above. That DOI is stable across releases. For reproducibility, also record the **MnemoLink version** you used (PyPI or Git tag, for example `0.2.1`).
 
 ```bibtex
 @software{peilivanidis2026mnemolink,
   author       = {Peilivanidis, Vladimiros and ARPA Hellenic Logical Systems},
   title        = {MnemoLink: Curated, injectable personas and artificial memories for AI agents.},
   year         = 2026,
-  publisher    = {GitHub},
-  url          = {https://github.com/ARPAHLS/mnemolink}
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.22727029},
+  url          = {https://doi.org/10.5281/zenodo.22727029}
 }
 ```
 

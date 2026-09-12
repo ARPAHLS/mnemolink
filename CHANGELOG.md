@@ -19,8 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added enterprise demonstration and customization disclaimer across curated library indexes.
 - **Removed Third-Party Middleware Dependencies**:
   - Purged LiteLLM installation notes and references from core documentation and quickstart guides, establishing that MnemoLink operates consumer-agnostically.
-- **Citation Metadata Harmonization**:
-  - Standardized `CITATION.cff` and `README.md` citing sections to match ARPA software standards with concept DOI compatibility for Zenodo indexing.
+- **Citation & Zenodo Archive Integration**:
+  - Registered and linked Zenodo concept DOI (`10.5281/zenodo.22727029`) across `CITATION.cff`, `README.md` badges, and `pyproject.toml` URLs for persistent scholarly indexing.
 - **Roadmap Expansion**:
   - Added interactive terminal menu experience (`mnemolink` bare launch without arguments) to Phase 2 in `0_local_drafts/ROADMAP_AND_EVALUATION.md`.
 
