@@ -4,10 +4,10 @@ Demonstrates loading the pre-composed 'legal_crucible' lineage alongside the
 'juris_philosopher' persona to guide contract risk analysis.
 """
 
-import mnemolink as ml
+import mnemolink
 
 # Compose using pre-existing bundled lineage
-counsel_bundle = ml.compose(
+counsel_bundle = mnemolink.compose(
     persona="juris_philosopher",
     lineage="legal_crucible",
 )

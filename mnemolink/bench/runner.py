@@ -137,7 +137,7 @@ def run_benchmark(model: Optional[str] = None, mock: bool = False):
             response_text = None
 
             # Attempt 1: Direct Ollama via HTTP (zero dependency)
-            if "ollama" in target_model.lower() or ollama_host:
+            if "ollama" in target_model.lower():
                 try:
                     response_text = query_ollama_direct(
                         host=ollama_host,

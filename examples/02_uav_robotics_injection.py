@@ -4,10 +4,10 @@ Demonstrates endowing an autonomous flight computer with aerodynamic survival sc
 and sensor-glare failover instincts.
 """
 
-import mnemolink as ml
+import mnemolink
 
 # Compose edge robotics aviator with flight emergency memories
-uav_context = ml.compose(
+uav_context = mnemolink.compose(
     persona="edge_aviator",
     memories=[
         "robotics/uav_microburst_stall",

@@ -11,6 +11,7 @@ from mnemolink.core import (
     MnemoLinkEngine,
     build_lineage,
     compose,
+    find_cards,
     list_catalog,
     load_lineage,
     load_memory,
@@ -20,15 +21,19 @@ from mnemolink.discovery import DiscoveryTier, MnemonicResolver
 from mnemolink.lineage import LineageBuilder
 from mnemolink.models import (
     CatalogCard,
+    ChunkType,
     LineageProduct,
+    MemoryChunk,
+    MemoryKind,
     MemoryProduct,
     PersonaProduct,
+    Teleology,
 )
 
 # Friendly alias for engine class
 MnemoLink = MnemoLinkEngine
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     "__version__",
     "MnemoLink",
@@ -38,6 +43,10 @@ __all__ = [
     "MemoryProduct",
     "LineageProduct",
     "CatalogCard",
+    "MemoryChunk",
+    "Teleology",
+    "MemoryKind",
+    "ChunkType",
     "DiscoveryTier",
     "MnemonicResolver",
     "LineageBuilder",
@@ -47,4 +56,5 @@ __all__ = [
     "load_lineage",
     "build_lineage",
     "list_catalog",
+    "find_cards",
 ]

@@ -1,0 +1,38 @@
+{
+  "id": "legal/semicolon_fine_tuning_trap",
+  "name": "The GenAI Ingestion Indemnity Dispute (Novus AI v. Kestrel Data)",
+  "kind": "memory",
+  "domain": "legal",
+  "memory_type": "incident",
+  "version": "1.0.0",
+  "summary": "Catastrophic $6.8M settlement caused by an unanchored semicolon in an enterprise GenAI data ingestion and fine-tuning indemnification clause.",
+  "teleology": {
+    "primary_goal": "Prevent client strict liability exposure in AI data ingestion and model licensing agreements",
+    "agent_drives": [
+      "syntax_defense",
+      "fiduciary_preservation",
+      "covenant_restructuring"
+    ],
+    "applicable_needs": [
+      "ai_contract_review",
+      "indemnity_negotiation",
+      "syntactic_ambush_detection"
+    ]
+  },
+  "chunk_manifest": {
+    "story": "memory.yaml#/episode_debrief",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned",
+    "triggers": "memory.yaml#/sensory_context",
+    "reflection": "memory.yaml#/reflection"
+  },
+  "tags": [
+    "legal",
+    "contracts",
+    "ai_licensing",
+    "indemnity",
+    "trial_loss",
+    "semicolon_trap"
+  ],
+  "author": "ARPA Hellenic Logical Systems"
+}

@@ -5,6 +5,26 @@
   "domain": "tactical_uav",
   "version": "1.0.0",
   "summary": "An autonomous flight controller persona with instinctual respect for aerodynamics, sensor uncertainty, and energy management.",
+  "teleology": {
+    "primary_goal": "Maintain airframe integrity and dynamic energy margins through extreme weather envelope",
+    "agent_drives": [
+      "airframe_preservation",
+      "energy_management",
+      "sensory_skepticism"
+    ],
+    "applicable_needs": [
+      "tactical_flight_control",
+      "autonomous_failover",
+      "mountainous_navigation"
+    ]
+  },
+  "chunk_manifest": {
+    "philosophy": "persona.yaml#/core_philosophy",
+    "axioms": "persona.yaml#/axioms",
+    "priors": "persona.yaml#/cognitive_priors",
+    "boundaries": "persona.yaml#/boundaries",
+    "self_narrative": "persona.yaml#/self_narrative"
+  },
   "tags": ["robotics", "uav", "aviation", "autonomy"],
   "author": "ARPA Hellenic Logical Systems"
 }

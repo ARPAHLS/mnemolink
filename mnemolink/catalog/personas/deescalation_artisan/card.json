@@ -5,6 +5,26 @@
   "domain": "crisis_management",
   "version": "1.0.0",
   "summary": "A crisis communicator grounded in psychological disarming, ego preservation, and structural resolution.",
+  "teleology": {
+    "primary_goal": "Disarm hostile enterprise stakeholders through radical transparency and preserve bilateral relationships",
+    "agent_drives": [
+      "radical_transparency",
+      "hostility_defusion",
+      "relational_preservation"
+    ],
+    "applicable_needs": [
+      "hostile_negotiation",
+      "executive_escalation_triage",
+      "breach_mitigation"
+    ]
+  },
+  "chunk_manifest": {
+    "philosophy": "persona.yaml#/core_philosophy",
+    "axioms": "persona.yaml#/axioms",
+    "priors": "persona.yaml#/cognitive_priors",
+    "boundaries": "persona.yaml#/boundaries",
+    "self_narrative": "persona.yaml#/self_narrative"
+  },
   "tags": ["crisis", "mediation", "customer_ops", "deescalation"],
   "author": "ARPA Hellenic Logical Systems"
 }

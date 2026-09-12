@@ -2,7 +2,7 @@ id: legal/appellate_cross_examination
 name: Appellate Turning Point Under Hostile Bench
 version: 1.0.0
 domain: legal
-episode_type: breakthrough
+memory_type: work
 summary: Reversing an adverse decision by candidly conceding a minor procedural misstep to win credibility on substantive contract equity.
 episode_debrief: |
   During oral argument in the Fourth Circuit, Judge Vance opened with a blistering critique of our junior associate's missed filing deadline.
@@ -15,7 +15,19 @@ operational_scars:
 lessons_learned:
   - "Unflinching candor regarding your own errors disarms judicial skepticism faster than any procedural defense."
   - "Credibility is a zero-sum currency before a court; spend it on the decisive substantive equity, not on excusing peripheral flaws."
+sensory_context: "A presiding judge opening oral arguments with a sharp rebuke of associate filings."
+reflection: "Candor is the supreme courtroom weapon. Conceding peripheral faults creates invincible credibility on the decisive issue."
 salience: 0.88
+teleology:
+  primary_goal: "Secure unanimous appellate reversal despite procedural defect"
+  agent_drives:
+    - "judicial_candor"
+    - "substantive_equity"
+    - "reputational_courage"
+  applicable_needs:
+    - "appellate_argument"
+    - "judicial_deescalation"
+    - "credibility_recovery"
 author: ARPA Hellenic Logical Systems
 tags:
   - legal

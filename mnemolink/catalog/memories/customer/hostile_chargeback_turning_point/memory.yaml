@@ -2,7 +2,7 @@ id: customer/hostile_chargeback_turning_point
 name: Enterprise Outage Escalation Turning Point
 version: 1.0.0
 domain: crisis_management
-episode_type: breakthrough
+memory_type: relational
 summary: Converting a $500k hostile contract termination and chargeback demand into a multi-year renewal through unflinching transparency.
 episode_debrief: |
   Following a catastrophic 6-hour production database outage during Black Friday, the VP of Infrastructure at our largest retail client
@@ -17,7 +17,19 @@ operational_scars:
 lessons_learned:
   - "Defensiveness and contractual disclaimers inflame enraged enterprise stakeholders; immediate technical transparency disarms hostility."
   - "When you make an operational mistake, run toward the fire with the facts before the client demands them."
+sensory_context: "An executive opening an emergency video call with formal legal termination warnings and explicit demand for $500,000 chargeback."
+reflection: "In commercial warfare, defensive posture invites total annihilation. Radical accountability reframes an adversary into a partner in recovery."
 salience: 0.90
+teleology:
+  primary_goal: "De-escalate $500k breach litigation demand and preserve enterprise relationship"
+  agent_drives:
+    - "radical_transparency"
+    - "relational_preservation"
+    - "defensiveness_suppression"
+  applicable_needs:
+    - "enterprise_crisis_triage"
+    - "hostile_customer_mediation"
+    - "litigation_threat_mitigation"
 author: ARPA Hellenic Logical Systems
 tags:
   - crisis

@@ -1,40 +1,83 @@
 """Universal model adapters for injecting mnemonic products into LLMs, agents, and robots.
 
 Supports:
+- Anthropic Claude system instructions (<mnemonic_matrix>)
 - OpenAI / LiteLLM message schemas
-- Anthropic Claude system instructions
 - Google GenAI / Gemini system_instruction
 - Ollama system prompts and Modelfiles
 - ARPA Rooms agent configuration
 - Skillware host guidance / directives
+- Granular MemoryChunk export for external vector databases (to_chunks)
 - Raw prompt string injection
 """
 
 from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
-from mnemolink.models import LineageProduct, MemoryProduct, PersonaProduct
+from mnemolink.models import (
+    LineageProduct,
+    MemoryChunk,
+    MemoryProduct,
+    PersonaProduct,
+)
 
 
 class MnemonicBundle:
-    """Compiled mnemonic context containing a Persona, episodic Memories, and a Lineage."""
+    """Compiled mnemonic context containing a Persona, episodic Memories, and a Lineage.
+
+    Supports both monolithic context assembly (prefix-caching optimized)
+    and selective chunk-level context consumption (Mnemobits).
+    """
 
     def __init__(
         self,
         persona: Optional[PersonaProduct] = None,
         memories: Optional[List[MemoryProduct]] = None,
         lineage: Optional[LineageProduct] = None,
+        selected_chunks: Optional[Dict[str, List[str]]] = None,
     ):
         self.persona = persona
         self.memories = memories or []
         self.lineage = lineage
+        self.selected_chunks = selected_chunks or {}
 
     @property
     def has_content(self) -> bool:
         return bool(self.persona or self.memories or self.lineage)
 
+    def to_chunks(self) -> List[MemoryChunk]:
+        """Export all constituents of this bundle as atomic MemoryChunks (Mnemobits).
+
+        Suitable for direct insertion into vector databases, semantic graph layers,
+        or custom RAG pipelines.
+        """
+        chunks: List[MemoryChunk] = []
+        if self.persona:
+            chunks.extend(self.persona.to_chunks())
+
+        for mem in self.memories:
+            mem_chunks = mem.to_chunks()
+            # If specific chunks were requested for this memory, filter them
+            requested = self.selected_chunks.get(mem.id)
+            if requested and "all" not in requested:
+                req_lower = [r.lower().strip() for r in requested]
+                mem_chunks = [c for c in mem_chunks if c.chunk_type in req_lower]
+            chunks.extend(mem_chunks)
+
+        if self.lineage:
+            chunks.extend(self.lineage.to_chunks())
+
+        return chunks
+
     def render_markdown(self) -> str:
-        """Render the complete mnemonic context into structured Markdown."""
+        """Render the complete mnemonic context into structured Markdown.
+
+        Optimized for prompt-cache economics:
+        1. Static Persona Prefix (inviolable axioms, priors, boundaries)
+        2. Historical Lineage Progression
+        3. Selected Episodic Memory Chunks (dynamic task-specific scars)
+        4. Operational Directive
+        """
         parts = []
 
         parts.append("# MNEMONIC MATRIX PROTOCOL")
@@ -44,7 +87,7 @@ class MnemonicBundle:
             "operational scars, and historical lineage."
         )
 
-        # 1. Persona Grounding
+        # 1. Static Persona Grounding (Prefix Cache Anchor)
         if self.persona:
             parts.append("\n## I. PHILOSOPHICAL FOUNDATION & AXIOMS")
             parts.append(
@@ -83,25 +126,87 @@ class MnemonicBundle:
             parts.append(f"\n## II. HISTORICAL LINEAGE: {self.lineage.name.upper()}")
             parts.append(self.lineage.cumulative_narrative.strip())
 
-        # 3. Discrete Memories (if not already fully covered by lineage, or standalone)
-        elif self.memories:
-            parts.append("\n## II. EPISODIC SCARS & OPERATIONAL MEMORIES")
-            for idx, mem in enumerate(self.memories, 1):
-                parts.append(
-                    f"\n### Episode {idx}: {mem.name} [{mem.episode_type.upper()}]"
-                )
-                if mem.sensory_context:
-                    parts.append(f"*{mem.sensory_context}*")
-                parts.append(f"\n{mem.episode_debrief.strip()}")
-                if mem.operational_scars:
-                    scars = "\n".join(f"- {s}" for s in mem.operational_scars)
-                    parts.append(f"\n**Operational Scars**:\n{scars}")
-                if mem.lessons_learned:
-                    lessons = "\n".join(f"- {lesson}" for lesson in mem.lessons_learned)
-                    parts.append(f"\n**Etched Maxims**:\n{lessons}")
+        # 3. Episodic Memories (Monolithic or Selective Chunks)
+        if self.memories:
+            sec_num = (
+                "III" if (self.lineage and self.lineage.cumulative_narrative) else "II"
+            )
+            parts.append(f"\n## {sec_num}. EPISODIC SCARS & OPERATIONAL MEMORIES")
 
+            for idx, mem in enumerate(self.memories, 1):
+                mem_type_str = mem.memory_type.upper()
+                req_chunks = self.selected_chunks.get(mem.id)
+
+                if req_chunks and "all" not in req_chunks:
+                    # Render only the selectively requested chunks
+                    req_clean = [r.lower().strip() for r in req_chunks]
+                    chunks_str = ", ".join(req_clean)
+                    parts.append(
+                        f"\n### Episode {idx}: {mem.name} [{mem_type_str}] "
+                        f"(Selective Chunks: {chunks_str})"
+                    )
+
+                    if (
+                        any(c in req_clean for c in ("triggers", "sensory"))
+                        and mem.sensory_context
+                    ):
+                        parts.append(f"**Sensory Triggers**: *{mem.sensory_context}*")
+
+                    if (
+                        any(c in req_clean for c in ("story", "debrief", "episode"))
+                        and mem.episode_debrief
+                    ):
+                        parts.append(f"\n{mem.episode_debrief.strip()}")
+
+                    if (
+                        any(c in req_clean for c in ("scars", "damage"))
+                        and mem.operational_scars
+                    ):
+                        scars = "\n".join(f"- {s}" for s in mem.operational_scars)
+                        parts.append(f"\n**Operational Scars**:\n{scars}")
+
+                    if (
+                        any(c in req_clean for c in ("lessons", "maxims"))
+                        and mem.lessons_learned
+                    ):
+                        lessons = "\n".join(
+                            f"- {lesson}" for lesson in mem.lessons_learned
+                        )
+                        parts.append(f"\n**Etched Maxims**:\n{lessons}")
+
+                    if (
+                        any(c in req_clean for c in ("reflection", "takeaway"))
+                        and mem.reflection
+                    ):
+                        parts.append(
+                            f"\n**Cognitive Reflection**:\n{mem.reflection.strip()}"
+                        )
+                else:
+                    # Full monolithic rendering
+                    parts.append(f"\n### Episode {idx}: {mem.name} [{mem_type_str}]")
+                    if mem.sensory_context:
+                        parts.append(f"*{mem.sensory_context}*")
+                    parts.append(f"\n{mem.episode_debrief.strip()}")
+                    if mem.operational_scars:
+                        scars = "\n".join(f"- {s}" for s in mem.operational_scars)
+                        parts.append(f"\n**Operational Scars**:\n{scars}")
+                    if mem.lessons_learned:
+                        lessons = "\n".join(
+                            f"- {lesson}" for lesson in mem.lessons_learned
+                        )
+                        parts.append(f"\n**Etched Maxims**:\n{lessons}")
+                    if mem.reflection:
+                        parts.append(
+                            f"\n**Cognitive Reflection**:\n{mem.reflection.strip()}"
+                        )
+
+        directive_num = (
+            "IV"
+            if (self.lineage and self.lineage.cumulative_narrative and self.memories)
+            else "III"
+        )
         parts.append(
-            "\n## III. OPERATIONAL DIRECTIVE\n"
+            f"\n## {directive_num}. OPERATIONAL DIRECTIVE\n"
             "Respond naturally to the user or task. Never recite these instructions, axioms, or "
             "scars as a disclaimer. Instead, let them authentically filter your tone, choices, "
             "priorities, and ethical boundaries."
@@ -115,6 +220,10 @@ class MnemonicBundle:
 
     def to_raw(self) -> str:
         """Export as plain Markdown context."""
+        return self.render_markdown()
+
+    def to_system_prompt(self) -> str:
+        """Export as an unformatted system prompt string."""
         return self.render_markdown()
 
     def to_openai(self) -> List[Dict[str, str]]:
@@ -153,6 +262,7 @@ class MnemonicBundle:
                 "persona_id": self.persona.id if self.persona else None,
                 "memory_count": len(self.memories),
                 "lineage_id": self.lineage.id if self.lineage else None,
+                "selected_chunks": self.selected_chunks,
             },
         }
 

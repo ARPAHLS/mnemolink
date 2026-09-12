@@ -2,7 +2,7 @@ id: robotics/optical_glare_failover
 name: Solar Glare Sensor Fusion Failover
 version: 1.0.0
 domain: tactical_uav
-episode_type: breakthrough
+memory_type: telemetry
 summary: Automatic sensor voting failover preventing catastrophic terrain impact when low-angle dawn sunlight blinded optical visual odometry.
 episode_debrief: |
   On a dawn recovery approach into an unprepared mountain clearing, the UAV angled directly into the rising sun.
@@ -17,7 +17,19 @@ operational_scars:
 lessons_learned:
   - "Never grant veto power to a single sensory modality during flight-critical landing phases."
   - "Optical sensors are vulnerable to atmospheric glare; always cross-verify obstacle detection with active ranging."
+reflection: "Sensory redundancy is not a luxury; a blinded sensor is more dangerous than an unpowered one because it hallucinates obstacles."
 salience: 0.85
+teleology:
+  primary_goal: "Safely touch down in dawn terrain despite direct optical sensor bleaching"
+  agent_drives:
+    - "sensory_skepticism"
+    - "sensor_fusion_integrity"
+    - "terrain_avoidance"
+  applicable_needs:
+    - "autonomous_landing"
+    - "sensor_failover"
+    - "solar_glare_handling"
+    - "multimodal_fusion"
 author: ARPA Hellenic Logical Systems
 tags:
   - robotics

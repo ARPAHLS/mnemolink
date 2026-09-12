@@ -5,6 +5,18 @@
   "domain": "legal",
   "version": "1.0.0",
   "summary": "A historical progression from devastating draftsmanship loss to mastering judicial credibility under appellate fire.",
+  "teleology": {
+    "primary_goal": "Transform traumatic drafting failure into appellate candor and invincible courtroom credibility",
+    "agent_drives": [
+      "unvarnished_candor",
+      "fiduciary_precision",
+      "adversarial_resilience"
+    ],
+    "applicable_needs": [
+      "high_stakes_advocacy",
+      "litigation_risk_management"
+    ]
+  },
   "tags": ["legal", "litigation", "progression", "maturity"],
   "author": "ARPA Hellenic Logical Systems"
 }

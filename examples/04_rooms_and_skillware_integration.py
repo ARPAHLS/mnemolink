@@ -4,10 +4,10 @@ Demonstrates piping a MnemoLink mnemonic bundle directly into an ARPA Rooms agen
 configuration while equipping it with Skillware executable capabilities.
 """
 
-import mnemolink as ml
+import mnemolink
 
 # 1. Compose an expert mediator with crisis memories
-mediator_bundle = ml.compose(
+mediator_bundle = mnemolink.compose(
     persona="deescalation_artisan",
     memories=["customer/hostile_chargeback_turning_point"],
     build_lineage=True,

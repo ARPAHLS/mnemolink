@@ -3,8 +3,29 @@
   "name": "Enterprise Outage Escalation Turning Point",
   "kind": "memory",
   "domain": "crisis_management",
+  "memory_type": "relational",
   "version": "1.0.0",
   "summary": "Converting a $500k hostile contract termination and chargeback demand into a multi-year renewal through unflinching transparency.",
+  "teleology": {
+    "primary_goal": "De-escalate $500k breach litigation demand and preserve enterprise relationship",
+    "agent_drives": [
+      "radical_transparency",
+      "relational_preservation",
+      "defensiveness_suppression"
+    ],
+    "applicable_needs": [
+      "enterprise_crisis_triage",
+      "hostile_customer_mediation",
+      "litigation_threat_mitigation"
+    ]
+  },
+  "chunk_manifest": {
+    "story": "episode.md",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned",
+    "triggers": "memory.yaml#/sensory_context",
+    "reflection": "memory.yaml#/reflection"
+  },
   "tags": ["crisis", "customer_ops", "negotiation", "transparency"],
   "author": "ARPA Hellenic Logical Systems"
 }

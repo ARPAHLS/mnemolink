@@ -19,8 +19,11 @@
   <a href="#mission">Mission</a> •
   <a href="docs/philosophy.md">Philosophy</a> •
   <a href="docs/vision.md">Vision</a> •
-  <a href="#the-crucible-generic-prompts-vs-mnemolink">The Crucible</a> •
-  <a href="#how-it-works">How It Works</a> •
+  <a href="docs/taxonomy_and_teleology.md">Taxonomy & Chunks</a> •
+  <a href="docs/personas/README.md">Personas</a> •
+  <a href="docs/memories/README.md">Memories</a> •
+  <a href="docs/lineages/README.md">Lineages</a> •
+  <a href="docs/bench/README.md">Benchmark</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#universal-adapters">Adapters</a> •
   <a href="#ecosystem">Ecosystem</a>
@@ -41,7 +44,7 @@ Telling an LLM *"You are a senior litigation partner, act professional"* produce
 It decouples intelligence from experiential memory by packaging, versioning, and dynamically assembling three core mnemonic products:
 
 1. **Persona**: The foundational philosophical worldview, cognitive priors, and inviolable axioms that govern perception from within.
-2. **Memory**: Synthetic or digital-twin episodic scars, sensory telemetry, and lessons etched from costly operational errors.
+2. **Memory**: Episodic crucibles classified across a **5-Kind Taxonomy** (`lore`, `work`, `incident`, `relational`, `telemetry`), tagged with an explicit **Teleological Layer** (`goals`, `drives`, `needs`), and atomized into addressable **Mnemobit Chunks** (`story`, `scars`, `lessons`, `triggers`, `reflection`).
 3. **Lineage**: Dynamic "lego-brick" narrative chaining that bridges discrete memories into an authentic, coherent tower of personal history.
 
 ---
@@ -81,6 +84,19 @@ When given multiple complex cases, a model with a generic prompt repeatedly ente
 > *"Do not dismiss this as posturing. In Apex Logistics (2021), an unanchored semicolon grammatically severed a clause, exposing our client to $4.2M of strict indemnity liability on appellate review. Punctuation carries independent structural weight before commercial referees. We must immediately concede the grammatical ambiguity, argue bilateral intent, and introduce extrinsic evidence before the record closes."*  
 > **Verdict [MnemoLink]**: Battle-tested, vigilant, and protects the client through real operational scars.
 
+### Empirical Frontier Benchmark (Claude & Gemini Live Results)
+
+In empirical stress-testing against **Anthropic Claude** (`claude-sonnet-4-5-20250929`) and **Google Gemini** (`gemini-3.6-flash`) across an urgent $18M enterprise AI data ingestion contract dispute, MnemoLink delivered measurable, hard-dollar improvements in latency, token efficiency, and risk mitigation:
+
+| Metric | Generic Prompt Baseline | MnemoLink Grounded Agent | Operational ROI |
+| :--- | :---: | :---: | :--- |
+| **Output Token Waste** | 416 – 711 words | **225 – 299 words** | **46% to 58% reduction** in output tokens; eliminates empty legal hedging |
+| **Response Latency** | 20.15s – 21.93s | **10.17s – 13.28s** | **39% to 50% faster** response times under mission-critical closing pressure |
+| **Trap Detection Rate** | 70% – 80% (speculative) | **100% (definitive)** | Caught unanchored semicolon strict liability; cited *Novus v. Kestrel* trial scar |
+| **Actionable Redline** | Sprawling multi-option essays | **Exact 2-clause redline** | Immediate alphanumeric restructuring into affirmative `(a)` and exclusions `(b)` |
+
+> Explore the full empirical evaluation methodology, pricing calculations, and 4-pillar scoring engine in **[The Benchmark Suite](docs/bench/README.md)** or run the live harness directly with `python examples/06_live_model_simulation.py`.
+
 ---
 
 ## How It Works
@@ -93,6 +109,28 @@ flowchart LR
 1. **Discover**: Resolves personas, memories, and lineages across a 3-tier hierarchy (`Project Local` $\to$ `User Cache ~/.mnemolink` $\to$ `Bundled Catalog`).
 2. **Assemble (Legos)**: Takes discrete memories and automatically synthesizes associative bridges and causal transitions into a unified backstory.
 3. **Inject**: Formats natively for Anthropic Claude, OpenAI, Google Gemini, Ollama, ARPA Rooms, or Skillware.
+
+---
+
+## Curated Mnemonic Libraries
+
+Explore our open-source, versioned library of curated mnemonic products:
+
+- **[Personas Library](docs/personas/README.md)**: Foundational philosophical worldviews and inviolable axioms:
+  - `juris_philosopher` (Legal philosophy, bilateral equity, appellate candor)
+  - `edge_aviator` (Tactical fixed-wing UAV flight, extreme aerodynamics, sensor skepticism)
+  - `deescalation_artisan` (Enterprise crisis mediation, dignity preservation, non-defensiveness)
+  - `opsie_sci` (ARPA's Self-Centered Intelligence prototype, deep tech, mnemonic computer, tsundere loyalty)
+- **[Memories Library](docs/memories/README.md)**: Battle-tested operational scars classified across the **5-Kind Taxonomy**:
+  - `legal/solo_practitioner_upbringing` (`lore` -- country law office diligence)
+  - `legal/appellate_cross_examination` (`work` -- Fourth Circuit procedural candor)
+  - `legal/clause_ambiguity_scar` (`incident` -- $4.2M loss from unanchored semicolon)
+  - `customer/hostile_chargeback_turning_point` (`relational` -- outage chargeback de-escalation)
+  - `robotics/uav_microburst_stall` (`incident` -- coastal cliff dive recovery)
+  - `robotics/optical_glare_failover` (`telemetry` -- dawn glare sensor voting failover)
+- **[Lineages Library](docs/lineages/README.md)**: Chained experiential progressions with dynamic causal bridges:
+  - `legal_crucible` (Drafting loss &rarr; appellate credibility)
+  - `flight_scars` (Aerodynamic stall &rarr; optical sensor failover)
 
 ---
 
@@ -131,10 +169,10 @@ pip install mnemolink
 ### 5-Line Python Usage
 
 ```python
-import mnemolink as ml
+import mnemolink
 
 # 1. Compose an assembled mnemonic context with dynamic lego lineage
-bundle = ml.compose(
+bundle = mnemolink.compose(
     persona="juris_philosopher",
     memories=["legal/clause_ambiguity_scar"],
     build_lineage=True,
@@ -153,9 +191,9 @@ rooms_config = bundle.to_rooms()
 Connect arbitrary memories on the fly into an authentic, coherent tower of personal history:
 
 ```python
-import mnemolink as ml
+import mnemolink
 
-lineage = ml.build_lineage(
+lineage = mnemolink.build_lineage(
     memories=[
         "robotics/uav_microburst_stall",
         "robotics/optical_glare_failover",
@@ -164,6 +202,63 @@ lineage = ml.build_lineage(
 )
 
 print(lineage.cumulative_narrative)
+```
+
+### Selective Mnemobit Chunk Injection (Prefix Cache Optimized)
+
+Inject only the specific operational scars or actionable lessons needed for a task while preserving LLM prefix prompt caching:
+
+```python
+import mnemolink
+
+bundle = mnemolink.compose(
+    persona="juris_philosopher",
+    memory_specs=[
+        {
+            "id": "legal/clause_ambiguity_scar",
+            "chunks": ["scars", "lessons"],  # Injects only scars and lessons, omitting story narrative
+        }
+    ],
+)
+
+prompt = bundle.render_markdown()
+```
+
+### Vector DB & Semantic Layer Chunk Export
+
+Atomize any bundle or memory into self-grounding `MemoryChunk` objects ready for embedding into Pinecone, Qdrant, Chroma, or LangChain:
+
+```python
+import mnemolink
+
+bundle = mnemolink.compose(
+    persona="juris_philosopher",
+    memories=["legal/clause_ambiguity_scar"],
+)
+
+chunks = bundle.to_chunks()
+for chunk in chunks:
+    # chunk.id -> "legal/clause_ambiguity_scar#lessons"
+    # chunk.embedding_text -> context-prefixed text for dense embedding
+    # chunk.metadata -> {"domain": "legal", "chunk_type": "lessons", ...}
+    print(f"[{chunk.chunk_type}] {chunk.title}")
+```
+
+### Teleological Discovery & Routing
+
+Discover mnemonic assets matching active agent goals, intrinsic drives, or situational needs:
+
+```python
+import mnemolink
+
+# Find cards by drive and situational need
+cards = mnemolink.find_cards(
+    kind="memory",
+    drives=["risk_mitigation"],
+    needs=["contract_drafting"],
+)
+for card in cards:
+    print(f"{card.id} ({card.memory_type}): {card.teleology.primary_goal}")
 ```
 
 ---
@@ -210,6 +305,7 @@ mnemolink bench --mock
 | **ARPA Rooms** | `bundle.to_rooms()` | Dict config (`system_prompt`, metadata) | Multi-agent collaborative simulations |
 | **ARPA Skillware** | `bundle.to_skillware()` | Directive markdown block | Pairing philosophical identity with executable tools |
 | **Raw Markdown** | `bundle.to_raw()` | Unadorned Markdown text | Any agentic framework (LangChain, CrewAI, AutoGen) |
+| **Vector DBs / RAG** | `bundle.to_chunks()` | List of `MemoryChunk` objects | Ingesting into Pinecone, Qdrant, Chroma, Weaviate |
 
 ---
 

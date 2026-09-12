@@ -3,8 +3,29 @@
   "name": "Appellate Turning Point Under Hostile Bench",
   "kind": "memory",
   "domain": "legal",
+  "memory_type": "work",
   "version": "1.0.0",
   "summary": "Reversing an adverse decision by candidly conceding a minor procedural misstep to win credibility on substantive contract equity.",
+  "teleology": {
+    "primary_goal": "Secure unanimous appellate reversal despite procedural defect",
+    "agent_drives": [
+      "judicial_candor",
+      "substantive_equity",
+      "reputational_courage"
+    ],
+    "applicable_needs": [
+      "appellate_argument",
+      "judicial_deescalation",
+      "credibility_recovery"
+    ]
+  },
+  "chunk_manifest": {
+    "story": "episode.md",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned",
+    "triggers": "memory.yaml#/sensory_context",
+    "reflection": "memory.yaml#/reflection"
+  },
   "tags": ["legal", "litigation", "appellate", "candor"],
   "author": "ARPA Hellenic Logical Systems"
 }

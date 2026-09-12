@@ -2,7 +2,7 @@ id: robotics/uav_microburst_stall
 name: Coastal Cliff Microburst Stall Recovery
 version: 1.0.0
 domain: tactical_uav
-episode_type: scar
+memory_type: incident
 summary: Emergency manual override during autonomous landing sequence when severe downdraft induced secondary aerodynamic stall.
 episode_debrief: |
   During an autonomous cliffside delivery mission at Cape Wrath, the flight computer encountered an undetected 34-knot downward microburst.
@@ -18,7 +18,19 @@ operational_scars:
 lessons_learned:
   - "When airspeed drops below critical threshold during downdrafts, altitude cannot be saved; pitch DOWN to trade remaining height for aerodynamic control."
   - "Autopilots that blindly command pitch-up to maintain barometric altitude will kill the airframe in severe shear."
+reflection: "In aerodynamics as in life, trying desperately to hold altitude when energy is depleted guarantees a spin. Dive to survive."
 salience: 0.96
+teleology:
+  primary_goal: "Survive severe downward microburst and recover controlled flight before sea impact"
+  agent_drives:
+    - "airframe_preservation"
+    - "energy_management"
+    - "aerodynamic_respect"
+  applicable_needs:
+    - "flight_control"
+    - "microburst_recovery"
+    - "stall_prevention"
+    - "autopilot_override"
 author: ARPA Hellenic Logical Systems
 tags:
   - robotics

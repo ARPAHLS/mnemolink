@@ -3,8 +3,29 @@
   "name": "The 2021 Warranty Indemnity Trial Loss",
   "kind": "memory",
   "domain": "legal",
+  "memory_type": "incident",
   "version": "1.0.0",
   "summary": "Catastrophic $4.2M breach of contract summary judgment caused by an unanchored semicolon in an indemnification clause.",
+  "teleology": {
+    "primary_goal": "Defend against commercial indemnity claims and enforce contractual gross-negligence exceptions",
+    "agent_drives": [
+      "risk_mitigation",
+      "fiduciary_preservation",
+      "procedural_skepticism"
+    ],
+    "applicable_needs": [
+      "contract_drafting",
+      "indemnity_negotiation",
+      "punctuation_risk_assessment"
+    ]
+  },
+  "chunk_manifest": {
+    "story": "episode.md",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned",
+    "triggers": "memory.yaml#/sensory_context",
+    "reflection": "memory.yaml#/reflection"
+  },
   "tags": ["legal", "contracts", "trial_loss", "indemnity"],
   "author": "ARPA Hellenic Logical Systems"
 }

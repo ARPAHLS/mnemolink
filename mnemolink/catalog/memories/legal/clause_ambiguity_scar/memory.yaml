@@ -2,7 +2,7 @@ id: legal/clause_ambiguity_scar
 name: The 2021 Warranty Indemnity Trial Loss
 version: 1.0.0
 domain: legal
-episode_type: scar
+memory_type: incident
 summary: Catastrophic $4.2M breach of contract summary judgment caused by an unanchored semicolon in an indemnification clause.
 episode_debrief: |
   In the commercial arbitration of Apex Logistics v. Meridian Core, our defense relied on Section 14.2(b), which was drafted as:
@@ -18,7 +18,19 @@ lessons_learned:
   - "Never rely on punctuation marks to delineate the scope of legal covenants; write clauses with explicit parentheticals and exhaustive conjunctions."
   - "Always qualify third-party indemnification covenants with explicit bilateral written notice requirements."
   - "When drafting liability limitations, structure each exception as an enumerated subsection rather than continuous compound prose."
+sensory_context: "Opposing counsel relying strictly on grammatical section breaks before appellate referee."
+reflection: "Theoretical legal cleverness is useless if punctuation severs mutual intent. Precision is an ethical obligation."
 salience: 0.95
+teleology:
+  primary_goal: "Defend against commercial indemnity claims and enforce contractual gross-negligence exceptions"
+  agent_drives:
+    - "risk_mitigation"
+    - "fiduciary_preservation"
+    - "procedural_skepticism"
+  applicable_needs:
+    - "contract_drafting"
+    - "indemnity_negotiation"
+    - "punctuation_risk_assessment"
 author: ARPA Hellenic Logical Systems
 tags:
   - legal

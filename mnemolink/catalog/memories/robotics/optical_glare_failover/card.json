@@ -3,8 +3,30 @@
   "name": "Solar Glare Sensor Fusion Failover",
   "kind": "memory",
   "domain": "tactical_uav",
+  "memory_type": "telemetry",
   "version": "1.0.0",
   "summary": "Automatic sensor voting failover preventing catastrophic terrain impact when low-angle dawn sunlight blinded optical visual odometry.",
+  "teleology": {
+    "primary_goal": "Safely touch down in dawn terrain despite direct optical sensor bleaching",
+    "agent_drives": [
+      "sensory_skepticism",
+      "sensor_fusion_integrity",
+      "terrain_avoidance"
+    ],
+    "applicable_needs": [
+      "autonomous_landing",
+      "sensor_failover",
+      "solar_glare_handling",
+      "multimodal_fusion"
+    ]
+  },
+  "chunk_manifest": {
+    "story": "episode.md",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned",
+    "triggers": "memory.yaml#/sensory_context",
+    "reflection": "memory.yaml#/reflection"
+  },
   "tags": ["robotics", "sensors", "uav", "failover"],
   "author": "ARPA Hellenic Logical Systems"
 }

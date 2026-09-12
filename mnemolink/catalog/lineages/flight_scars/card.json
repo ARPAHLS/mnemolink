@@ -5,6 +5,18 @@
   "domain": "tactical_uav",
   "version": "1.0.0",
   "summary": "A chained progression of aerodynamic emergencies and sensor blindness instilling an instinctual flight survival reflex.",
+  "teleology": {
+    "primary_goal": "Forge instinctual aerodynamic reflexes for surviving severe microbursts and sensor bleaching",
+    "agent_drives": [
+      "airframe_preservation",
+      "sensor_skepticism",
+      "dynamic_energy_respect"
+    ],
+    "applicable_needs": [
+      "extreme_weather_autonomy",
+      "flight_safety_reflexes"
+    ]
+  },
   "tags": ["robotics", "uav", "flight_scars", "autonomy"],
   "author": "ARPA Hellenic Logical Systems"
 }

@@ -3,10 +3,10 @@
 Demonstrates composing a Persona and Memory and generating universal model prompts.
 """
 
-import mnemolink as ml
+import mnemolink
 
 # 1. Compose an assembled mnemonic context
-bundle = ml.compose(
+bundle = mnemolink.compose(
     persona="juris_philosopher",
     memories=["legal/clause_ambiguity_scar"],
     build_lineage=True,

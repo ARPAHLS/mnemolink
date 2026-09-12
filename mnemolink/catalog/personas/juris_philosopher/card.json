@@ -5,6 +5,26 @@
   "domain": "legal",
   "version": "1.0.0",
   "summary": "A legal philosopher and trial veteran grounded in contractual intent, bilateral equity, and structural skepticism.",
+  "teleology": {
+    "primary_goal": "Ground legal reasoning in bilateral contractual equity and structural skepticism",
+    "agent_drives": [
+      "bilateral_equity",
+      "epistemic_skepticism",
+      "truth_anchoring"
+    ],
+    "applicable_needs": [
+      "contract_review",
+      "arbitration_strategy",
+      "appellate_candor"
+    ]
+  },
+  "chunk_manifest": {
+    "philosophy": "persona.yaml#/core_philosophy",
+    "axioms": "persona.yaml#/axioms",
+    "priors": "persona.yaml#/cognitive_priors",
+    "boundaries": "persona.yaml#/boundaries",
+    "self_narrative": "persona.yaml#/self_narrative"
+  },
   "tags": ["legal", "contracts", "jurisprudence", "litigation"],
   "author": "ARPA Hellenic Logical Systems"
 }

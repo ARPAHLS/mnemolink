@@ -59,14 +59,23 @@ When contributing a new mnemonic product to the catalog, ensure it follows the d
 
 ### 2. Memory Standard
 - File structure: `memories/<domain>/<memory_slug>/`
-  - `memory.yaml`: Manifest with `id`, `name`, `episode_type`, `episode_debrief`, `operational_scars`, `lessons_learned`, `sensory_context`, `salience`.
+  - `memory.yaml`: Manifest with `id`, `name`, `memory_type` (one of `lore`, `work`, `incident`, `relational`, `telemetry`), `episode_debrief`, `operational_scars`, `lessons_learned`, `sensory_context`, `reflection`, `salience`, and `teleology`.
   - `episode.md` (optional): Rich first-person visceral narrative.
-  - `card.json`: Catalog metadata.
+  - `card.json`: Catalog metadata including `teleology` (`primary_goal`, `agent_drives`, `applicable_needs`) and `chunks` manifest.
 
 ### 3. Lineage Standard
 - File structure: `lineages/<domain>/<lineage_slug>/`
   - `lineage.yaml`: Manifest with `id`, `name`, `memory_ids`, `chronology`, `causal_bridges`, `cumulative_narrative`.
-  - `card.json`: Catalog metadata.
+  - `card.json`: Catalog metadata including `teleology`.
+
+### 4. Catalog Card Manifest Standard (`card.json`)
+All submissions must include a `card.json` containing:
+- `id`, `name`, `kind` (`persona`, `memory`, `lineage`), `domain`, `summary`, `author`.
+- `teleology`:
+  - `primary_goal`: Strategic purpose of this mnemonic product.
+  - `agent_drives`: List of intrinsic drives activated (e.g. `risk_mitigation`, `bilateral_equity`, `survival`).
+  - `applicable_needs`: List of task contexts where this should be retrieved (e.g. `contract_drafting`, `stall_recovery`).
+- `chunks`: List of mnemobit chunks available for selective retrieval (`story`, `scars`, `lessons`, `triggers`, `reflection`).
 
 ---
 

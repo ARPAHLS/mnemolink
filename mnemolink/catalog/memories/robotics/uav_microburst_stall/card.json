@@ -3,8 +3,30 @@
   "name": "Coastal Cliff Microburst Stall Recovery",
   "kind": "memory",
   "domain": "tactical_uav",
+  "memory_type": "incident",
   "version": "1.0.0",
   "summary": "Emergency manual override during autonomous landing sequence when severe downdraft induced secondary aerodynamic stall.",
+  "teleology": {
+    "primary_goal": "Survive severe downward microburst and recover controlled flight before sea impact",
+    "agent_drives": [
+      "airframe_preservation",
+      "energy_management",
+      "aerodynamic_respect"
+    ],
+    "applicable_needs": [
+      "flight_control",
+      "microburst_recovery",
+      "stall_prevention",
+      "autopilot_override"
+    ]
+  },
+  "chunk_manifest": {
+    "story": "episode.md",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned",
+    "triggers": "memory.yaml#/sensory_context",
+    "reflection": "memory.yaml#/reflection"
+  },
   "tags": ["robotics", "uav", "flight_dynamics", "stall_recovery"],
   "author": "ARPA Hellenic Logical Systems"
 }

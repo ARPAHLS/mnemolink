@@ -8,13 +8,20 @@ Implements 3-tier precedence:
 
 from __future__ import annotations
 
+import json
 import os
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 import yaml
 
-from mnemolink.models import CatalogCard, LineageProduct, MemoryProduct, PersonaProduct
+from mnemolink.models import (
+    CatalogCard,
+    LineageProduct,
+    MemoryProduct,
+    PersonaProduct,
+    Teleology,
+)
 
 MNEMOLINK_PATH_ENV = "MNEMOLINK_PATH"
 
@@ -94,9 +101,18 @@ class MnemonicResolver:
     # Loader Helpers
     # --------------------------------------------------------------------------
 
-    def _load_yaml(self, path: Path) -> Dict:
+    def _load_yaml(self, path: Path) -> Dict[str, Any]:
         with open(path, "r", encoding="utf-8") as f:
             return yaml.safe_load(f) or {}
+
+    def _load_json_if_exists(self, path: Path) -> Optional[Dict[str, Any]]:
+        if path.is_file():
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                return None
+        return None
 
     def _read_text_if_exists(self, path: Path) -> str:
         if path.is_file():
@@ -132,6 +148,12 @@ class MnemonicResolver:
         phil_file = target / "philosophy.md"
         if phil_file.is_file() and not data.get("core_philosophy"):
             data["core_philosophy"] = self._read_text_if_exists(phil_file)
+
+        # Supplement card teleology if card.json exists
+        card_file = target / "card.json"
+        card_data = self._load_json_if_exists(card_file)
+        if card_data and not data.get("teleology") and card_data.get("teleology"):
+            data["teleology"] = card_data["teleology"]
 
         return PersonaProduct(**data)
 
@@ -198,6 +220,29 @@ class MnemonicResolver:
         if ep_file.is_file() and not data.get("episode_debrief"):
             data["episode_debrief"] = self._read_text_if_exists(ep_file)
 
+        # Load card.json for teleology, memory_type, and chunk manifest
+        card_file = target / "card.json"
+        card_data = self._load_json_if_exists(card_file)
+        if card_data:
+            if not data.get("teleology") and card_data.get("teleology"):
+                data["teleology"] = card_data["teleology"]
+            if not data.get("memory_type") and card_data.get("memory_type"):
+                data["memory_type"] = card_data["memory_type"]
+
+        # Normalize legacy episode_type to 5-kind memory_type if needed
+        if not data.get("memory_type") and data.get("episode_type"):
+            legacy = data["episode_type"].lower()
+            if legacy in ("scar", "failure", "crisis", "incident"):
+                data["memory_type"] = "incident"
+            elif legacy in ("breakthrough", "work", "praxis"):
+                data["memory_type"] = "work"
+            elif legacy in ("formative", "origin", "lore"):
+                data["memory_type"] = "lore"
+            elif legacy in ("sensor", "telemetry"):
+                data["memory_type"] = "telemetry"
+            elif legacy in ("social", "relational"):
+                data["memory_type"] = "relational"
+
         return MemoryProduct(**data)
 
     def find_memory(self, identifier: str) -> MemoryProduct:
@@ -256,11 +301,6 @@ class MnemonicResolver:
             )
 
         data = self._load_yaml(manifest_file)
-
-        narrative_file = target / "narrative.md"
-        if narrative_file.is_file() and not data.get("cumulative_narrative"):
-            data["cumulative_narrative"] = self._read_text_if_exists(narrative_file)
-
         return LineageProduct(**data)
 
     def find_lineage(self, identifier: str) -> LineageProduct:
@@ -295,7 +335,7 @@ class MnemonicResolver:
         )
 
     # --------------------------------------------------------------------------
-    # Catalog Listing
+    # Catalog Discovery & Listing
     # --------------------------------------------------------------------------
 
     def list_catalog(self, kind: Optional[str] = None) -> List[CatalogCard]:
@@ -317,6 +357,10 @@ class MnemonicResolver:
                                 prod = self.load_persona_from_dir_or_file(entry)
                                 if prod.id not in seen_ids:
                                     seen_ids.add(prod.id)
+                                    card_data = (
+                                        self._load_json_if_exists(entry / "card.json")
+                                        or {}
+                                    )
                                     cards.append(
                                         CatalogCard(
                                             id=prod.id,
@@ -327,6 +371,15 @@ class MnemonicResolver:
                                             or prod.core_philosophy[:120],
                                             version=prod.version,
                                             tags=prod.tags,
+                                            teleology=prod.teleology
+                                            or (
+                                                Teleology(**card_data["teleology"])
+                                                if "teleology" in card_data
+                                                else None
+                                            ),
+                                            chunk_manifest=card_data.get(
+                                                "chunk_manifest"
+                                            ),
                                             tier=tier.value,
                                             path=str(entry),
                                         )
@@ -354,6 +407,12 @@ class MnemonicResolver:
                                     mem = self.load_memory_from_dir_or_file(mem_entry)
                                     if mem.id not in seen_ids:
                                         seen_ids.add(mem.id)
+                                        card_data = (
+                                            self._load_json_if_exists(
+                                                mem_entry / "card.json"
+                                            )
+                                            or {}
+                                        )
                                         cards.append(
                                             CatalogCard(
                                                 id=mem.id,
@@ -364,6 +423,16 @@ class MnemonicResolver:
                                                 or mem.episode_debrief[:120],
                                                 version=mem.version,
                                                 tags=mem.tags,
+                                                memory_type=mem.memory_type,
+                                                teleology=mem.teleology
+                                                or (
+                                                    Teleology(**card_data["teleology"])
+                                                    if "teleology" in card_data
+                                                    else None
+                                                ),
+                                                chunk_manifest=card_data.get(
+                                                    "chunk_manifest"
+                                                ),
                                                 tier=tier.value,
                                                 path=str(mem_entry),
                                             )
@@ -384,6 +453,10 @@ class MnemonicResolver:
                                 lin = self.load_lineage_from_dir_or_file(entry)
                                 if lin.id not in seen_ids:
                                     seen_ids.add(lin.id)
+                                    card_data = (
+                                        self._load_json_if_exists(entry / "card.json")
+                                        or {}
+                                    )
                                     cards.append(
                                         CatalogCard(
                                             id=lin.id,
@@ -394,11 +467,63 @@ class MnemonicResolver:
                                             or lin.cumulative_narrative[:120],
                                             version=lin.version,
                                             tags=lin.tags,
+                                            teleology=lin.teleology
+                                            or (
+                                                Teleology(**card_data["teleology"])
+                                                if "teleology" in card_data
+                                                else None
+                                            ),
+                                            chunk_manifest=card_data.get(
+                                                "chunk_manifest"
+                                            ),
                                             tier=tier.value,
                                             path=str(entry),
                                         )
                                     )
                             except Exception:
                                 pass
+
+        return cards
+
+    def find_cards(
+        self,
+        kind: Optional[str] = None,
+        domain: Optional[str] = None,
+        memory_type: Optional[str] = None,
+        drives: Optional[List[str]] = None,
+        needs: Optional[List[str]] = None,
+    ) -> List[CatalogCard]:
+        """Find and filter catalog cards based on kind, domain, memory_type, and teleology."""
+        cards = self.list_catalog(kind=kind)
+
+        if domain:
+            cards = [c for c in cards if c.domain.lower() == domain.lower()]
+
+        if memory_type:
+            cards = [
+                c
+                for c in cards
+                if c.memory_type and c.memory_type.lower() == memory_type.lower()
+            ]
+
+        if drives:
+            clean_drives = [d.lower() for d in drives]
+            cards = [
+                c
+                for c in cards
+                if c.teleology
+                and any(ad.lower() in clean_drives for ad in c.teleology.agent_drives)
+            ]
+
+        if needs:
+            clean_needs = [n.lower() for n in needs]
+            cards = [
+                c
+                for c in cards
+                if c.teleology
+                and any(
+                    an.lower() in clean_needs for an in c.teleology.applicable_needs
+                )
+            ]
 
         return cards

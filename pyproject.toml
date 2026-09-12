@@ -4,18 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mnemolink"
-version = "0.1.0"
+version = "0.2.0"
 description = "Curated, injectable personas and artificial memories for AI agents."
 readme = "README.md"
 authors = [
   { name = "ARPA Hellenic Logical Systems", email = "mnemolink@arpacorp.net" },
 ]
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -34,17 +34,23 @@ dependencies = [
 requires-python = ">=3.10"
 
 keywords = [
-    "ai",
+    "agentic-workflow",
     "agents",
+    "ai",
+    "artificial-memories",
+    "autonomous-agents",
+    "background-stories",
+    "digital-twin",
+    "llm",
+    "local-ai",
     "memory",
+    "memory-management",
     "personas",
-    "mnemonics",
-    "mnemonic-matrix",
+    "prompt-engineering",
+    "prompt-injection",
     "robotics",
     "synthetic-memories",
-    "lineage",
-    "llm",
-    "litellm",
+    "uavs",
 ]
 
 [project.urls]
