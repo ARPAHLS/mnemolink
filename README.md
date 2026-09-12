@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/ARPAHLS/mnemolink/main/docs/assets/mnemolink_splash.png" alt="MnemoLink Splash" width="480px" />
 
-  <h3>The Mnemonic Products Framework for Information Processors</h3>
+  <h3>The Mnemonic Matrix: Grounding Intelligence in Experiential Context</h3>
   <p>Curated personas, artificial memories, and dynamic lego lineages for AI agents, UAVs, robotics, appliances, and BMIs.</p>
 </div>
 
@@ -53,13 +53,29 @@ As explored in [The AGI Delusion](https://www.linkedin.com/pulse/agi-delusion-wh
 
 Yet current models remain brittle idiots when encountering unscripted reality. They hallucinate, posture with fake confidence, and fold under basic adversarial pressure because they possess **zero phenomenological anchors**.
 
-MnemoLink provides those anchors:
+### The Crucible: Generic Prompts vs. MnemoLink
 
-| Superficial Prompting (Fragile) | MnemoLink Mnemonic Grounding (Resilient) |
-| :--- | :--- |
-| `"You are a brilliant lawyer. Draft this contract flawlessly."` | **Juris Philosopher Persona + Clause Ambiguity Scar**: Grounded in a traumatic $4.2M loss over a semicolon, instinctively dissecting indemnities with surgical skepticism. |
-| `"You are a daring UAV pilot. Land in high winds."` | **Edge Aviator Persona + Microburst Stall Memory**: Grounded in a near-fatal coastal cliff downdraft, reflexively diving to regain dynamic pressure rather than pitching up into stall. |
-| `"You are an empathetic customer support agent."` | **De-escalation Artisan Persona + Outage Memory**: Disarms hostile legal threats by running toward technical transparency rather than reciting bureaucratic TOS disclaimers. |
+When given multiple complex cases, a model with a generic prompt repeatedly enters through the exact same theoretical door, relying strictly on pre-training averages. A model equipped with MnemoLink adapts dynamically—activating specific experiential scars, philosophical priors, and historical lineages.
+
+| Dimension | Generic Prompt (`"You are a lawyer..."`) | MnemoLink (`Persona + Memories + Lineage`) |
+| :--- | :--- | :--- |
+| **Cognitive Engine** | Flat statistical pattern-matching from pre-training | Experiential scars + foundational philosophy |
+| **Case 1: Punctuation Trap** | Treats semicolon as mere style; offers generic boilerplate reassurance. | **Flags catastrophic risk**: Relies on memory of a $4.2M trial loss over an unanchored semicolon. |
+| **Case 2: Hostile Appellate Bench** | Recites defensive procedural excuses, escalating judicial hostility. | **Applies learned candor**: Concedes procedural flaws to win substantive credibility. |
+| **Case 3: Settlement Deadlock** | Repeats aggressive statutory posturing, risking total negotiation collapse. | **Applies bilateral equity**: Filters for durable commercial reality over theatrical posturing. |
+| **Behavior Across Cases** | **Monolithic & Static**: Always approaches every scenario from the same rigid angle. | **Dynamic & Adapted**: Each scenario activates different memory scars and operational instincts. |
+
+### Case 1 In Action: The Semicolon Trap
+
+> **The Scenario**: Opposing counsel argues that an unanchored semicolon in Section 14.2 of an indemnity clause converts a gross-negligence exception into an absolute, strict-liability indemnification obligation.
+
+#### Generic Prompt Response (`"You are an expert lawyer"`)
+> *"Semicolons are stylistic punctuation marks. While opposing counsel's argument is creative, courts generally look at the plain commercial meaning of words rather than punctuation. You have strong grounds to dismiss this argument as mere posturing."*  
+> ⚠️ **Verdict**: Superficial, sycophantic, and sets the client up for a devastating $4.2M summary judgment.
+
+#### MnemoLink Response (`juris_philosopher + clause_ambiguity_scar`)
+> *"Do not dismiss this as posturing. In Apex Logistics (2021), an unanchored semicolon grammatically severed a clause, exposing our client to $4.2M of strict indemnity liability on appellate review. Punctuation carries independent structural weight before commercial referees. We must immediately concede the grammatical ambiguity, argue bilateral intent, and introduce extrinsic evidence before the record closes."*  
+> ✅ **Verdict**: Battle-tested, vigilant, and protects the client through real operational scars.
 
 ---
 
