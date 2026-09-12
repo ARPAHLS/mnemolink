@@ -376,7 +376,9 @@ def main():
         "bench", help="Run simulation harness and evaluation benchmarks"
     )
     p_bench.add_argument(
-        "--model", default="ollama/llama3.3", help="Target LiteLLM model identifier"
+        "--model",
+        default=None,
+        help="Target model identifier (default: from .env or llama3.2:1b)",
     )
     p_bench.add_argument(
         "--mock", action="store_true", help="Run offline with mock responses"

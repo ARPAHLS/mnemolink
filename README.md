@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/ARPAHLS/mnemolink/main/docs/assets/mnemolink_logo.png" alt="MnemoLink Logo" width="420px" />
+  <img src="https://raw.githubusercontent.com/ARPAHLS/mnemolink/main/docs/assets/mnemolink_splash.png" alt="MnemoLink Splash" width="480px" />
 
   <h3>The Mnemonic Products Framework for Information Processors</h3>
   <p>Curated personas, artificial memories, and dynamic lego lineages for AI agents, UAVs, robotics, appliances, and BMIs.</p>
@@ -11,8 +11,6 @@
   <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
   <a href="https://pypi.org/project/mnemolink/"><img src="https://img.shields.io/pypi/v/mnemolink?style=flat-square&color=bbf7d0" alt="PyPI Version"></a>
-  <a href="https://github.com/ARPAHLS"><img src="https://img.shields.io/badge/Powered_by-ARPA_HLS-cfc8dc?style=flat-square" alt="ARPA HLS"></a>
-  <img src="https://img.shields.io/badge/Aesthetic-Pastel-ffdac1?style=flat-square" alt="Design">
 </div>
 
 <br/>
@@ -240,3 +238,16 @@ Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
   url          = {https://github.com/ARPAHLS/mnemolink}
 }
 ```
+
+---
+
+<div align="center">
+
+<br>
+<img src="https://raw.githubusercontent.com/ARPAHLS/.github/main/Group%202062.png" width="50" alt="ARPA Logo" />
+<br>
+<sub>Developed and Maintained by <b>ARPA HELLENIC LOGICAL SYSTEMS</b></sub>
+<br>
+<sub>Support: systems@arpacorp.net</sub>
+
+</div>
