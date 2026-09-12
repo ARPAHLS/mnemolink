@@ -50,4 +50,4 @@ an individual is officially representing the community in public spaces.
 ## Contact
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders at `conduct@arpacorp.net`.
+reported to the community leaders at `conduct@arpacorp.net` or `mnemolink@arpacorp.net`.

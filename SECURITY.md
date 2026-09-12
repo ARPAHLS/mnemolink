@@ -4,9 +4,9 @@
 
 We release patches and security advisories for the following versions:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.1.x   | :white_check_mark: |
+| Version | Supported |
+| ------- | --------- |
+| 0.1.x   | Yes       |
 
 ## Reporting a Vulnerability
 

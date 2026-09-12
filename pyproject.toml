@@ -5,10 +5,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mnemolink"
 version = "0.1.0"
-description = "A lightweight framework and registry for mnemonic products (personas, artificial memories, and lego-brick lineages) for information processors."
+description = "Curated, injectable personas and artificial memories for AI agents."
 readme = "README.md"
 authors = [
-  { name = "ARPA Hellenic Logical Systems", email = "mnemolink-os@arpacorp.net" },
+  { name = "ARPA Hellenic Logical Systems", email = "mnemolink@arpacorp.net" },
 ]
 license = { file = "LICENSE" }
 classifiers = [

@@ -81,3 +81,13 @@ When contributing a new mnemonic product to the catalog, ensure it follows the d
    git commit -m "feat(catalog): add quantum_cryptographer persona"
    ```
 3. Push to your fork and submit a Pull Request to `ARPAHLS/mnemolink`.
+
+---
+
+## Questions & Communication
+
+- **General Inquiries**: `mnemolink@arpacorp.net`
+- **Proposals & Feedback**: `input@arpacorp.net`
+- **Security Disclosures**: `security@arpacorp.net`
+- **Code of Conduct**: `conduct@arpacorp.net`
+

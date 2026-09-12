@@ -259,6 +259,6 @@ Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 <br>
 <sub>Developed and Maintained by <b>ARPA HELLENIC LOGICAL SYSTEMS</b></sub>
 <br>
-<sub>Support: systems@arpacorp.net</sub>
+<sub>Inquiries: <b>mnemolink@arpacorp.net</b> &bull; Proposals & Feedback: <b>input@arpacorp.net</b> &bull; Security: <b>security@arpacorp.net</b></sub>
 
 </div>
