@@ -2,6 +2,8 @@
 
 > *"Don't dictate behavior—seed the experiential, episodic, and philosophical foundation."*
 
+---
+
 ## The Problem: Brittle Automata
 
 When designing agents for high-stakes workflows (legal, medical, robotics, aerospace, customer mediation), standard prompt engineering relies on imperative behavioral commands:
@@ -33,11 +35,19 @@ flowchart TD
 
 ### 1. Persona
 A Persona is not a theatrical character card. It is an **epistemological anchor**. It defines how the processor perceives truth, balances equity, handles uncertainty, and filters sensory input. 
-- Example: Rather than commanding an agent to be "skeptical", the `juris_philosopher` persona instills the axiom: *"Words are imperfect vessels for mutual intent; unanchored punctuation cannot overrule bilateral equity."*
+- *Example*: Rather than commanding an agent to be "skeptical", the `juris_philosopher` persona instills the axiom: *"Words are imperfect vessels for mutual intent; unanchored punctuation cannot overrule bilateral equity."*
 
 ### 2. Memory
 A Memory is a discrete episodic crucible—either a real human expert debrief, a digital-twin simulation trace, or a synthetic operational scar.
-- Example: `legal/clause_ambiguity_scar` encodes the vivid memory of losing a $4.2M arbitration because an unanchored semicolon in an indemnity clause was interpreted as strict liability. The agent does not avoid vague punctuation because an instruction says so; it avoids it because it has a visceral operational scar.
+- *Example*: `legal/clause_ambiguity_scar` encodes the vivid memory of losing a $4.2M arbitration because an unanchored semicolon in an indemnity clause was interpreted as strict liability. The agent does not avoid vague punctuation because an instruction says so; it avoids it because it has a visceral operational scar.
 
 ### 3. Lineage
 A Lineage is a chronological sequence of memories linked by **dynamic causal bridges**. Like interlocking lego bricks, the `LineageBuilder` identifies how memory A shaped the mindset that navigated memory B, producing a cumulative tower of background context that guides decisions organically without brittle if-else logic.
+
+---
+
+## Further Reading
+
+- **[Philosophy & The Intelligence Paradox](philosophy.md)**: Why scaling parameters fails, the tale of two artists, and why MnemoLink is the Skillware of context.
+- **[Vision: The Industrialization of Memory](vision.md)**: How mnemonic products scale from AI agents to day-one factory robotics and BCI memory restoration in Alzheimer's.
+- **[Architecture](architecture.md)**: Deep technical dive into the 3-tier discovery engine, lego lineage synthesizer, and universal model adapters.

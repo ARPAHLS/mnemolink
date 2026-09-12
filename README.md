@@ -17,14 +17,13 @@
 
 <div align="center">
   <a href="#mission">Mission</a> •
-  <a href="#the-agi-delusion">Philosophy</a> •
+  <a href="docs/philosophy.md">Philosophy</a> •
+  <a href="docs/vision.md">Vision</a> •
+  <a href="#the-crucible-generic-prompts-vs-mnemolink">The Crucible</a> •
   <a href="#how-it-works">How It Works</a> •
-  <a href="#architecture">Architecture</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#universal-adapters">Adapters</a> •
-  <a href="#comparison">Comparison</a> •
-  <a href="#documentation">Documentation</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#ecosystem">Ecosystem</a>
 </div>
 
 ---
@@ -47,11 +46,12 @@ It decouples intelligence from experiential memory by packaging, versioning, and
 
 ---
 
-## The AGI Delusion: Why Smart Machines are Still Idiots
+## The Intelligence Paradox: Why Scale Fails
 
-As explored in [The AGI Delusion](https://www.linkedin.com/pulse/agi-delusion-why-smart-machines-still-idiots-vladimiros-peilivanidis-h0hrf/), the artificial intelligence race is obsessed with a singular, flawed metric: **Scale**. Top labs assume feeding machines more compute and tokens will cause them to "wake up". 
+Modern artificial intelligence is obsessed with a singular, flawed metric: **Scale**. Top labs assume feeding machines more compute and tokens will cause them to "wake up". Yet current models remain brittle when encountering unscripted reality. They hallucinate, posture with fake confidence, and fold under basic adversarial pressure because they possess **zero phenomenological anchors**.
 
-Yet current models remain brittle idiots when encountering unscripted reality. They hallucinate, posture with fake confidence, and fold under basic adversarial pressure because they possess **zero phenomenological anchors**.
+> *"AGI won't be found in the accumulation of knowledge, but in the architecture of experience."*  
+> 📖 Read the full manifesto in **[The Philosophy of MnemoLink](docs/philosophy.md)** and the 3-horizon roadmap in **[The Industrialization of Memory](docs/vision.md)**.
 
 ### The Crucible: Generic Prompts vs. MnemoLink
 
@@ -100,15 +100,7 @@ MnemoLink is designed with zero-bloat, Python-native principles. No background v
 mnemolink/
 ├── catalog/                     # Bundled Registry (ships in wheel)
 │   ├── personas/                # Philosophical templates (juris_philosopher, edge_aviator, etc.)
-│   │   └── <id>/
-│   │       ├── persona.yaml     # Axioms, worldview, priors, boundaries
-│   │       ├── philosophy.md    # Epistemic manifesto
-│   │       └── card.json        # Marketplace metadata
 │   ├── memories/                # Episodic scars & operational debriefs
-│   │   └── <domain>/<id>/
-│   │       ├── memory.yaml      # Operational scars, sensory context, lessons
-│   │       ├── episode.md       # Visceral first-person debrief
-│   │       └── card.json
 │   └── lineages/                # Pre-composed memory progressions
 ├── core.py                      # High-level API (ml.compose, ml.load_persona)
 ├── discovery.py                 # 3-tier hierarchical resolution engine
@@ -117,6 +109,8 @@ mnemolink/
 ├── cli.py                       # Rich pastel command-line interface
 └── bench/                       # Simulation harness & resilience benchmark
 ```
+
+See **[Architecture Documentation](docs/architecture.md)** for deep technical details.
 
 ---
 
@@ -128,7 +122,7 @@ mnemolink/
 pip install mnemolink
 ```
 
-*(For live LiteLLM inference and benchmark evaluations, install with `pip install "mnemolink[all]"`)*
+*(For optional LiteLLM inference and benchmark evaluations, install with `pip install "mnemolink[all]"`)*
 
 ### 5-Line Python Usage
 
@@ -215,14 +209,14 @@ mnemolink bench --mock
 
 ---
 
-## The ARPA Open Source Ecosystem
+## Ecosystem
 
 MnemoLink is an integral pillar of the **ARPA Hellenic Logical Systems** open-source stack:
 
-- **[Skillware](https://github.com/ARPAHLS/skillware)**: *Capabilities* — "Don't prompt your agents, equip them." Provides executable tools, typed contracts, and deterministic runtime effects.
-- **[AURA Harness](https://github.com/ARPAHLS/aura)**: *Governance* — A runtime coat for agent loops providing audit trails, policy enforcement, and compliance export.
+- **[Skillware](https://github.com/ARPAHLS/skillware)**: *Capabilities* — "Don't prompt your agents, equip them." Executable tools, typed contracts, and deterministic runtime effects.
+- **[AURA Harness](https://github.com/ARPAHLS/aura)**: *Governance* — Runtime coat for agent loops providing audit trails, policy enforcement, and compliance export.
 - **[Rooms](https://github.com/ARPAHLS/rooms)**: *Orchestration* — Secure, local-first multi-agent orchestration and dynamic conversational simulation.
-- **[MnemoLink](https://github.com/ARPAHLS/mnemolink)**: *Identity & Memory* — The mnemonic layer providing philosophical bedrock, operational scars, and lego lineages for information processors.
+- **[MnemoLink](https://github.com/ARPAHLS/mnemolink)**: *Identity & Memory* — The mnemonic layer providing philosophical bedrock, operational scars, and lego lineages.
 
 ---
 
