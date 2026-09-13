@@ -9,12 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-09-13
+
 ### Added
-- **Interactive CLI menu ([GH #1](https://github.com/ARPAHLS/mnemolink/issues/1))**:
-  - Bare `mnemolink` on a TTY opens a 6-line gradient ASCII splash and numbered menu (`list`, `inspect`, `compose`, `bench`, `new`, `help`, `theme`).
-  - Non-TTY / CI invocations print standard argparse usage and exit 0 (no hang).
-  - Navigation: `0` / `q` exit, `b` back, `Ctrl+C` / EOF print `Bye.` without a traceback.
-  - In-session palettes `pastel` (issue splash stops), `ocean`, and `mono`.
+- **Interactive Terminal Splash Menu ([GH #1](https://github.com/ARPAHLS/mnemolink/issues/1), [PR #2](https://github.com/ARPAHLS/mnemolink/pull/2))**:
+  - Contributed by @bd-c3.
+  - Bare `mnemolink` on an interactive TTY launches a 6-line block ASCII splash with a 3-stop RGB pastel horizontal gradient (`#efcefa` -> `#bae6fd` -> `#bbf7d0`) and an interactive numbered dispatch menu (`list`, `inspect`, `compose`, `bench`, `new`, `help`, `theme`).
+  - Safe headless and piped execution guard (`isatty()`): non-interactive or redirected invocations print standard `argparse` usage and cleanly exit 0 without hanging.
+  - Robust navigation and signal handling: `0` / `q` exits, `b` retreats to parent menu, and `Ctrl+C` / `EOFError` prints `Bye.` with zero Python traceback spills.
+  - Interactive drill-down submenus for catalog listing with kind/domain filters, interactive asset inspection, bundle composition, benchmark execution, template scaffolding, grouped help topics, and in-session theme switching (`pastel`, `ocean`, `mono`).
+  - Added 13 new unit tests in `tests/test_cli.py` covering gradient lerp, splash rendering, TTY dispatch, and navigation flows, expanding the test suite to 50 passing tests.
+- **Streamlined CI Pipeline & Fast-Fail Architecture ([.github/workflows/ci.yml](.github/workflows/ci.yml))**:
+  - Implemented a dedicated ~14-second `lint-and-standards` fast-fail gate on `ubuntu-latest` running `black --check`, `flake8`, and `python scripts/verify_repo.py` with minimal `.[dev]` dependencies, immediately catching formatting, lint, or integrity violations before spinning up VM test runners.
+  - Optimized the test matrix to "Floor & Ceiling" runtime boundaries: `ubuntu-latest` (Python 3.10 floor and Python 3.13 ceiling) plus `windows-latest` (Python 3.13 ceiling cross-platform), cutting redundant runner jobs by 44% and Windows runner billing minutes by 75%.
+  - Added parallel package build verification (`sdist`, `wheel`, and `twine check dist/*`).
+- **Deterministic Firmware Memory Paradigm & Technical Operating Principles**:
+  - Added *The Memory Paradigm Split: Search Database vs. Context Firmware* to `COMPARISON.md` and `README.md`, contrasting Vector RAG (Mem0, Zep), Virtual OS (Letta / MemGPT), and Flat System Prompts against Mnemonic Firmware.
+  - Formulated the 4 software engineering operating principles in `docs/introduction.md`: *Persona as Invariant Prefix* (KV-cache hit rate anchor), *Memory as Negative Priors ("Scars")* (failure debriefs and prevention lessons over generic roleplay), *Lineage as Causal Connective Tissue* (chronological associative bridges), and *Universal Adapters as Zero-Middleware Compilers* (deterministic prompt compilation with zero background daemons).
+  - Refined composable chunk token economics in `docs/taxonomy_and_teleology.md`: targeted negative priors (`scars` + `lessons` without `story` bloat), sensor/telemetry anomaly detection loops (`triggers`), and granular API composition via `memory_specs`.
+- **Pytest Configuration Hardening ([pyproject.toml](pyproject.toml))**:
+  - Configured `pythonpath = ["."]` in `[tool.pytest.ini_options]` so that bare `pytest` executes cleanly out-of-the-box in local checkouts without requiring `python -m pytest` or editable installation.
 - **4-Tier Progression A/B Benchmark Harness & 6-Pillar Metric Engine**:
   - Upgraded benchmark evaluation engine (`mnemolink/bench/evaluators.py` & `mnemolink/bench/runner.py`) into a 4-tier comparative A/B harness:
     1. Generic Baseline (unconditioned generic AI prompt)
@@ -38,10 +52,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented automated gate enforcing zero Unicode emojis across all code, tests, documentation, and manifests.
   - Validates relative markdown link integrity across all 33 documentation and manifest files.
   - Validates all catalog manifests and teleological cards against Pydantic schema models (`PersonaProduct`, `MemoryProduct`, `LineageProduct`, `CatalogCard`).
-- **Hardened GitHub Actions Continuous Integration (`.github/workflows/ci.yml`)**:
-  - Added multi-OS matrix testing across Python `3.10`, `3.11`, `3.12`, and `3.13` on both `ubuntu-latest` and `windows-latest`.
-  - Added sequential pipeline stages: `black --check`, `flake8`, `python scripts/verify_repo.py`, `pytest tests/ -v`.
-  - Added isolated distribution build and twine validation job (`python -m build`, `twine check dist/*`).
 - **Comprehensive Usage Guide (`docs/usage_guide.md`)**:
   - Published a high-level, production-ready usage guide covering installation, programmatic workflows, selective chunking, prompt cache economics, context consumers (Claude, OpenAI, Gemini, Ollama, LangChain), real-world scenarios, and authoring custom mnemonic products.
 - **New Persona: North Mediterranean Chef (`north_mediterranean_chef`)**:
@@ -148,3 +158,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Documentation**:
   - Comprehensive `README.md`, `COMPARISON.md`, `CONTRIBUTING.md`, `CITATION.cff`, `SECURITY.md`.
   - Runnable examples in `examples/`.
+
+[Unreleased]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/ARPAHLS/mnemolink/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/ARPAHLS/mnemolink/releases/tag/v0.1.0

@@ -326,7 +326,7 @@ We welcome community contributions of novel personas, battle-tested operational 
 
 <a href="https://doi.org/10.5281/zenodo.22727029"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22727029-c7d2fe?style=flat-square" alt="DOI 10.5281/zenodo.22727029"></a>
 
-If you use MnemoLink in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**) or the Zenodo concept DOI above. That DOI is stable across releases. For reproducibility, also record the **MnemoLink version** you used (PyPI or Git tag, for example `0.2.1`).
+If you use MnemoLink in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**) or the Zenodo concept DOI above. That DOI is stable across releases. For reproducibility, also record the **MnemoLink version** you used (PyPI or Git tag, for example `0.2.2`).
 
 ---
 
