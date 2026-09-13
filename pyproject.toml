@@ -93,6 +93,7 @@ mnemolink = ["catalog/**/*", "bench/scenarios.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-v --tb=short"
 
 [tool.black]
