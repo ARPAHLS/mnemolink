@@ -7,6 +7,12 @@ AI agents, UAVs, edge robotics, smart appliances, and brain-machine interfaces.
 from __future__ import annotations
 
 from mnemolink.adapters import MnemonicBundle
+from mnemolink.config import (
+    MnemoLinkConfig,
+    load_config,
+    resolve_api_key,
+    save_config,
+)
 from mnemolink.core import (
     MnemoLinkEngine,
     build_lineage,
@@ -38,6 +44,7 @@ __all__ = [
     "__version__",
     "MnemoLink",
     "MnemoLinkEngine",
+    "MnemoLinkConfig",
     "MnemonicBundle",
     "PersonaProduct",
     "MemoryProduct",
@@ -57,4 +64,7 @@ __all__ = [
     "build_lineage",
     "list_catalog",
     "find_cards",
+    "load_config",
+    "save_config",
+    "resolve_api_key",
 ]

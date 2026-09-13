@@ -188,7 +188,7 @@ def test_main_non_tty_prints_help(monkeypatch, capsys):
     assert exc.value.code == 0
     out = capsys.readouterr().out
     assert "usage:" in out.lower()
-    assert "{list,inspect,compose,new,bench}" in out
+    assert "{list,inspect,compose,new,bench,wizard,author,config}" in out
 
 
 def test_main_tty_launches_interactive(monkeypatch):
@@ -198,3 +198,45 @@ def test_main_tty_launches_interactive(monkeypatch):
     monkeypatch.setattr("mnemolink.cli.cmd_interactive", lambda: called.append(True))
     main()
     assert called == [True]
+
+
+def test_cli_config_show(capsys):
+    from mnemolink.cli import cmd_config
+
+    args = MagicMock()
+    args.config_action = "show"
+    cmd_config(args)
+    captured = capsys.readouterr()
+    assert "MnemoLink User Configuration & Settings" in captured.out
+    assert "API Credential Precedence Status" in captured.out
+
+
+def test_cli_config_set(tmp_path, monkeypatch):
+    from mnemolink import config
+    from mnemolink.cli import cmd_config
+
+    cfg_file = tmp_path / "config.yaml"
+    monkeypatch.setattr(config, "CONFIG_FILE", cfg_file)
+    monkeypatch.setattr(config, "CONFIG_DIR", tmp_path)
+
+    args = MagicMock()
+    args.config_action = "set"
+    args.key = "theme"
+    args.value = "ocean"
+    cmd_config(args)
+
+    loaded = config.load_config()
+    assert loaded.theme == "ocean"
+
+
+def test_cmd_interactive_config_dispatch():
+    # Input 8 (config), then b (back), then q (quit)
+    responses = iter(["8", "b", "q"])
+    buf = io.StringIO()
+    cmd_interactive(
+        console=Console(file=buf, force_terminal=False, width=120),
+        input_fn=lambda _: next(responses),
+    )
+    out = buf.getvalue()
+    assert "MnemoLink User Configuration & Credentials" in out
+    assert "Bye." in out

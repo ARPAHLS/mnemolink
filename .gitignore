@@ -53,6 +53,7 @@ results/
 
 # Local drafts & scratch directories
 0_local_drafts/
+scratch/
 
 # Agent workspace customizations (local only)
 .agents/

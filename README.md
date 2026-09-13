@@ -274,6 +274,12 @@ mnemolink inspect juris_philosopher
 
 # Compose on the command line and export to target format
 mnemolink compose -p edge_aviator -m robotics/uav_microburst_stall -f claude
+
+# Launch the Authoring Studio & AI Mnemonic Wizard for scar elicitation
+mnemolink author  # or mnemolink wizard
+
+# View and manage persistent user configuration and API credentials
+mnemolink config
 ```
 
 For the complete CLI reference, commands, and options, see **[CLI Documentation](docs/cli.md)**.

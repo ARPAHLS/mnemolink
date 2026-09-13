@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, Tuple
 
+from mnemolink.config import load_config, save_config
+
 
 @dataclass(frozen=True)
 class ThemePalette:
@@ -76,7 +78,13 @@ THEMES: Dict[str, ThemePalette] = {
     ),
 }
 
-_ACTIVE_THEME = "pastel"
+
+try:
+    _ACTIVE_THEME = load_config().theme
+    if _ACTIVE_THEME not in THEMES:
+        _ACTIVE_THEME = "pastel"
+except Exception:
+    _ACTIVE_THEME = "pastel"
 
 
 def theme_name() -> str:
@@ -87,11 +95,18 @@ def palette() -> ThemePalette:
     return THEMES.get(_ACTIVE_THEME, THEMES["pastel"])
 
 
-def set_theme(name: str) -> bool:
-    """Switch the in-session palette. Returns False if the name is unknown."""
+def set_theme(name: str, persist: bool = True) -> bool:
+    """Switch the in-session palette and persist to ~/.mnemolink/config.yaml."""
     global _ACTIVE_THEME
     key = name.strip().lower()
     if key not in THEMES:
         return False
     _ACTIVE_THEME = key
+    if persist:
+        try:
+            cfg = load_config()
+            cfg.theme = key
+            save_config(cfg)
+        except Exception:
+            pass
     return True

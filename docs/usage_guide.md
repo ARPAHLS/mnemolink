@@ -368,8 +368,38 @@ If you want to customize `juris_philosopher` for your own firm, simply copy it i
 
 ## 8. Authoring Custom Mnemonic Products
 
-### 8.1 Scaffolding via the CLI
-Use the `new` command to create pre-formatted templates:
+MnemoLink provides three ways to author custom mnemonic products: the **AI Mnemonic Wizard**, **Guided Manual Authoring**, and **Quick File Scaffolding**.
+
+### 8.1 The AI Mnemonic Wizard & Authoring Hub
+
+Launch the interactive authoring hub directly via the CLI:
+
+```bash
+# Launch the wizard directly
+mnemolink wizard
+
+# Or via the interactive menu: run 'mnemolink' and select [5] (author)
+```
+
+The authoring hub presents three modes:
+1. **AI Elicitation Wizard**: Guides you through conversational prompts to elicit operational scars, failure modes, and boundaries, then synthesizes fully compliant schemas using your chosen LLM.
+2. **Guided Manual Authoring**: Prompts you for each schema field step-by-step with real-time field tooltips and validation, auto-generating both the YAML manifest and the `card.json`.
+3. **Quick File Scaffolding**: Emits standard template files directly into your workspace.
+
+#### Model Execution Target & Dynamic Selection
+When authoring with the AI Wizard, models are **never hardcoded**:
+- **Cloud Provider APIs**: Select Google Gemini, Anthropic Claude, Mistral AI, or OpenAI. The wizard prints official model documentation URLs and example identifiers, then prompts you to enter or paste the exact model string.
+- **Local Ollama Daemon**: If running locally, the wizard verifies whether the specified model exists in your local Ollama daemon (`list_ollama_local_models`). If missing, it provides `ollama pull <model>` instructions and `https://ollama.com/library` documentation links.
+
+#### 3-Tier Credential Resolution & Persistence
+API credentials are automatically resolved across three tiers:
+1. Workspace `.env` (`./.env`)
+2. User Global `.env` (`~/.mnemolink/.env`)
+3. Process Environment (`os.environ`)
+4. Interactive Prompt: Prompts for the missing key with direct console URLs (e.g. `https://aistudio.google.com/app/apikey`), and persists it securely to `~/.mnemolink/.env`.
+
+### 8.2 Quick Scaffolding via the CLI
+Use the `new` command to create blank pre-formatted templates:
 
 ```bash
 # Scaffold a new persona
@@ -379,7 +409,7 @@ mnemolink new persona quantum_cryptographer
 mnemolink new memory key_leak_postmortem --domain security --kind incident
 ```
 
-### 8.2 Writing a Custom Persona (`persona.yaml` & `card.json`)
+### 8.3 Writing a Custom Persona (`persona.yaml` & `card.json`)
 
 #### File: `personas/my_domain/my_persona/persona.yaml`
 ```yaml
@@ -415,7 +445,7 @@ voice_tone:
 }
 ```
 
-### 8.3 Writing a Custom Memory (`memory.yaml` & `card.json`)
+### 8.4 Writing a Custom Memory (`memory.yaml` & `card.json`)
 
 #### File: `memories/my_domain/my_memory/memory.yaml`
 ```yaml
@@ -438,7 +468,7 @@ teleology:
   applicable_needs: ["cryptographic_implementation_audit"]
 ```
 
-### 8.4 Programmatic Card Discovery (`find_cards`)
+### 8.5 Programmatic Card Discovery (`find_cards`)
 Query available assets using the teleological discovery engine without loading entire bundles:
 
 ```python
