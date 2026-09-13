@@ -37,9 +37,10 @@ MAIN_MENU: List[Tuple[str, str, str]] = [
     ("2", "inspect", "inspect axioms, scars, and teleology"),
     ("3", "compose", "bundle a persona and memories for export"),
     ("4", "bench", "run empirical benchmark crucibles"),
-    ("5", "new", "scaffold a persona, memory, or lineage template"),
+    ("5", "author", "authoring hub (AI wizard, guided manual, or scaffold)"),
     ("6", "help", "grouped help topics, examples, and docs"),
     ("7", "theme", "switch CLI palette (pastel, ocean, mono)"),
+    ("8", "config", "view and manage user settings and credentials"),
 ]
 
 HELP_GROUPS: List[Tuple[str, List[Tuple[str, str]], str]] = [
@@ -74,6 +75,7 @@ HELP_GROUPS: List[Tuple[str, List[Tuple[str, str]], str]] = [
     (
         "Authoring",
         [
+            ("mnemolink wizard", "launch interactive authoring studio (tooltips + AI)"),
             ("mnemolink new persona <name>", "scaffold a persona template"),
             ("mnemolink new memory <name>", "scaffold a memory template"),
             ("mnemolink new lineage <name>", "scaffold a lineage template"),
@@ -359,6 +361,112 @@ def cmd_theme_picker(
         return None
 
 
+def cmd_config_interactive(
+    console: Console | None = None,
+    input_fn: Callable[[str], str] | None = None,
+) -> Optional[str]:
+    """View and update user configuration, models, and credentials interactively."""
+    import os
+    from pathlib import Path
+    from rich.panel import Panel
+    from mnemolink.config import (
+        CONFIG_FILE,
+        PROVIDER_KEY_URLS,
+        USER_ENV_FILE,
+        get_credential_status,
+        load_config,
+        save_config,
+        save_user_env_key,
+    )
+    from mnemolink.wizard import MnemonicWizard
+
+    if console is None:
+        console = Console()
+
+    p = palette()
+    cfg = load_config()
+    cred_status = get_credential_status()
+
+    console.print(
+        Panel(
+            f"[bold {p.pink}]MnemoLink User Configuration & Credentials[/]",
+            border_style=p.blue,
+        )
+    )
+    console.print(f"  [cyan]Config file:[/]    {CONFIG_FILE}")
+    console.print(f"  [cyan]Global env:[/]     {USER_ENV_FILE}")
+    console.print(f"  [cyan]Active theme:[/]   {cfg.theme}")
+    console.print(f"  [cyan]Provider:[/]       {cfg.provider or '(not set)'}")
+    console.print(f"  [cyan]Model:[/]          {cfg.model or '(not set)'}")
+    console.print(f"  [cyan]Ollama host:[/]    {cfg.ollama_host}")
+    console.print(
+        f"  [cyan]Catalog roots:[/]  "
+        f"{', '.join(cfg.catalog_roots) if cfg.catalog_roots else '(none)'}"
+    )
+    console.print()
+    console.print("  [bold]Credential Precedence Status:[/]")
+    for prov, configured in cred_status.items():
+        status_text = "[green]Configured[/]" if configured else "[dim]Not Set[/]"
+        console.print(f"    - {prov.capitalize():<12}: {status_text}")
+
+    console.print()
+    console.print("  [1] Set Preferred Provider & Model", style=p.menu_style)
+    console.print("  [2] Configure API Key", style=p.menu_style)
+    console.print("  [3] Add Custom Catalog Root Directory", style=p.menu_style)
+    console.print("  [4] Set Ollama Host URL", style=p.menu_style)
+    _print_nav_footer(console, show_back=True)
+
+    choice_raw = _read_line("  config action [1-4, b]> ", input_fn)
+    choice, nav = _parse_nav(choice_raw if choice_raw is not None else "")
+    if nav:
+        return nav
+
+    if choice == "1":
+        wiz = MnemonicWizard(console=console, input_fn=input_fn)
+        wiz.setup_ai_model()
+    elif choice == "2":
+        console.print("\n  [bold]Choose provider to configure API Key:[/]")
+        providers = [
+            ("1", "gemini", "Google Gemini", "GEMINI_API_KEY"),
+            ("2", "anthropic", "Anthropic Claude", "ANTHROPIC_API_KEY"),
+            ("3", "mistral", "Mistral AI", "MISTRAL_API_KEY"),
+            ("4", "openai", "OpenAI", "OPENAI_API_KEY"),
+        ]
+        for num, _, label, env_var in providers:
+            console.print(f"    [{num}] {label} ({env_var})", style=p.menu_style)
+        prov_pick = _read_line("  Select provider (1-4)> ", input_fn) or "1"
+        prov_map = {num: (p_name, env_var) for num, p_name, _, env_var in providers}
+        if prov_pick in prov_map:
+            p_name, env_var = prov_map[prov_pick]
+            url = PROVIDER_KEY_URLS.get(p_name, "")
+            if url:
+                console.print(f"  [dim italic]Get your key at:[/] [cyan]{url}[/]")
+            key_val = _read_line(f"  Paste {env_var}> ", input_fn)
+            if key_val:
+                save_user_env_key(env_var, key_val)
+                os.environ[env_var] = key_val
+                console.print(f"  [green]Saved {env_var} to ~/.mnemolink/.env[/]")
+    elif choice == "3":
+        root_dir = _read_line(
+            "  Enter directory path to add to catalog roots> ", input_fn
+        )
+        if root_dir:
+            p_root = Path(root_dir).expanduser().resolve()
+            p_root.mkdir(parents=True, exist_ok=True)
+            if str(p_root) not in cfg.catalog_roots:
+                cfg.catalog_roots.append(str(p_root))
+                save_config(cfg)
+                console.print(f"  [green]Added {p_root} to catalog roots.[/]")
+    elif choice == "4":
+        host = _read_line(f"  Ollama host URL [default {cfg.ollama_host}]> ", input_fn)
+        if host:
+            cfg.ollama_host = host.strip()
+            save_config(cfg)
+            console.print(f"  [green]Saved ollama_host: {cfg.ollama_host}[/]")
+
+    return None
+
+
 def _safe_run(console: Console, fn, *args) -> None:
     """Run a CLI command without letting SystemExit leave the menu."""
     try:
@@ -507,16 +615,147 @@ def _prompt_bench_args(
 
     model = None
     if not mock:
-        console.print("  model id (Enter for default)", style="dim")
-        raw = _read_line("  model> ", input_fn)
+        from mnemolink.config import (
+            PROVIDER_MODEL_EXAMPLES,
+            PROVIDER_MODEL_URLS,
+            list_ollama_local_models,
+            load_config,
+            resolve_api_key,
+        )
+
+        cfg = load_config()
+        if cfg.model and cfg.provider:
+            console.print(
+                f"  Configured model: '{cfg.provider}/{cfg.model}'",
+                style="dim",
+            )
+            raw = _read_line("  Use configured model? (Y/n)> ", input_fn)
+            choice, nav = _parse_nav(raw if raw is not None else "")
+            if nav == _NAV_EXIT:
+                return None, _NAV_EXIT
+            if nav == _NAV_BACK or raw is None:
+                return None, _NAV_BACK
+            if (choice or "y").lower() in ("y", "yes"):
+                model = cfg.model
+                if cfg.provider != "ollama":
+                    resolve_api_key(
+                        cfg.provider,
+                        interactive=True,
+                        console=console,
+                        input_fn=input_fn,
+                    )
+                return (
+                    argparse.Namespace(
+                        model=model, mock=mock, tier=tier, export_json=None
+                    ),
+                    None,
+                )
+
+        console.print("  Select AI Target (no default):", style="dim")
+        console.print(
+            "    [1] Cloud Provider API (Google Gemini, Anthropic Claude, Mistral, OpenAI)",
+            style="dim",
+        )
+        console.print("    [2] Local Ollama (offline local daemon)", style="dim")
+        raw = _read_line("  target [1-2]> ", input_fn)
         choice, nav = _parse_nav(raw if raw is not None else "")
         if nav == _NAV_EXIT:
             return None, _NAV_EXIT
         if nav == _NAV_BACK or raw is None:
             return None, _NAV_BACK
-        model = choice or None
 
-    return argparse.Namespace(model=model, mock=mock, tier=tier, export_json=None), None
+        if choice == "2" or choice.lower() == "ollama":
+            provider = "ollama"
+            ollama_url = PROVIDER_MODEL_URLS.get("ollama", "https://ollama.com/library")
+            console.print(f"  Browse Ollama library: {ollama_url}", style="dim")
+            console.print("  Pull models: 'ollama pull <model>'", style="dim")
+            local_models = list_ollama_local_models(cfg.ollama_host)
+            if local_models:
+                console.print(
+                    f"  Installed local models: {', '.join(local_models)}",
+                    style="dim",
+                )
+            raw_m = _read_line("  Ollama model name> ", input_fn)
+            choice_m, nav_m = _parse_nav(raw_m if raw_m is not None else "")
+            if nav_m == _NAV_EXIT:
+                return None, _NAV_EXIT
+            if nav_m == _NAV_BACK or raw_m is None:
+                return None, _NAV_BACK
+            model = choice_m or (local_models[0] if local_models else "llama3.2:1b")
+        else:
+            console.print("  Select Cloud Provider:", style="dim")
+            console.print("    [1] Google Gemini", style="dim")
+            console.print("    [2] Anthropic Claude", style="dim")
+            console.print("    [3] Mistral AI", style="dim")
+            console.print("    [4] OpenAI", style="dim")
+            raw_p = _read_line("  provider [1-4]> ", input_fn)
+            choice_p, nav_p = _parse_nav(raw_p if raw_p is not None else "")
+            if nav_p == _NAV_EXIT:
+                return None, _NAV_EXIT
+            if nav_p == _NAV_BACK or raw_p is None:
+                return None, _NAV_BACK
+
+            prov_map = {
+                "1": "gemini",
+                "gemini": "gemini",
+                "2": "anthropic",
+                "claude": "anthropic",
+                "anthropic": "anthropic",
+                "3": "mistral",
+                "mistral": "mistral",
+                "4": "openai",
+                "openai": "openai",
+            }
+            provider = prov_map.get(choice_p.lower(), "gemini")
+
+            m_url = PROVIDER_MODEL_URLS.get(provider, "")
+            m_ex = PROVIDER_MODEL_EXAMPLES.get(provider, "")
+            if m_url:
+                console.print(f"  Model catalog: {m_url}", style="dim")
+            if m_ex:
+                console.print(f"  Examples: {m_ex}", style="dim")
+
+            hint = (
+                cfg.model
+                if (cfg.model and getattr(cfg, "provider", None) == provider)
+                else ""
+            )
+            prompt_str = (
+                f"  {provider.title()} model name [{hint}]> "
+                if hint
+                else f"  {provider.title()} model name> "
+            )
+            raw_m = _read_line(prompt_str, input_fn)
+            choice_m, nav_m = _parse_nav(raw_m if raw_m is not None else "")
+            if nav_m == _NAV_EXIT:
+                return None, _NAV_EXIT
+            if nav_m == _NAV_BACK or raw_m is None:
+                return None, _NAV_BACK
+            model = choice_m or hint
+            while not model:
+                console.print(
+                    f"  Please enter a {provider.title()} model name (see {m_url})",
+                    style="yellow",
+                )
+                raw_m = _read_line(f"  {provider.title()} model name> ", input_fn)
+                choice_m, nav_m = _parse_nav(raw_m if raw_m is not None else "")
+                if nav_m == _NAV_EXIT:
+                    return None, _NAV_EXIT
+                if nav_m == _NAV_BACK or raw_m is None:
+                    return None, _NAV_BACK
+                model = choice_m
+
+            resolve_api_key(
+                provider,
+                interactive=True,
+                console=console,
+                input_fn=input_fn,
+            )
+
+    return (
+        argparse.Namespace(model=model, mock=mock, tier=tier, export_json=None),
+        None,
+    )
 
 
 def _prompt_new_args(
@@ -579,12 +818,20 @@ def cmd_interactive(
         "compose": "compose",
         "4": "bench",
         "bench": "bench",
-        "5": "new",
-        "new": "new",
+        "5": "author",
+        "author": "author",
+        "authoring": "author",
+        "wizard": "author",
+        "w": "author",
+        "new": "author",
         "6": "help",
         "help": "help",
         "7": "theme",
         "theme": "theme",
+        "8": "config",
+        "config": "config",
+        "cfg": "config",
+        "settings": "config",
     }
 
     _print_menu(console)
@@ -634,13 +881,38 @@ def cmd_interactive(
                 return
             if extra != _NAV_BACK and args is not None:
                 _safe_run(console, cmd_bench, args)
-        elif command == "new":
-            args, extra = _prompt_new_args(console, input_fn)
-            if extra == _NAV_EXIT:
+        elif command == "author":
+            console.print(
+                "  [1] Interactive Mnemonic Wizard (Guided tooltips + AI generation)",
+                style=p.menu_style,
+            )
+            console.print(
+                "  [2] Fast Template Scaffolder (raw YAML templates)",
+                style=p.menu_style,
+            )
+            raw_hub = _read_line("  choice [1-2, default 1]> ", input_fn)
+            choice_hub, nav_hub = _parse_nav(raw_hub if raw_hub is not None else "")
+            if nav_hub == _NAV_EXIT:
                 console.print("  Bye.", style="dim")
                 return
-            if extra != _NAV_BACK and args is not None:
-                _safe_run(console, cmd_new, args)
+            if nav_hub != _NAV_BACK:
+                if (choice_hub or "1") == "1":
+                    from mnemolink.wizard import MnemonicWizard
+
+                    _safe_run(
+                        console,
+                        lambda _: MnemonicWizard(
+                            console=console, input_fn=input_fn
+                        ).run(),
+                        None,
+                    )
+                else:
+                    args, extra = _prompt_new_args(console, input_fn)
+                    if extra == _NAV_EXIT:
+                        console.print("  Bye.", style="dim")
+                        return
+                    if extra != _NAV_BACK and args is not None:
+                        _safe_run(console, cmd_new, args)
         elif command == "help":
             help_nav = cmd_help_submenu(console=console, input_fn=input_fn)
             if help_nav == _NAV_EXIT:
@@ -649,6 +921,11 @@ def cmd_interactive(
         elif command == "theme":
             theme_nav = cmd_theme_picker(console=console, input_fn=input_fn)
             if theme_nav == _NAV_EXIT:
+                console.print("  Bye.", style="dim")
+                return
+        elif command == "config":
+            cfg_nav = cmd_config_interactive(console=console, input_fn=input_fn)
+            if cfg_nav == _NAV_EXIT:
                 console.print("  Bye.", style="dim")
                 return
         else:

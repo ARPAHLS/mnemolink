@@ -202,32 +202,38 @@ mnemolink bench --mock --export-json results/bench_report.json
 ```
 
 ### 2. Live Production Model Evaluation
-Runs live evaluations against production model APIs over direct HTTPS:
+Runs live evaluations against production model APIs over direct HTTPS or local Ollama daemons:
 
 ```bash
-# Run against Anthropic Claude Sonnet 5
-mnemolink bench --model claude-sonnet-5
-
-# Run against Google Gemini 3.5 Flash
+# Run against Google Gemini
 mnemolink bench --model gemini-3.5-flash
+
+# Run against Anthropic Claude
+mnemolink bench --model claude-sonnet-5
 
 # Run against Mistral AI
 mnemolink bench --model ministral-8b-latest
 
-# Run against OpenAI GPT-5.6 Luna
-mnemolink bench --model gpt-5.6-luna
+# Run against OpenAI
+mnemolink bench --model gpt-4o
 
 # Run against local Ollama instance
 mnemolink bench --model llama3.2:1b
 ```
 
-*Requirements*: Set the corresponding API keys in your local `.env` file:
-```bash
-ANTHROPIC_API_KEY=sk-ant-api03-...
-GEMINI_API_KEY=AIzaSy...
-MISTRAL_API_KEY=...
-OPENAI_API_KEY=sk-proj-...
-```
+#### Credential Precedence & Key Management
+Credentials are automatically resolved using MnemoLink's 3-tier precedence:
+1. Workspace `.env` (`./.env`)
+2. User Global `.env` (`~/.mnemolink/.env`)
+3. Process Environment (`os.environ`)
+4. Interactive Prompt: If an API key is missing, the CLI presents direct console links and prompts for the key, saving it to `~/.mnemolink/.env` for subsequent runs:
+   - Google AI Studio: `https://aistudio.google.com/app/apikey`
+   - Anthropic Console: `https://console.anthropic.com/settings/keys`
+   - Mistral Console: `https://console.mistral.ai/api-keys/`
+   - OpenAI Platform: `https://platform.openai.com/api-keys`
+
+#### Local Ollama Offline Verification
+When benchmarking with Ollama models, MnemoLink verifies whether the model is downloaded locally using `list_ollama_local_models()`. If missing, it provides `ollama pull <model>` instructions and `https://ollama.com/library` documentation links.
 
 ### 3. Local Developer Asset Simulation Harness
 For interactive multi-turn testing when authoring new personas, memories, or lineages:

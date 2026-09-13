@@ -440,18 +440,24 @@ def dispatch_model_query(
     ollama_host: str = "http://localhost:11434",
 ) -> Optional[str]:
     """Route query to appropriate provider API."""
+    from mnemolink.config import resolve_api_key
+
     m_lower = model.lower()
     claude_kw = ("claude", "anthropic", "sonnet", "haiku", "fable", "opus")
     if any(k in m_lower for k in claude_kw):
+        resolve_api_key("anthropic")
         clean_m = model.replace("anthropic/", "")
         return query_anthropic_direct(system_prompt, prompt, model=clean_m)
     elif "gemini" in m_lower:
+        resolve_api_key("gemini")
         clean_m = model.replace("gemini/", "")
         return query_gemini_direct(system_prompt, prompt, model=clean_m)
     elif any(k in m_lower for k in ("gpt", "openai", "o1", "o3", "luna")):
+        resolve_api_key("openai")
         clean_m = model.replace("openai/", "")
         return query_openai_direct(system_prompt, prompt, model=clean_m)
     elif any(k in m_lower for k in ("mistral", "ministral", "codestral")):
+        resolve_api_key("mistral")
         clean_m = model.replace("mistral/", "")
         return query_mistral_direct(system_prompt, prompt, model=clean_m)
     elif any(k in m_lower for k in ("ollama", "llama", "qwen", "phi")):
@@ -511,10 +517,21 @@ def run_benchmark(
     verbose: bool = False,
 ) -> Dict[str, Any]:
     """Run empirical 4-tier benchmark (Generic Baseline, Persona, Persona+Memory, Delta)."""
-    env_model = (
-        os.getenv("OLLAMA_MODEL") or os.getenv("MNEMOLINK_MODEL") or "claude-sonnet-5"
+    from mnemolink.config import load_config
+
+    cfg = load_config()
+    target_model = (
+        model or os.getenv("MNEMOLINK_MODEL") or os.getenv("OLLAMA_MODEL") or cfg.model
     )
-    target_model = model or env_model
+    if not mock and not target_model:
+        console.print(
+            "[bold red]Error:[/] No model specified for live benchmark.\n"
+            "Please specify --model <id> (e.g. gemini-3.5-flash) "
+            "or configure a model in ~/.mnemolink/config.yaml."
+        )
+        return {}
+    if not target_model:
+        target_model = "mock"
     ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
     scenarios_path = Path(__file__).resolve().parent / "scenarios.json"

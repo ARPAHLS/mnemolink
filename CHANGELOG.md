@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Persistent User Configuration Architecture (`~/.mnemolink/config.yaml`)**:
+  - Global user configuration system storing active CLI theme (`pastel`, `ocean`, `mono`), preferred provider, active model, custom Ollama host, author name, and custom catalog directories.
+  - Automatic directory resolution: custom catalog roots defined in `config.yaml` are discovered seamlessly across all search hierarchies (`Project Local` -> `User Cache` -> `Bundled Catalog`).
+- **Dynamic Unhardcoded Model Selection & Ollama Local Verification**:
+  - Zero hardcoding: user explicitly chooses execution target (`Cloud Provider API` vs `Local Ollama`).
+  - Cloud APIs (Gemini, Claude, Mistral, OpenAI) display official documentation URLs in rich tooltips (`https://ai.google.dev/...`, `https://docs.anthropic.com/...`, etc.) and examples, prompting the user to type or paste the exact model string.
+  - Local Ollama prompts for model name, queries the local daemon via `list_ollama_local_models()`, and if missing, issues a warning, lists installed models, provides `ollama pull <model>` instructions and `https://ollama.com/library` documentation, letting the user choose between `use`, `pick`, or `re-enter`.
+- **3-Tier Credential Precedence & Auto-Persistence (`~/.mnemolink/.env`)**:
+  - Secure credential precedence: Workspace `.env` (`./.env`) -> User Global `.env` (`~/.mnemolink/.env`) -> Process Environment (`os.environ`) -> Interactive Secure Prompt.
+  - Interactive prompts display direct API key console links (Google AI Studio, Anthropic Console, Mistral Console, OpenAI Platform, Groq, DeepSeek) and automatically persist entered keys to `~/.mnemolink/.env`.
+- **Interactive AI Mnemonic Wizard & Authoring Studio (`mnemolink wizard` / `mnemolink author`)**:
+  - Unified Authoring Hub (`mnemolink author` / `mnemolink wizard` and interactive menu option `[5] author`) providing three creation paths: conversational AI scar elicitation, guided manual interview, and fast scaffolding.
+  - Architectural role clarity: `author` / `wizard` handles asset manufacturing (writing `.yaml` and `card.json` to catalog disk), whereas `compose` handles prompt assembly (compiling catalog assets into target-model prompts).
+  - Guided conversational scar elicitation extracting genuine operational failure modes, cognitive boundaries, sensory cues, and philosophical reflections.
+  - Strict 5-Kind Memory Taxonomy support (`lore`, `work`, `incident`, `relational`, `telemetry`).
+  - Dual-manifest emission: automatically generates and validates both schema manifest (`persona.yaml`, `memory.yaml`, or `lineage.yaml`) and companion discovery card (`card.json`).
+  - Self-healing retry loops for LLM JSON outputs and exponential backoff on HTTP 429/503 rate limits.
+  - Doubled default output token limit to 8,192 tokens across all providers to prevent schema truncation on extensive memories and lineages.
+- **Dedicated CLI `config` Command & Interactive Menu Option `[8]`**:
+  - `mnemolink config` / `mnemolink config show`: View active settings, configuration paths, and API credential status.
+  - `mnemolink config set <key> <value>`: Programmatically update user preferences from terminal.
+  - Interactive menu option `[8] config` for managing settings and credentials directly in the interactive splash menu.
+
 ## [0.2.2] - 2026-09-13
 
 ### Added

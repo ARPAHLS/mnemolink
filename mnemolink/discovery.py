@@ -53,6 +53,17 @@ def get_user_catalog_roots() -> List[Path]:
     if default_user.is_dir() and default_user not in roots:
         roots.append(default_user)
 
+    # Configured roots from ~/.mnemolink/config.yaml
+    try:
+        from mnemolink.config import load_config
+
+        for cr in load_config().catalog_roots:
+            clean_cr = Path(str(cr).strip()).expanduser().resolve()
+            if clean_cr.is_dir() and clean_cr not in roots:
+                roots.append(clean_cr)
+    except Exception:
+        pass
+
     return roots
 
 

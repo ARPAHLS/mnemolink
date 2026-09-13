@@ -309,6 +309,74 @@ def cmd_bench(args):
     )
 
 
+def cmd_config(args):
+    from mnemolink.config import (
+        CONFIG_FILE,
+        USER_ENV_FILE,
+        get_credential_status,
+        load_config,
+        set_config_value,
+    )
+
+    action = getattr(args, "config_action", None)
+    p = palette()
+
+    if action == "set":
+        key = getattr(args, "key", "")
+        value = getattr(args, "value", "")
+        if not key or not value:
+            err_console.print("[bold red]Usage:[/] mnemolink config set <key> <value>")
+            sys.exit(1)
+        set_config_value(key, value)
+        console.print(
+            f"  [green]Updated config setting[/] [bold {p.mint}]{key}[/] = '{value}'"
+        )
+        return
+
+    # Default action: display configuration
+    cfg = load_config()
+    cred_status = get_credential_status()
+
+    table = Table(
+        title="MnemoLink User Configuration & Settings",
+        title_style=f"bold {p.pink}",
+        header_style=f"bold {p.blue}",
+        border_style=p.lavender,
+        box=box.SIMPLE_HEAVY,
+    )
+    table.add_column("Setting", style="bold white", width=22)
+    table.add_column("Value", style=f"{p.mint}")
+
+    table.add_row("Config File", str(CONFIG_FILE))
+    table.add_row("User Env File", str(USER_ENV_FILE))
+    table.add_row("Active Theme", cfg.theme)
+    table.add_row("Preferred Provider", cfg.provider or "(not set)")
+    table.add_row("Preferred Model", cfg.model or "(not set)")
+    table.add_row("Ollama Host", cfg.ollama_host)
+    table.add_row(
+        "Custom Catalog Roots",
+        ", ".join(cfg.catalog_roots) if cfg.catalog_roots else "(none)",
+    )
+
+    console.print(table)
+
+    cred_table = Table(
+        title="API Credential Precedence Status",
+        title_style=f"bold {p.blue}",
+        header_style=f"bold {p.pink}",
+        border_style=p.lavender,
+        box=box.SIMPLE_HEAVY,
+    )
+    cred_table.add_column("Provider", style="bold white", width=22)
+    cred_table.add_column("Status", width=16)
+
+    for prov, configured in cred_status.items():
+        status_text = "[green]Configured[/]" if configured else "[dim]Not Set[/]"
+        cred_table.add_row(prov.capitalize(), status_text)
+
+    console.print(cred_table)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="mnemolink",
@@ -408,6 +476,33 @@ def main():
         help="Export machine-readable JSON benchmark report to file path",
     )
     p_bench.set_defaults(func=cmd_bench)
+
+    # wizard
+    p_wizard = subparsers.add_parser(
+        "wizard",
+        aliases=["author"],
+        help="Interactive studio for authoring personas, memories, and lineages",
+    )
+    p_wizard.add_argument("--dir", help="Target output directory for created assets")
+    p_wizard.set_defaults(
+        func=lambda args: __import__(
+            "mnemolink.wizard", fromlist=["cmd_wizard"]
+        ).cmd_wizard(args)
+    )
+
+    # config
+    p_config = subparsers.add_parser(
+        "config", help="View or update user configuration and settings"
+    )
+    p_config_sub = p_config.add_subparsers(dest="config_action")
+    p_config_sub.add_parser("show", help="Display active configuration and credentials")
+    p_config_set = p_config_sub.add_parser("set", help="Set a configuration value")
+    p_config_set.add_argument(
+        "key",
+        help="Setting name (theme, model, provider, ollama_host, catalog_root)",
+    )
+    p_config_set.add_argument("value", help="Setting value")
+    p_config.set_defaults(func=cmd_config)
 
     # Bare invocation: interactive menu on a TTY; argparse help when piped / CI.
     if len(sys.argv) == 1 and sys.stdout.isatty():
