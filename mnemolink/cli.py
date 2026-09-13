@@ -9,6 +9,7 @@ import argparse
 import sys
 from pathlib import Path
 import yaml
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -21,10 +22,13 @@ from mnemolink import (
     load_memory,
     load_persona,
 )
+from mnemolink.cli_interactive import cmd_interactive, print_splash
+from mnemolink.cli_theme import palette
 
 console = Console()
 err_console = Console(stderr=True)
 
+# Default pastel tokens (issue #1). Live commands read palette() so theme switch applies.
 PASTEL_PINK = "#efcefa"
 PASTEL_BLUE = "#bae6fd"
 PASTEL_MINT = "#bbf7d0"
@@ -33,10 +37,8 @@ PASTEL_LAVENDER = "#cfc8dc"
 
 
 def print_banner():
-    banner_text = f"""[bold {PASTEL_PINK}]MnemoLink[/] [dim]v{__version__}[/]
-[dim {PASTEL_BLUE}]Mnemonic Products Framework for Information Processors[/]
-[dim italic]ARPA Hellenic Logical Systems ?" https://github.com/ARPAHLS/mnemolink[/]"""
-    console.print(Panel(banner_text, border_style=PASTEL_LAVENDER))
+    """Legacy alias — interactive and TTY launches use the gradient splash."""
+    print_splash(console)
 
 
 def cmd_list(args):
@@ -44,24 +46,26 @@ def cmd_list(args):
     if args.domain:
         cards = [c for c in cards if c.domain.lower() == args.domain.lower()]
 
+    p = palette()
     table = Table(
         title=f"MnemoLink Registry Catalog ({len(cards)} items)",
-        title_style=f"bold {PASTEL_PINK}",
-        header_style=f"bold {PASTEL_BLUE}",
-        border_style=PASTEL_LAVENDER,
+        title_style=f"bold {p.pink}",
+        header_style=f"bold {p.blue}",
+        border_style=p.lavender,
+        box=box.SIMPLE_HEAVY,
     )
     table.add_column("Kind", style="dim", width=10)
-    table.add_column("Identifier", style=f"bold {PASTEL_MINT}", no_wrap=True)
+    table.add_column("Identifier", style=f"bold {p.mint}", no_wrap=True)
     table.add_column("Name", style="white")
     table.add_column("Domain", style="cyan")
-    table.add_column("Tier", style=f"italic {PASTEL_PEACH}", width=8)
+    table.add_column("Tier", style=f"italic {p.peach}", width=8)
     table.add_column("Summary", style="dim", overflow="ellipsis")
 
     for card in cards:
         kind_badge = {
-            "persona": f"[{PASTEL_PINK}]Persona[/]",
-            "memory": f"[{PASTEL_BLUE}]Memory[/]",
-            "lineage": f"[{PASTEL_MINT}]Lineage[/]",
+            "persona": f"[{p.pink}]Persona[/]",
+            "memory": f"[{p.blue}]Memory[/]",
+            "lineage": f"[{p.mint}]Lineage[/]",
         }.get(card.kind, card.kind)
 
         table.add_row(
@@ -101,67 +105,68 @@ def cmd_inspect(args):
                 sys.exit(1)
 
     domain_label = getattr(item, "domain", "N/A")
+    p = palette()
     meta_info = (
         f"[cyan]Domain:[/] {domain_label} | [dim]v{item.version} | {item.author}[/]"
     )
     console.print(
         Panel(
-            f"[bold {PASTEL_PINK}]{item.name}[/] [dim]({kind}: {item.id})[/]\n"
+            f"[bold {p.pink}]{item.name}[/] [dim]({kind}: {item.id})[/]\n"
             f"{meta_info}\n\n"
             f"[italic]{item.summary}[/]",
             title=f"MnemoLink Inspection: {kind}",
-            border_style=PASTEL_BLUE,
+            border_style=p.blue,
         )
     )
 
     if kind == "Persona":
         console.print(
             Panel(
-                f"[bold {PASTEL_PINK}]Core Philosophy:[/] \n{item.core_philosophy.strip()}\n\n"
-                f"[bold {PASTEL_MINT}]Inviolable Axioms:[/]\n"
-                + "\n".join(f"  ? {a}" for a in item.axioms)
+                f"[bold {p.pink}]Core Philosophy:[/] \n{item.core_philosophy.strip()}\n\n"
+                f"[bold {p.mint}]Inviolable Axioms:[/]\n"
+                + "\n".join(f"  - {a}" for a in item.axioms)
                 + "\n\n"
-                f"[bold {PASTEL_BLUE}]Cognitive Priors:[/]\n"
-                + "\n".join(f"  ? {p}" for p in item.cognitive_priors)
+                f"[bold {p.blue}]Cognitive Priors:[/]\n"
+                + "\n".join(f"  - {prior}" for prior in item.cognitive_priors)
                 + "\n\n"
-                f"[bold {PASTEL_PEACH}]Voice & Tone:[/] {item.voice_tone}",
+                f"[bold {p.peach}]Voice & Tone:[/] {item.voice_tone}",
                 title="Philosophical Grounding",
-                border_style=PASTEL_LAVENDER,
+                border_style=p.lavender,
             )
         )
 
     elif kind == "Memory":
         console.print(
             Panel(
-                f"[bold {PASTEL_PINK}]Episode Debrief:[/] \n{item.episode_debrief.strip()}\n\n"
+                f"[bold {p.pink}]Episode Debrief:[/] \n{item.episode_debrief.strip()}\n\n"
                 + (
                     f"[cyan]Sensory Context:[/] {item.sensory_context}\n\n"
                     if item.sensory_context
                     else ""
                 )
                 + "[bold red]Operational Scars:[/]\n"
-                + "\n".join(f"  ? {s}" for s in item.operational_scars)
+                + "\n".join(f"  - {s}" for s in item.operational_scars)
                 + "\n\n"
-                f"[bold {PASTEL_MINT}]Lessons Learned:[/]\n"
-                + "\n".join(f"  ? {lesson}" for lesson in item.lessons_learned),
+                f"[bold {p.mint}]Lessons Learned:[/]\n"
+                + "\n".join(f"  - {lesson}" for lesson in item.lessons_learned),
                 title="Episodic Debrief & Operational Scars",
-                border_style=PASTEL_LAVENDER,
+                border_style=p.lavender,
             )
         )
 
     elif kind == "Lineage":
         console.print(
             Panel(
-                f"[bold {PASTEL_PINK}]Memory Spine:[/]\n"
-                + "\n".join(f"  ? {mid}" for mid in item.memory_ids)
+                f"[bold {p.pink}]Memory Spine:[/]\n"
+                + "\n".join(f"  - {mid}" for mid in item.memory_ids)
                 + "\n\n"
-                f"[bold {PASTEL_MINT}]Chronology Progression:[/]\n"
+                f"[bold {p.mint}]Chronology Progression:[/]\n"
                 + "\n".join(f"  {idx+1}. {c}" for idx, c in enumerate(item.chronology))
                 + "\n\n"
-                f"[bold {PASTEL_BLUE}]Cumulative Backstory:[/]\n"
+                f"[bold {p.blue}]Cumulative Backstory:[/]\n"
                 f"{item.cumulative_narrative.strip()}",
                 title="Lineage Tower & Lego Bridges",
-                border_style=PASTEL_LAVENDER,
+                border_style=p.lavender,
             )
         )
 
@@ -201,7 +206,9 @@ def cmd_compose(args):
         out_path = Path(args.out)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(out, encoding="utf-8")
-        console.print(f"[bold {PASTEL_MINT}]Saved composed context to:[/] {out_path}")
+        console.print(
+            f"[bold {palette().mint}]Saved composed context to:[/] {out_path}"
+        )
     else:
         print(out)
 
@@ -286,7 +293,7 @@ def cmd_new(args):
     )
 
     console.print(
-        f"[bold {PASTEL_MINT}]Scaffolded new {kind} bundle at:[/] {target_dir}"
+        f"[bold {palette().mint}]Scaffolded new {kind} bundle at:[/] {target_dir}"
     )
 
 
@@ -402,8 +409,12 @@ def main():
     )
     p_bench.set_defaults(func=cmd_bench)
 
+    # Bare invocation: interactive menu on a TTY; argparse help when piped / CI.
+    if len(sys.argv) == 1 and sys.stdout.isatty():
+        cmd_interactive()
+        return
+
     if len(sys.argv) == 1:
-        print_banner()
         parser.print_help()
         sys.exit(0)
 

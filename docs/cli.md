@@ -20,6 +20,32 @@ mnemolink --help
 
 ---
 
+## Interactive menu
+
+Running `mnemolink` with no arguments in an interactive terminal opens a gradient ASCII splash and a numbered menu (Skillware / AURA style):
+
+```bash
+mnemolink
+```
+
+| Input | Command | Action |
+| :--- | :--- | :--- |
+| `1` / `list` | list | Catalog table with optional kind and domain filters |
+| `2` / `inspect` | inspect | Prompt for an asset id |
+| `3` / `compose` | compose | Prompt for persona, memories, lineage, and export format |
+| `4` / `bench` | bench | Prompt for tier and mock vs live |
+| `5` / `new` | new | Scaffold a persona, memory, or lineage |
+| `6` / `help` | help | Grouped topics, examples, and documentation links |
+| `7` / `theme` | theme | Switch `pastel`, `ocean`, or `mono` |
+
+Navigation: `0` / `q` exits, `b` returns from a submenu, `Ctrl+C` prints `Bye.` with no traceback.
+
+Piped or CI invocations (`mnemolink | cat`, GitHub Actions) are not a TTY: the CLI prints standard argparse usage and exits `0` without hanging.
+
+The splash uses a 6-line MNEMOLINK block logo with a three-stop horizontal RGB gradient (`#efcefa` -> `#bae6fd` -> `#bbf7d0` in the default pastel theme) and the tagline `MnemoLink v{version} — Mnemonic Products Framework for Information Processors`.
+
+---
+
 ## Commands Reference
 
 ### 1. `list`

@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Interactive CLI menu ([GH #1](https://github.com/ARPAHLS/mnemolink/issues/1))**:
+  - Bare `mnemolink` on a TTY opens a 6-line gradient ASCII splash and numbered menu (`list`, `inspect`, `compose`, `bench`, `new`, `help`, `theme`).
+  - Non-TTY / CI invocations print standard argparse usage and exit 0 (no hang).
+  - Navigation: `0` / `q` exit, `b` back, `Ctrl+C` / EOF print `Bye.` without a traceback.
+  - In-session palettes `pastel` (issue splash stops), `ocean`, and `mono`.
 - **4-Tier Progression A/B Benchmark Harness & 6-Pillar Metric Engine**:
   - Upgraded benchmark evaluation engine (`mnemolink/bench/evaluators.py` & `mnemolink/bench/runner.py`) into a 4-tier comparative A/B harness:
     1. Generic Baseline (unconditioned generic AI prompt)

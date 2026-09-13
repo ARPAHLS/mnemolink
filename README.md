@@ -263,6 +263,9 @@ for card in cards:
 MnemoLink includes a command-line interface for browsing, inspecting, composing, and benchmarking:
 
 ```bash
+# Interactive splash menu (TTY)
+mnemolink
+
 # Browse catalog products
 mnemolink list
 
