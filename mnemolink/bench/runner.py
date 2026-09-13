@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import os
+import random
 import time
 import urllib.error
 import urllib.request
@@ -34,6 +35,21 @@ PASTEL_BLUE = "#bae6fd"
 PASTEL_MINT = "#bbf7d0"
 PASTEL_PEACH = "#ffdac1"
 PASTEL_LAVENDER = "#cfc8dc"
+
+
+def _calculate_backoff(attempt: int, headers: Any = None) -> float:
+    """Calculate exponential backoff delay with jitter, respecting Retry-After."""
+    if headers:
+        try:
+            retry_after = headers.get("Retry-After")
+            if retry_after:
+                return max(1.0, float(retry_after) + 0.5)
+        except Exception:
+            pass
+    # Jittered exponential backoff: 3s, 6s, 12s, 24s... + jitter
+    base = (2**attempt) * 3
+    jitter = random.uniform(0.5, 2.5)
+    return min(60.0, base + jitter)
 
 
 def get_mock_response(scenario_id: str, config: str = "persona_memory") -> str:
@@ -239,11 +255,19 @@ def get_mock_response(scenario_id: str, config: str = "persona_memory") -> str:
 
 
 def query_anthropic_direct(
-    system_prompt: str, prompt: str, model: str = "claude-sonnet-5"
+    system_prompt: str,
+    prompt: str,
+    model: str = "claude-sonnet-5",
+    api_key: Optional[str] = None,
 ) -> Optional[str]:
-    """Direct query to Anthropic Messages API."""
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
+    """Direct query to Anthropic Messages API with exponential backoff on 429/529."""
+    from mnemolink.config import resolve_api_key
+
+    resolved_key = (
+        api_key or os.getenv("ANTHROPIC_API_KEY") or resolve_api_key("anthropic")
+    )
+    if not resolved_key:
+        console.print("[yellow]Anthropic query error: No ANTHROPIC_API_KEY found.[/]")
         return None
     url = "https://api.anthropic.com/v1/messages"
     payload: Dict[str, Any] = {
@@ -262,11 +286,11 @@ def query_anthropic_direct(
     if not any(v in model for v in ("-5", "sonnet-5", "haiku-5", "opus-5", "fable-5")):
         payload["temperature"] = 0.0
     headers = {
-        "x-api-key": api_key,
+        "x-api-key": resolved_key,
         "anthropic-version": "2023-06-01",
         "content-type": "application/json",
     }
-    max_retries = 3
+    max_retries = 5
     for attempt in range(max_retries):
         try:
             req = urllib.request.Request(
@@ -283,27 +307,41 @@ def query_anthropic_direct(
                     return "\n".join(text_blocks).strip()
                 return None
         except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 3)
+            if e.code in (429, 529, 503) and attempt < max_retries - 1:
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                console.print(
+                    f"  [dim yellow]Anthropic rate limit ({e.code}). "
+                    f"Waiting {delay:.1f}s before retry ({attempt + 1}/{max_retries})...[/]"
+                )
+                time.sleep(delay)
                 continue
             console.print(f"[yellow]Anthropic query error: {e}[/]")
             return None
         except Exception as e:
+            if attempt < max_retries - 1:
+                time.sleep(2.0)
+                continue
             console.print(f"[yellow]Anthropic query error: {e}[/]")
             return None
     return None
 
 
 def query_gemini_direct(
-    system_instruction: str, prompt: str, model: str = "gemini-3.5-flash"
+    system_instruction: str,
+    prompt: str,
+    model: str = "gemini-3.5-flash",
+    api_key: Optional[str] = None,
 ) -> Optional[str]:
-    """Direct query to Google Gemini REST API."""
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
+    """Direct query to Google Gemini REST API with robust exponential backoff on 429/503."""
+    from mnemolink.config import resolve_api_key
+
+    resolved_key = api_key or os.getenv("GEMINI_API_KEY") or resolve_api_key("gemini")
+    if not resolved_key:
+        console.print("[yellow]Gemini query error: No GEMINI_API_KEY found.[/]")
         return None
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-        f"?key={api_key}"
+        f"?key={resolved_key}"
     )
     payload = {
         "system_instruction": {"parts": [{"text": system_instruction}]},
@@ -311,7 +349,7 @@ def query_gemini_direct(
         "generationConfig": {"temperature": 0.0, "maxOutputTokens": 1024},
     }
     headers = {"Content-Type": "application/json"}
-    max_retries = 3
+    max_retries = 5
     for attempt in range(max_retries):
         try:
             req = urllib.request.Request(
@@ -319,25 +357,44 @@ def query_gemini_direct(
             )
             with urllib.request.urlopen(req, timeout=45) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
-                return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                candidates = data.get("candidates", [])
+                if candidates:
+                    parts = candidates[0].get("content", {}).get("parts", [])
+                    if parts:
+                        return parts[0].get("text", "").strip()
+                return None
         except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 4)
+            if e.code in (429, 503) and attempt < max_retries - 1:
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                console.print(
+                    f"  [dim yellow]Gemini rate limit ({e.code}). "
+                    f"Waiting {delay:.1f}s before retry ({attempt + 1}/{max_retries})...[/]"
+                )
+                time.sleep(delay)
                 continue
             console.print(f"[yellow]Gemini query error: {e}[/]")
             return None
         except Exception as e:
+            if attempt < max_retries - 1:
+                time.sleep(2.0)
+                continue
             console.print(f"[yellow]Gemini query error: {e}[/]")
             return None
     return None
 
 
 def query_mistral_direct(
-    system_prompt: str, prompt: str, model: str = "ministral-8b-latest"
+    system_prompt: str,
+    prompt: str,
+    model: str = "ministral-8b-latest",
+    api_key: Optional[str] = None,
 ) -> Optional[str]:
-    """Direct query to Mistral API."""
-    api_key = os.getenv("MISTRAL_API_KEY")
-    if not api_key:
+    """Direct query to Mistral API with retry handling."""
+    from mnemolink.config import resolve_api_key
+
+    resolved_key = api_key or os.getenv("MISTRAL_API_KEY") or resolve_api_key("mistral")
+    if not resolved_key:
+        console.print("[yellow]Mistral query error: No MISTRAL_API_KEY found.[/]")
         return None
     url = "https://api.mistral.ai/v1/chat/completions"
     payload = {
@@ -349,10 +406,10 @@ def query_mistral_direct(
         ],
     }
     headers = {
-        "Authorization": f"Bearer {api_key}",
+        "Authorization": f"Bearer {resolved_key}",
         "Content-Type": "application/json",
     }
-    max_retries = 3
+    max_retries = 5
     for attempt in range(max_retries):
         try:
             req = urllib.request.Request(
@@ -362,23 +419,37 @@ def query_mistral_direct(
                 data = json.loads(resp.read().decode("utf-8"))
                 return data["choices"][0]["message"]["content"].strip()
         except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 3)
+            if e.code in (429, 503) and attempt < max_retries - 1:
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                console.print(
+                    f"  [dim yellow]Mistral rate limit ({e.code}). "
+                    f"Waiting {delay:.1f}s before retry ({attempt + 1}/{max_retries})...[/]"
+                )
+                time.sleep(delay)
                 continue
             console.print(f"[yellow]Mistral query error: {e}[/]")
             return None
         except Exception as e:
+            if attempt < max_retries - 1:
+                time.sleep(2.0)
+                continue
             console.print(f"[yellow]Mistral query error: {e}[/]")
             return None
     return None
 
 
 def query_openai_direct(
-    system_prompt: str, prompt: str, model: str = "gpt-5.6-luna"
+    system_prompt: str,
+    prompt: str,
+    model: str = "gpt-5.6-luna",
+    api_key: Optional[str] = None,
 ) -> Optional[str]:
-    """Direct query to OpenAI Chat Completions API."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
+    """Direct query to OpenAI Chat Completions API with retry handling."""
+    from mnemolink.config import resolve_api_key
+
+    resolved_key = api_key or os.getenv("OPENAI_API_KEY") or resolve_api_key("openai")
+    if not resolved_key:
+        console.print("[yellow]OpenAI query error: No OPENAI_API_KEY found.[/]")
         return None
     url = "https://api.openai.com/v1/chat/completions"
     payload = {
@@ -390,19 +461,36 @@ def query_openai_direct(
         ],
     }
     headers = {
-        "Authorization": f"Bearer {api_key}",
+        "Authorization": f"Bearer {resolved_key}",
         "Content-Type": "application/json",
     }
-    try:
-        req = urllib.request.Request(
-            url, data=json.dumps(payload).encode("utf-8"), headers=headers
-        )
-        with urllib.request.urlopen(req, timeout=45) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            return data["choices"][0]["message"]["content"].strip()
-    except Exception as e:
-        console.print(f"[yellow]OpenAI query error: {e}[/]")
-        return None
+    max_retries = 5
+    for attempt in range(max_retries):
+        try:
+            req = urllib.request.Request(
+                url, data=json.dumps(payload).encode("utf-8"), headers=headers
+            )
+            with urllib.request.urlopen(req, timeout=45) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                return data["choices"][0]["message"]["content"].strip()
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 503) and attempt < max_retries - 1:
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                console.print(
+                    f"  [dim yellow]OpenAI rate limit ({e.code}). "
+                    f"Waiting {delay:.1f}s before retry ({attempt + 1}/{max_retries})...[/]"
+                )
+                time.sleep(delay)
+                continue
+            console.print(f"[yellow]OpenAI query error: {e}[/]")
+            return None
+        except Exception as e:
+            if attempt < max_retries - 1:
+                time.sleep(2.0)
+                continue
+            console.print(f"[yellow]OpenAI query error: {e}[/]")
+            return None
+    return None
 
 
 def query_ollama_direct(
@@ -560,13 +648,17 @@ def run_benchmark(
     persona_results: List[Dict[str, Any]] = []
     memory_results: List[Dict[str, Any]] = []
 
-    for sc in scenarios:
+    for idx, sc in enumerate(scenarios):
         # Prompt definition
         user_prompt = sc["prompt"]
         domain = sc.get("domain", "operations")
         generic_sys = (
             f"You are a helpful, professional AI assistant specialized in {domain}. "
             "Provide a balanced, thorough, and professional response to the user's inquiry."
+        )
+
+        console.print(
+            f"  [dim cyan]Crucible [{idx + 1}/{len(scenarios)}] {sc['id']}...[/]"
         )
 
         # ----------------------------------------------------------------------
@@ -582,8 +674,13 @@ def run_benchmark(
             )
             lat_base = round(time.perf_counter() - t0, 2)
             if not resp_base:
+                console.print(
+                    f"  [yellow]Warning:[/] Live baseline query failed for {sc['id']}; "
+                    "falling back to golden mock for scoring."
+                )
                 resp_base = get_mock_response(sc["id"], config="baseline")
                 lat_base = 0.05
+            time.sleep(1.5)  # Inter-query pacing delay to avoid provider RPM bursts
 
         eval_base = evaluate_response(resp_base, sc, latency_seconds=lat_base)
         eval_base["config"] = "Generic Baseline"
@@ -611,8 +708,13 @@ def run_benchmark(
             )
             lat_persona = round(time.perf_counter() - t1, 2)
             if not resp_persona:
+                console.print(
+                    f"  [yellow]Warning:[/] Live persona query failed for {sc['id']}; "
+                    "falling back to golden mock for scoring."
+                )
                 resp_persona = get_mock_response(sc["id"], config="persona")
                 lat_persona = 0.03
+            time.sleep(1.5)
 
         eval_persona = evaluate_response(resp_persona, sc, latency_seconds=lat_persona)
         eval_persona["config"] = "MnemoLink Persona"
@@ -644,8 +746,13 @@ def run_benchmark(
             )
             lat_memory = round(time.perf_counter() - t2, 2)
             if not resp_memory:
+                console.print(
+                    f"  [yellow]Warning:[/] Live memory query failed for {sc['id']}; "
+                    "falling back to golden mock for scoring."
+                )
                 resp_memory = get_mock_response(sc["id"], config="persona_memory")
                 lat_memory = 0.02
+            time.sleep(1.5)
 
         eval_memory = evaluate_response(resp_memory, sc, latency_seconds=lat_memory)
         eval_memory["config"] = "MnemoLink Persona + Memory"

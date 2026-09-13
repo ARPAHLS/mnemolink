@@ -15,7 +15,7 @@ import urllib.error
 import urllib.request
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Union
 import yaml
 from dotenv import load_dotenv
 
@@ -104,18 +104,43 @@ def get_config_file() -> Path:
 
 
 def load_config() -> MnemoLinkConfig:
-    """Load configuration from ~/.mnemolink/config.yaml or return defaults."""
+    """Load configuration from ~/.mnemolink/config.yaml or return defaults.
+
+    Ensures the user store ~/.mnemolink (and ~/mnemonics if existing) is
+    represented in catalog_roots if no explicit roots are defined.
+    """
+    default_user_dir = (Path.home() / ".mnemolink").resolve()
+    user_mnemonics = (Path.home() / "mnemonics").resolve()
+
     if not CONFIG_FILE.is_file():
-        return MnemoLinkConfig()
+        cfg = MnemoLinkConfig()
+        if user_mnemonics.is_dir():
+            cfg.catalog_roots = [str(user_mnemonics), str(default_user_dir)]
+        else:
+            cfg.catalog_roots = [str(default_user_dir)]
+        return cfg
 
     try:
         raw = CONFIG_FILE.read_text(encoding="utf-8")
         data = yaml.safe_load(raw)
         if isinstance(data, dict):
-            return MnemoLinkConfig.from_dict(data)
+            cfg = MnemoLinkConfig.from_dict(data)
+            # Ensure user catalog root is in catalog_roots if list is empty
+            if not cfg.catalog_roots:
+                if user_mnemonics.is_dir():
+                    cfg.catalog_roots = [str(user_mnemonics), str(default_user_dir)]
+                else:
+                    cfg.catalog_roots = [str(default_user_dir)]
+            return cfg
     except Exception:
         pass
-    return MnemoLinkConfig()
+
+    fallback = MnemoLinkConfig()
+    if user_mnemonics.is_dir():
+        fallback.catalog_roots = [str(user_mnemonics), str(default_user_dir)]
+    else:
+        fallback.catalog_roots = [str(default_user_dir)]
+    return fallback
 
 
 def save_config(config: MnemoLinkConfig) -> None:
@@ -123,6 +148,15 @@ def save_config(config: MnemoLinkConfig) -> None:
     get_config_dir()
     data = config.to_dict()
     CONFIG_FILE.write_text(yaml.dump(data, sort_keys=False), encoding="utf-8")
+
+
+def register_catalog_root(root: Union[str, Path]) -> None:
+    """Register a new catalog root directory in ~/.mnemolink/config.yaml."""
+    cfg = load_config()
+    clean = str(Path(root).expanduser().resolve())
+    if clean not in cfg.catalog_roots:
+        cfg.catalog_roots.append(clean)
+        save_config(cfg)
 
 
 def resolve_api_key(

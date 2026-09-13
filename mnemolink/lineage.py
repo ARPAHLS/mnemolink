@@ -50,7 +50,7 @@ class LineageBuilder:
                 f"### Formative Perspective\n{self.persona.self_narrative.strip()}\n"
             )
 
-        narrative_sections.append("### Chronological Evolution of Experiential Scars\n")
+        narrative_sections.append("### Chronological Experiential Evolution\n")
 
         for idx, mem in enumerate(memories):
             step_num = idx + 1
@@ -61,15 +61,35 @@ class LineageBuilder:
             if mem.sensory_context:
                 section.append(f"*[Operational Environment: {mem.sensory_context}]*")
 
-            section.append(f"\n**The Crucible**: {mem.episode_debrief.strip()}")
+            m_type = getattr(mem, "memory_type", "incident")
+            if m_type == "incident":
+                debrief_label = "**The Crucible & Crisis**"
+                scars_label = "**Operational Scars**"
+            elif m_type == "work":
+                debrief_label = "**Tradecraft & Operational Practice**"
+                scars_label = "**Challenges Overcome & Friction Points**"
+            elif m_type == "lore":
+                debrief_label = "**Formative Experience & Heritage**"
+                scars_label = "**Formative Milestones & Obstacles**"
+            elif m_type == "relational":
+                debrief_label = "**Relational Milestone & Partnership**"
+                scars_label = "**Friction Points & Alignment Challenges**"
+            elif m_type == "telemetry":
+                debrief_label = "**Telemetry Benchmark & Empirical Run**"
+                scars_label = "**Anomalies & Variance Factors**"
+            else:
+                debrief_label = "**Experiential Debrief**"
+                scars_label = "**Challenges Overcome**"
+
+            section.append(f"\n{debrief_label}: {mem.episode_debrief.strip()}")
 
             if mem.operational_scars:
                 scars_str = "\n".join(f"- {scar}" for scar in mem.operational_scars)
-                section.append(f"\n**Enduring Scars**:\n{scars_str}")
+                section.append(f"\n{scars_label}:\n{scars_str}")
 
             if mem.lessons_learned:
                 lessons_str = "\n".join(f"- {lesson}" for lesson in mem.lessons_learned)
-                section.append(f"\n**Etched Maxim**:\n{lessons_str}")
+                section.append(f"\n**Core Principles & Maxims**:\n{lessons_str}")
 
             narrative_sections.append("\n".join(section))
 
@@ -85,9 +105,9 @@ class LineageBuilder:
         if all_lessons:
             distilled = "\n".join(f"- {item}" for item in all_lessons[:6])
             narrative_sections.append(
-                "\n### Cumulative Experiential Reflexes\n"
-                "The compound weight of these events forms an instinctual boundary. "
-                "When confronting novel scenarios, decisions are filtered through these scars:\n"
+                "\n### Cumulative Experiential Reflexes & Wisdom\n"
+                "The compound weight of these events forms an instinctual foundation. "
+                "When confronting novel scenarios, decisions are guided by these principles:\n"
                 f"{distilled}"
             )
 

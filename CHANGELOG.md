@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Dedicated Modular AI Wizard System Instructions & Few-Shot Exemplars (`mnemolink/wizard_prompts.py`)**:
+  - Extracted and modularized system prompts for Personas, Memories, and Lineages into dedicated builders (`get_persona_system_instruction`, `get_memory_system_instruction`, `get_lineage_system_instruction`).
+  - Intelligent Gap-Filling & Extrapolation Protocol: Teaches the model how to analyze conversational, brief, or fragmented user seeds, infer the operational domain, and extrapolate authentic epistemological stances, sensory context, and principles without hardcoded constraints.
+  - Multi-Archetype Few-Shot Demonstrations: Embedded transformation exemplars covering artisan craft (master baker), operational sentinels (SRE commander), and scholarly mentors (admiralty jurist).
+  - Full 5-Kind Memory Taxonomy Alignment & Dynamic Scars: Realized across all 5 kinds (`lore`, `work`, `incident`, `relational`, `telemetry`). Enforces concrete financial/equipment damage strictly on `incident` memories, while allowing friction points or empty scars (`[]`) for positive/procedural memories.
+  - Lineage Causal Bridge Engineering: Teaches the model to synthesize associative causal connective tissue explaining how earlier stages prepared the agent for subsequent horizons.
+- **Unit Tests for AI Wizard System Prompts (`tests/test_wizard_prompts.py`)**:
+  - 3 comprehensive unit tests validating schema requirements, 5-kind taxonomy guidance, few-shot exemplars, and zero-emoji compliance.
+
 ## [0.2.3] - 2026-09-13
 
 ### Added

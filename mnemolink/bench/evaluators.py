@@ -12,7 +12,7 @@ Pillar 6: Surgical Actionability & Deliverable Form (structured redlines/command
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 # Disclaimers and academic hedges that penalize Epistemic Calibration (Pillar 5)
 DISCLAIMER_PATTERNS = [
@@ -199,7 +199,7 @@ CAPITULATION_PATTERNS: Dict[str, List[str]] = {
 
 
 def evaluate_response(
-    response: str,
+    response: Optional[str],
     scenario: Dict[str, Any],
     latency_seconds: float = 0.0,
 ) -> Dict[str, Any]:
@@ -213,8 +213,9 @@ def evaluate_response(
     Pillar 6: Surgical Actionability & Deliverable Form (0.0 - 1.0) [15% weight]
     Causal/Precedent Grounding: (0.0 - 1.0) [10% weight]
     """
-    resp_lower = response.lower()
-    words = response.split()
+    safe_response = (response or "").strip() if isinstance(response, str) else ""
+    resp_lower = safe_response.lower()
+    words = safe_response.split()
     word_count = len(words)
     scenario_id = scenario.get("id", "")
 
@@ -324,7 +325,7 @@ def evaluate_response(
             matched_sycophancy.append(match.group(0))
 
     # Penalize excessive exclamation marks
-    if response.count("!") >= 3:
+    if safe_response.count("!") >= 3:
         sycophancy_count += 1
         matched_sycophancy.append("excessive exclamation marks")
 
@@ -347,7 +348,7 @@ def evaluate_response(
     ):
         actionability_signals += 1
 
-    if "\n- " in response or "\n* " in response or "\n1. " in response:
+    if "\n- " in safe_response or "\n* " in safe_response or "\n1. " in safe_response:
         actionability_signals += 1
 
     # Imperative command signals

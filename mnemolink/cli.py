@@ -136,20 +136,41 @@ def cmd_inspect(args):
         )
 
     elif kind == "Memory":
+        mem_kind = getattr(item, "memory_type", "incident")
+        body_parts = [
+            f"[bold {p.pink}]Episode Debrief:[/]\n{item.episode_debrief.strip()}"
+        ]
+        if getattr(item, "sensory_context", None):
+            body_parts.append(f"\n[cyan]Sensory Context:[/]\n{item.sensory_context}")
+        if getattr(item, "operational_scars", None):
+            scars_title = (
+                "[bold red]Operational Scars:[/]"
+                if mem_kind == "incident"
+                else f"[bold {p.peach}]Operational Scars & Challenges Overcome:[/]"
+            )
+            body_parts.append(
+                f"\n{scars_title}\n"
+                + "\n".join(f"  - {s}" for s in item.operational_scars)
+            )
+        if getattr(item, "lessons_learned", None):
+            body_parts.append(
+                f"\n[bold {p.mint}]Lessons Learned & Principles:[/]\n"
+                + "\n".join(f"  - {lesson}" for lesson in item.lessons_learned)
+            )
+        if getattr(item, "reflection", None):
+            body_parts.append(
+                f"\n[bold {p.lavender}]Philosophical Reflection:[/]\n"
+                f"{item.reflection.strip()}"
+            )
+        panel_title = (
+            "Episodic Debrief & Operational Scars"
+            if mem_kind == "incident"
+            else "Episodic Debrief & Core Insights"
+        )
         console.print(
             Panel(
-                f"[bold {p.pink}]Episode Debrief:[/] \n{item.episode_debrief.strip()}\n\n"
-                + (
-                    f"[cyan]Sensory Context:[/] {item.sensory_context}\n\n"
-                    if item.sensory_context
-                    else ""
-                )
-                + "[bold red]Operational Scars:[/]\n"
-                + "\n".join(f"  - {s}" for s in item.operational_scars)
-                + "\n\n"
-                f"[bold {p.mint}]Lessons Learned:[/]\n"
-                + "\n".join(f"  - {lesson}" for lesson in item.lessons_learned),
-                title="Episodic Debrief & Operational Scars",
+                "\n".join(body_parts),
+                title=panel_title,
                 border_style=p.lavender,
             )
         )
@@ -214,10 +235,31 @@ def cmd_compose(args):
 
 
 def cmd_new(args):
+    from mnemolink.config import load_config, register_catalog_root
+
     kind = args.kind.lower()
     name_slug = args.name.lower().replace(" ", "_")
-    target_dir = Path(args.dir or ("./mnemonics/" + kind + "s/" + name_slug)).resolve()
+    folder_name = "memories" if kind == "memory" else f"{kind}s"
+
+    if args.dir:
+        target_dir = Path(args.dir).resolve()
+    else:
+        cfg = load_config()
+        if Path("./mnemonics").is_dir():
+            target_dir = (Path("./mnemonics") / folder_name / name_slug).resolve()
+        elif cfg.catalog_roots:
+            target_dir = (
+                Path(cfg.catalog_roots[0]).expanduser().resolve()
+                / folder_name
+                / name_slug
+            )
+        else:
+            target_dir = (
+                Path.home() / ".mnemolink" / folder_name / name_slug
+            ).resolve()
+
     target_dir.mkdir(parents=True, exist_ok=True)
+    register_catalog_root(target_dir.parent.parent)
 
     if kind == "persona":
         manifest = {

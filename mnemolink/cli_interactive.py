@@ -308,7 +308,7 @@ def cmd_help_submenu(
         else:
             _print_help_static_topic(console, target)
 
-        pause = _read_line("  Press Enter to return to help topics… ", input_fn)
+        pause = _read_line("  Press Enter to return to help topics... ", input_fn)
         _, pause_nav = _parse_nav(pause if pause else "")
         if pause_nav == _NAV_EXIT:
             return _NAV_EXIT

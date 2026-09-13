@@ -13,6 +13,7 @@ import argparse
 import builtins
 import json
 import os
+import random
 import re
 import time
 import urllib.error
@@ -43,6 +44,38 @@ from mnemolink.models import (
     MemoryProduct,
     PersonaProduct,
 )
+from mnemolink.wizard_prompts import (
+    get_lineage_system_instruction,
+    get_memory_system_instruction,
+    get_persona_system_instruction,
+)
+
+
+def _kind_dir_name(kind: str) -> str:
+    """Return canonical catalog directory plural name for a product kind."""
+    k = kind.lower().strip()
+    if k == "memory":
+        return "memories"
+    if k == "persona":
+        return "personas"
+    if k == "lineage":
+        return "lineages"
+    return f"{k}s"
+
+
+def _calculate_backoff(attempt: int, headers: Any = None) -> float:
+    """Calculate exponential backoff delay with jitter, respecting Retry-After."""
+    if headers:
+        try:
+            retry_after = headers.get("Retry-After")
+            if retry_after:
+                return max(1.0, float(retry_after) + 0.5)
+        except Exception:
+            pass
+    # Jittered exponential backoff: 3s, 6s, 12s, 24s... + jitter
+    base = (2**attempt) * 3
+    jitter = random.uniform(0.5, 2.0)
+    return min(60.0, base + jitter)
 
 
 def _clean_json_response(raw: str) -> str:
@@ -163,7 +196,7 @@ def _query_gemini(
     model: str,
     api_key: Optional[str],
     timeout: int = 45,
-    max_retries: int = 3,
+    max_retries: int = 5,
     max_output_tokens: int = 8192,
 ) -> Optional[str]:
     """Query Google Gemini REST API with 429/503 exponential backoff retries."""
@@ -200,7 +233,8 @@ def _query_gemini(
                 return None
         except urllib.error.HTTPError as e:
             if e.code in (429, 503) and attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 3)
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                time.sleep(delay)
                 continue
             raise
         except (urllib.error.URLError, TimeoutError):
@@ -247,9 +281,9 @@ def _query_ollama(
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 return data.get("response", "").strip()
-        except urllib.error.HTTPError:
-            if attempt < max_retries - 1:
-                time.sleep(1.5)
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 503) and attempt < max_retries - 1:
+                time.sleep((attempt + 1) * 2)
                 continue
             raise
         except (urllib.error.URLError, TimeoutError):
@@ -266,7 +300,7 @@ def _query_anthropic(
     model: str,
     api_key: Optional[str],
     timeout: int = 45,
-    max_retries: int = 3,
+    max_retries: int = 5,
     max_output_tokens: int = 8192,
 ) -> Optional[str]:
     """Query Anthropic Messages API with 429/529 retry handling."""
@@ -304,7 +338,8 @@ def _query_anthropic(
                 return "\n".join(blocks).strip() if blocks else None
         except urllib.error.HTTPError as e:
             if e.code in (429, 529, 503) and attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 3)
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                time.sleep(delay)
                 continue
             raise
         except (urllib.error.URLError, TimeoutError):
@@ -321,7 +356,7 @@ def _query_mistral(
     model: str,
     api_key: Optional[str],
     timeout: int = 45,
-    max_retries: int = 3,
+    max_retries: int = 5,
     max_output_tokens: int = 8192,
 ) -> Optional[str]:
     """Query Mistral AI API with retry handling."""
@@ -353,7 +388,8 @@ def _query_mistral(
                 return data["choices"][0]["message"]["content"].strip()
         except urllib.error.HTTPError as e:
             if e.code in (429, 503) and attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 3)
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                time.sleep(delay)
                 continue
             raise
         except (urllib.error.URLError, TimeoutError):
@@ -370,7 +406,7 @@ def _query_openai(
     model: str,
     api_key: Optional[str],
     timeout: int = 45,
-    max_retries: int = 3,
+    max_retries: int = 5,
     max_output_tokens: int = 8192,
 ) -> Optional[str]:
     """Query OpenAI API with JSON mode and retry handling."""
@@ -402,7 +438,8 @@ def _query_openai(
                 return data["choices"][0]["message"]["content"].strip()
         except urllib.error.HTTPError as e:
             if e.code in (429, 503) and attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 3)
+                delay = _calculate_backoff(attempt, getattr(e, "headers", None))
+                time.sleep(delay)
                 continue
             raise
         except (urllib.error.URLError, TimeoutError):
@@ -429,12 +466,18 @@ class MnemonicWizard:
         # Determine target scaffold directory
         if output_dir:
             self.base_output_dir = Path(output_dir).resolve()
+        elif Path("./mnemonics").is_dir():
+            self.base_output_dir = Path("./mnemonics").resolve()
+        elif Path("./.mnemolink").is_dir():
+            self.base_output_dir = Path("./.mnemolink").resolve()
         elif self.config.catalog_roots:
             self.base_output_dir = (
                 Path(self.config.catalog_roots[0]).expanduser().resolve()
             )
+        elif (Path.home() / "mnemonics").is_dir():
+            self.base_output_dir = (Path.home() / "mnemonics").resolve()
         else:
-            self.base_output_dir = Path("./mnemonics").resolve()
+            self.base_output_dir = (Path.home() / ".mnemolink").resolve()
 
     def _read(self, prompt_text: str, default: str = "") -> str:
         suffix = f" [{default}]" if default else ""
@@ -786,28 +829,20 @@ class MnemonicWizard:
 
         self.console.print("\n  [bold]Describe the Persona you need:[/]")
         self.console.print(
-            "  [dim italic]Example: 'An SRE incident commander who survived "
-            "thundering herd outages and strictly enforces declarative GitOps.'[/]"
+            "  [dim italic]Examples:\n"
+            "    - Artisan: 'A passionate Mediterranean chef dedicated to hospitality and craft.'\n"
+            "    - Mentor: 'A patient educator fostering curiosity and psychological safety.'\n"
+            "    - Sentinel: 'An SRE commander who enforces GitOps and zero downtime.'\n"
+            "    - Scholar: 'A commercial jurist balancing equity with rigorous precision.'[/]"
         )
         user_prompt = self._read("Description")
         if not user_prompt:
             return None
 
-        system_instruction = (
-            "You are the MnemoLink Mnemonic Wizard. Your task is to generate a strictly compliant "
-            "MnemoLink Persona manifest and companion Catalog Card JSON based on requirements.\n"
-            "Rules:\n"
-            "1. Output MUST be valid JSON with two top-level keys: 'manifest' and 'card'.\n"
-            "2. Zero emojis anywhere in strings.\n"
-            "3. Axioms and boundaries must be laconic, imperative, and non-negotiable.\n"
-            "4. 'manifest' keys: id, name, version, domain, summary, core_philosophy, "
-            "axioms (list), cognitive_priors (list), self_narrative, boundaries (list), "
-            "voice_tone, author, tags (list).\n"
-            "5. 'card' keys: id, name, kind ('persona'), domain, version, summary, tags, author.\n"
-        )
+        system_instruction = get_persona_system_instruction()
 
         with self.console.status(
-            f"[bold {p.mint}]Generating Persona via {provider}/{model}…[/]"
+            f"[bold {p.mint}]Generating Persona via {provider}/{model}...[/]"
         ):
             result = query_llm_for_json(
                 user_prompt,
@@ -871,23 +906,23 @@ class MnemonicWizard:
 
         self.console.print("\n  [bold]Select Memory Kind (5-Kind Taxonomy):[/]")
         self.console.print(
-            "    [1] lore       — Foundational mythos, origins, mentor upbringing",
+            "    [1] lore       — Traditions, cultural roots, mentorship, heritage",
             style=p.menu_style,
         )
         self.console.print(
-            "    [2] work       — Technical craft, repeatable tradecraft, procedural praxis",
+            "    [2] work       — Technical craft, repeatable tradecraft, procedural praxis, SOPs",
             style=p.menu_style,
         )
         self.console.print(
-            "    [3] incident   — Costly failure crucibles, physical crashes, arbitration losses",
+            "    [3] incident   — Critical failure crucibles, outages, crashes, arbitration losses",
             style=p.menu_style,
         )
         self.console.print(
-            "    [4] relational — Adversarial negotiations, customer churn turning points",
+            "    [4] relational — Collaborative breakthroughs, team trust, partnerships",
             style=p.menu_style,
         )
         self.console.print(
-            "    [5] telemetry  — Quantitative sensor traces, flight logs, failover sequences",
+            "    [5] telemetry  — Quantitative sensor traces, performance telemetry, benchmarks",
             style=p.menu_style,
         )
 
@@ -898,45 +933,50 @@ class MnemonicWizard:
             "4": "relational",
             "5": "telemetry",
         }
-        kind = kind_map.get(self._read("kind [1-5]", default="3"), "incident")
+        kind = kind_map.get(self._read("kind [1-5]", default="1"), "lore")
 
         summary = self._read(
             "Summary (1-2 sentences)", default=f"Episodic {kind} memory for {name}"
         )
 
-        self.console.print("\n  [bold]Episodic Crucible & Narrative Debrief:[/]")
+        self.console.print("\n  [bold]Episodic Narrative & Debrief:[/]")
         debrief = self._read(
             "episode_debrief",
             default="Detailed first-person chronological account of what transpired.",
         )
 
-        scars = self._read_multiline_list(
-            "Operational Scars (Tangible Damage Sustained)",
-            tooltip=(
-                "Concrete costs: $ USD lost, hardware destroyed, downtime incurred. "
-                "Example: '$4.2M warranty judgment entered against client.'"
-            ),
+        scars_prompt = (
+            "Operational Scars (Tangible Damage Sustained)"
+            if kind == "incident"
+            else "Operational Scars / Challenges Overcome (Enter to skip if none)"
         )
-        if not scars:
-            scars = ["Severe capital or operational loss sustained."]
+        scars_tooltip = (
+            "Concrete costs: $ USD lost, hardware destroyed, downtime incurred. "
+            "Example: '$4.2M warranty judgment entered against client.'"
+            if kind == "incident"
+            else (
+                "Friction points, early mistakes, or obstacles surmounted. "
+                "Optional for positive or procedural memories."
+            )
+        )
+        scars = self._read_multiline_list(scars_prompt, tooltip=scars_tooltip)
+        if not scars and kind == "incident":
+            scars = ["Operational cost or friction point recorded."]
 
         lessons = self._read_multiline_list(
-            "Lessons Learned (Imperative Operational Maxims)",
-            tooltip=(
-                "Clear rules learned from the failure. Example: "
-                "'Never rely on unanchored punctuation to delineate liability covenants.'"
-            ),
+            "Lessons Learned & Core Principles",
+            tooltip="Actionable maxims, craft guidelines, or insights etched into memory.",
         )
         if not lessons:
-            lessons = ["Always enforce strict boundary checks before execution."]
+            lessons = ["Uphold core craft principles and verified standards."]
 
         sensory = self._read(
-            "Sensory Context / Precursor Signals (Warning triggers)",
-            default="Precursor environmental cues signaling recurrence.",
+            "Sensory Context & Environmental Atmosphere (optional)",
+            default="",
         )
         reflection = self._read(
-            "Philosophical Reflection (Deeper root cause realization)",
-            default="Underlying systemic truth learned through survival.",
+            "Philosophical Reflection & Meaning (optional)",
+            default="",
         )
 
         salience_raw = self._read(
@@ -949,11 +989,11 @@ class MnemonicWizard:
 
         self.console.print("\n  [bold]Teleological Layer (Goal, Drives & Needs):[/]")
         primary_goal = self._read(
-            "primary_goal (e.g. prevent_syntactic_liability_severance)",
-            default=f"mitigate_{slug}",
+            "primary_goal (e.g. master_craft_discipline, risk_mitigation)",
+            default=f"pursue_{slug}",
         )
         drives = self._read_multiline_list(
-            "agent_drives (e.g. risk_mitigation, procedural_candor)",
+            "agent_drives (e.g. craft_excellence, risk_mitigation, hospitality)",
             tooltip="Intrinsic behavioral imperatives.",
         )
         if not drives:
@@ -1007,11 +1047,15 @@ class MnemonicWizard:
         return self._save_asset("memory", f"{domain}/{slug}", manifest_data, card_data)
 
     def create_memory_ai(self) -> Optional[Path]:
-        """AI-assisted memory crucible extraction."""
+        """AI-assisted episodic memory generation across all 5 taxonomy kinds."""
         p = palette()
         self.console.print(
             Panel(
-                "[bold]AI-Assisted Memory Generator (5-Kind Taxonomy)[/]",
+                f"[bold {p.mint}]AI Mnemonic Memory Studio (5-Kind Taxonomy)[/]\n"
+                "[dim]Generate rich, authentic episodic memories: formative lore & heritage, "
+                "procedural work & craft, collaborative relational bonds, sensor telemetry, "
+                "or high-stakes incident crucibles.[/]",
+                title="AI Memory Generator",
                 border_style=p.mint,
             )
         )
@@ -1022,37 +1066,24 @@ class MnemonicWizard:
         provider, model, api_key = model_setup
 
         self.console.print(
-            "\n  [bold]Describe the Failure Scenario or Operational Crucible:[/]"
+            "\n  [bold]Describe the experience, event, craft technique, or incident:[/]"
         )
         self.console.print(
-            "  [dim italic]Example: 'A UAV flying near cliff terrain blinded by "
-            "morning sun glare, suffering a near-stall before sensor failover.'[/]"
+            "  [dim italic]Examples:\n"
+            "    - Lore: 'Formative memories of bougatsa pastry discipline in Thessaloniki.'\n"
+            "    - Work: 'SOP protocol for hot-patching a database connection pool safely.'\n"
+            "    - Incident: 'UAV glare washout causing near-stall before sensor failover.'\n"
+            "    - Relational: 'Navigating tense enterprise contract renewal with skeptical CFO.'\n"
+            "    - Telemetry: 'Acoustic calibration test on composite wing spars at Mach 0.8.'[/]"
         )
-        user_prompt = self._read("Crucible Story")
+        user_prompt = self._read("Memory Story / Experience")
         if not user_prompt:
             return None
 
-        system_instruction = (
-            "You are the MnemoLink Mnemonic Wizard. Extract an episodic memory manifest "
-            "and companion Catalog Card JSON based on the user's operational story.\n"
-            "Rules:\n"
-            "1. Output MUST be valid JSON with two top-level keys: 'manifest' and 'card'.\n"
-            "2. Zero emojis anywhere in strings.\n"
-            "3. Memory must be classified into one of 5 kinds: "
-            "'lore', 'work', 'incident', 'relational', 'telemetry'.\n"
-            "4. Operational scars must contain tangible, quantitative costs "
-            "($ USD, hours downtime, broken hardware).\n"
-            "5. Lessons must be crisp, imperative rules.\n"
-            "6. 'manifest' keys: id (domain/slug format), name, version, domain, memory_type, "
-            "summary, episode_debrief, operational_scars (list), lessons_learned (list), "
-            "sensory_context, reflection, salience (float 0.0-1.0), author, tags (list), "
-            "teleology (object with primary_goal, agent_drives list, applicable_needs list).\n"
-            "7. 'card' keys: id, name, kind ('memory'), domain, version, summary, tags, "
-            "author, teleology, chunks (['story', 'scars', 'lessons', 'triggers', 'reflection']).\n"
-        )
+        system_instruction = get_memory_system_instruction()
 
         with self.console.status(
-            f"[bold {p.mint}]Extracting Memory Crucible via {provider}/{model}…[/]"
+            f"[bold {p.mint}]Generating Memory Episode via {provider}/{model}...[/]"
         ):
             result = query_llm_for_json(
                 user_prompt,
@@ -1221,8 +1252,10 @@ class MnemonicWizard:
             "\n  [bold]Describe the desired evolutionary backstory or career progression:[/]"
         )
         self.console.print(
-            "  [dim italic]Example: 'An autonomous UAV pilot who starts with a "
-            "near-crash in wind shear and evolves into an all-weather emergency master.'[/]"
+            "  [dim italic]Examples:\n"
+            "    - Mastery: 'Mediterranean chef progressing from apprentice to culinary icon.'\n"
+            "    - Craft: 'SRE advancing from junior responder to principal architect.'\n"
+            "    - Hardening: 'Autonomous pilot evolving to all-weather flight mastery.'[/]"
         )
         user_prompt = self._read("Progression Requirement")
         if not user_prompt:
@@ -1232,27 +1265,15 @@ class MnemonicWizard:
             f"User Requirement:\n{user_prompt}\n\n"
             f"Available Memories in Catalog:\n{catalog_summary}\n\n"
             "Select 2 to 4 of the most relevant memories from the catalog above. "
-            "Order them chronologically, derive epoch chronology milestones, and write "
-            "compelling associative causal bridges explaining how surviving earlier crucibles "
-            "prepared the agent for subsequent challenges."
+            "Order them chronologically, derive epoch milestones, and write "
+            "compelling associative causal bridges explaining how earlier experiences "
+            "and milestones prepared the agent for subsequent horizons."
         )
 
-        system_instruction = (
-            "You are the MnemoLink Mnemonic Wizard. Synthesize a Lineage manifest "
-            "and companion Catalog Card JSON based on user requirements and catalog.\n"
-            "Rules:\n"
-            "1. Output MUST be valid JSON with two top-level keys: 'manifest' and 'card'.\n"
-            "2. Zero emojis anywhere in strings.\n"
-            "3. 'memory_ids' must reference valid IDs from the available memories list.\n"
-            "4. 'causal_bridges' must be a list of narrative transitions explaining the "
-            "causal link between epoch A and epoch B.\n"
-            "5. 'manifest' keys: id, name, version, domain, summary, memory_ids (list), "
-            "chronology (list), causal_bridges (list), cumulative_narrative, author, tags (list).\n"
-            "6. 'card' keys: id, name, kind ('lineage'), domain, version, summary, tags, author.\n"
-        )
+        system_instruction = get_lineage_system_instruction()
 
         with self.console.status(
-            f"[bold {p.mint}]Synthesizing Lineage Progression via {provider}/{model}…[/]"
+            f"[bold {p.mint}]Synthesizing Lineage Progression via {provider}/{model}...[/]"
         ):
             result = query_llm_for_json(
                 full_prompt,
@@ -1301,8 +1322,11 @@ class MnemonicWizard:
         card_data: Dict[str, Any],
     ) -> Path:
         """Save YAML manifest and JSON card to target catalog directory."""
+        from mnemolink.config import register_catalog_root
+
         clean_slug = slug_or_id.replace("/", os.sep)
-        target_dir = self.base_output_dir / f"{kind}s" / clean_slug
+        folder_name = _kind_dir_name(kind)
+        target_dir = self.base_output_dir / folder_name / clean_slug
         target_dir.mkdir(parents=True, exist_ok=True)
 
         manifest_file = target_dir / f"{kind}.yaml"
@@ -1312,6 +1336,9 @@ class MnemonicWizard:
             yaml.dump(manifest_data, sort_keys=False), encoding="utf-8"
         )
         card_file.write_text(json.dumps(card_data, indent=2), encoding="utf-8")
+
+        # Auto-register catalog root in config
+        register_catalog_root(self.base_output_dir)
 
         p = palette()
         self.console.print(
@@ -1327,16 +1354,46 @@ class MnemonicWizard:
 
     def _preview_persona(self, m: Dict[str, Any]) -> None:
         p = palette()
+        body_parts = [
+            f"[bold {p.pink}]{m.get('name')}[/] [dim]({m.get('id')})[/]",
+            f"[dim]Domain:[/] {m.get('domain')} | [italic]{m.get('summary')}[/]",
+            f"\n[bold {p.pink}]Core Philosophy:[/]\n{m.get('core_philosophy')}",
+            f"\n[bold {p.mint}]Inviolable Axioms:[/]\n"
+            + "\n".join(f"  - {a}" for a in m.get("axioms", [])),
+            f"\n[bold {p.peach}]Operational Boundaries:[/]\n"
+            + "\n".join(f"  - {b}" for b in m.get("boundaries", [])),
+        ]
+        if m.get("cognitive_priors"):
+            body_parts.append(
+                f"\n[bold {p.blue}]Cognitive Priors:[/]\n"
+                + "\n".join(f"  - {cp}" for cp in m.get("cognitive_priors", []))
+            )
+        if m.get("self_narrative"):
+            body_parts.append(
+                f"\n[bold {p.lavender}]Self-Narrative:[/]\n{m.get('self_narrative')}"
+            )
+        if m.get("voice_tone"):
+            body_parts.append(
+                f"\n[bold {p.pink}]Voice & Tone:[/] {m.get('voice_tone')}"
+            )
+        teleology = m.get("teleology")
+        if teleology and isinstance(teleology, dict):
+            t_goal = teleology.get("primary_goal", "")
+            t_drives = ", ".join(teleology.get("agent_drives", []))
+            t_needs = ", ".join(teleology.get("applicable_needs", []))
+            body_parts.append(
+                f"\n[bold {p.mint}]Teleology:[/]\n"
+                f"  - Goal:   {t_goal}\n"
+                f"  - Drives: {t_drives}\n"
+                f"  - Needs:  {t_needs}"
+            )
+        if m.get("tags"):
+            tags_str = " ".join(f"#{t}" for t in m.get("tags", []))
+            body_parts.append(f"\n[dim cyan]{tags_str}[/]")
+
         self.console.print(
             Panel(
-                f"[bold {p.pink}]{m.get('name')}[/] [dim]({m.get('id')})[/]\n"
-                f"[dim]Domain:[/] {m.get('domain')} | [italic]{m.get('summary')}[/]\n\n"
-                f"[bold {p.pink}]Core Philosophy:[/] {m.get('core_philosophy')}\n\n"
-                f"[bold {p.mint}]Inviolable Axioms:[/]\n"
-                + "\n".join(f"  - {a}" for a in m.get("axioms", []))
-                + "\n\n"
-                f"[bold {p.peach}]Operational Boundaries:[/]\n"
-                + "\n".join(f"  - {b}" for b in m.get("boundaries", [])),
+                "\n".join(body_parts),
                 title="Persona Preview",
                 border_style=p.blue,
             )
@@ -1344,16 +1401,58 @@ class MnemonicWizard:
 
     def _preview_memory(self, m: Dict[str, Any]) -> None:
         p = palette()
+        salience = m.get("salience", 0.8)
+        body_parts = [
+            f"[bold {p.pink}]{m.get('name')}[/] [dim]({m.get('id')})[/]",
+            (
+                f"[dim]Kind:[/] {m.get('memory_type')} | "
+                f"[dim]Domain:[/] {m.get('domain')} | "
+                f"[dim]Salience:[/] {salience}"
+            ),
+            f"\n[bold {p.pink}]Debrief:[/]\n{m.get('episode_debrief')}",
+        ]
+        scars = m.get("operational_scars", [])
+        if scars:
+            scars_title = (
+                "[bold red]Operational Scars:[/]"
+                if m.get("memory_type") == "incident"
+                else f"[bold {p.peach}]Operational Scars & Challenges Overcome:[/]"
+            )
+            body_parts.append(
+                f"\n{scars_title}\n" + "\n".join(f"  - {s}" for s in scars)
+            )
+        lessons = m.get("lessons_learned", [])
+        if lessons:
+            body_parts.append(
+                f"\n[bold {p.mint}]Lessons Learned & Principles:[/]\n"
+                + "\n".join(f"  - {lesson}" for lesson in lessons)
+            )
+        if m.get("sensory_context"):
+            body_parts.append(
+                f"\n[bold {p.peach}]Sensory & Telemetry Cues:[/]\n{m.get('sensory_context')}"
+            )
+        if m.get("reflection"):
+            body_parts.append(
+                f"\n[bold {p.lavender}]Philosophical Reflection:[/]\n{m.get('reflection')}"
+            )
+        teleology = m.get("teleology")
+        if teleology and isinstance(teleology, dict):
+            t_goal = teleology.get("primary_goal", "")
+            t_drives = ", ".join(teleology.get("agent_drives", []))
+            t_needs = ", ".join(teleology.get("applicable_needs", []))
+            body_parts.append(
+                f"\n[bold {p.mint}]Teleology:[/]\n"
+                f"  - Primary Goal:    {t_goal}\n"
+                f"  - Agent Drives:    {t_drives}\n"
+                f"  - Applicable Needs:{t_needs}"
+            )
+        if m.get("tags"):
+            tags_str = " ".join(f"#{t}" for t in m.get("tags", []))
+            body_parts.append(f"\n[dim cyan]{tags_str}[/]")
+
         self.console.print(
             Panel(
-                f"[bold {p.pink}]{m.get('name')}[/] [dim]({m.get('id')})[/]\n"
-                f"[dim]Kind:[/] {m.get('memory_type')} | [dim]Domain:[/] {m.get('domain')}\n\n"
-                f"[bold {p.pink}]Debrief:[/] {m.get('episode_debrief')}\n\n"
-                f"[bold red]Operational Scars:[/]\n"
-                + "\n".join(f"  - {s}" for s in m.get("operational_scars", []))
-                + "\n\n"
-                f"[bold {p.mint}]Lessons Learned:[/]\n"
-                + "\n".join(f"  - {lesson}" for lesson in m.get("lessons_learned", [])),
+                "\n".join(body_parts),
                 title="Memory Preview",
                 border_style=p.blue,
             )
@@ -1361,17 +1460,39 @@ class MnemonicWizard:
 
     def _preview_lineage(self, m: Dict[str, Any]) -> None:
         p = palette()
+        body_parts = [
+            f"[bold {p.pink}]{m.get('name')}[/] [dim]({m.get('id')})[/]",
+            f"[dim]Domain:[/] {m.get('domain', 'general')} | [italic]{m.get('summary', '')}[/]",
+            f"[dim]Memory Spine:[/] {', '.join(m.get('memory_ids', []))}",
+            f"\n[bold {p.mint}]Chronology Milestones:[/]\n"
+            + "\n".join(
+                f"  {idx+1}. {c}" for idx, c in enumerate(m.get("chronology", []))
+            ),
+            f"\n[bold {p.blue}]Causal Bridges:[/]\n"
+            + "\n".join(f"  - {b}" for b in m.get("causal_bridges", [])),
+        ]
+        if m.get("cumulative_narrative"):
+            body_parts.append(
+                f"\n[bold {p.lavender}]Cumulative Narrative:[/]\n{m.get('cumulative_narrative')}"
+            )
+        teleology = m.get("teleology")
+        if teleology and isinstance(teleology, dict):
+            t_goal = teleology.get("primary_goal", "")
+            t_drives = ", ".join(teleology.get("agent_drives", []))
+            t_needs = ", ".join(teleology.get("applicable_needs", []))
+            body_parts.append(
+                f"\n[bold {p.mint}]Teleology:[/]\n"
+                f"  - Goal:   {t_goal}\n"
+                f"  - Drives: {t_drives}\n"
+                f"  - Needs:  {t_needs}"
+            )
+        if m.get("tags"):
+            tags_str = " ".join(f"#{t}" for t in m.get("tags", []))
+            body_parts.append(f"\n[dim cyan]{tags_str}[/]")
+
         self.console.print(
             Panel(
-                f"[bold {p.pink}]{m.get('name')}[/] [dim]({m.get('id')})[/]\n"
-                f"[dim]Memory Spine:[/] {', '.join(m.get('memory_ids', []))}\n\n"
-                f"[bold {p.mint}]Chronology:[/]\n"
-                + "\n".join(
-                    f"  {idx+1}. {c}" for idx, c in enumerate(m.get("chronology", []))
-                )
-                + "\n\n"
-                f"[bold {p.blue}]Causal Bridges:[/]\n"
-                + "\n".join(f"  - {b}" for b in m.get("causal_bridges", [])),
+                "\n".join(body_parts),
                 title="Lineage Preview",
                 border_style=p.blue,
             )
@@ -1398,11 +1519,11 @@ class MnemonicWizard:
             style=p.menu_style,
         )
         self.console.print(
-            "    [2] Memory  — Episodic crucibles, quantifiable scars, sensory cues",
+            "    [2] Memory  — Episodic experiences, lore & craft, breakthroughs, or scars",
             style=p.menu_style,
         )
         self.console.print(
-            "    [3] Lineage — Multi-epoch backstories, associative causal bridges",
+            "    [3] Lineage — Multi-epoch backstories, developmental arcs, and causal bridges",
             style=p.menu_style,
         )
         self.console.print("    [0] Exit", style="dim")
