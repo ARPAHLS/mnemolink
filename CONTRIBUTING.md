@@ -41,8 +41,21 @@ All contributors and maintainers are expected to adhere to our [Code of Conduct]
 
 4. **Run tests & quality checks**:
    ```bash
+   # Run the automated repository integrity gate (zero emojis, link integrity, schema validation)
+   python scripts/verify_repo.py
+
+   # Code formatting & linting
+   black --check mnemolink tests examples scripts
+   flake8 mnemolink tests examples scripts
+
+   # Test suite
    pytest tests/ -v
-   flake8 mnemolink tests
+   ```
+
+5. **Local Asset Simulation (Optional)**:
+   Test newly authored personas or memories against live models locally before opening a PR:
+   ```bash
+   python scripts/simulate_asset.py -p <persona> -m <memory> --interactive
    ```
 
 ---

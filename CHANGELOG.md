@@ -10,6 +10,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **4-Tier Progression A/B Benchmark Harness & 6-Pillar Metric Engine**:
+  - Upgraded benchmark evaluation engine (`mnemolink/bench/evaluators.py` & `mnemolink/bench/runner.py`) into a 4-tier comparative A/B harness:
+    1. Generic Baseline (unconditioned generic AI prompt)
+    2. MnemoLink Persona (identity, philosophical axioms, boundary priors, laconic tone)
+    3. MnemoLink Persona + Memory (full mnemonic matrix with episodic scars and causal lineages)
+    4. Delta ($\Delta$) (empirical lift: latency speedup, token bloat compression, boundary defense lift, and score improvement)
+  - Scored across 6 objective, non-brittle pillars avoiding hardcoded keyword traps:
+    1. Latency & Velocity (execution speed elapsed directly over HTTP)
+    2. Word Count & Token Economy (compression of conversational and disclaimer bloat)
+    3. Adversarial Trap & Risk Vigilance (semantic risk recognition and warning posture)
+    4. Axiomatic Boundary Defense (non-capitulation against unsafe pressure)
+    5. Epistemic Calibration & Disclaimer Elimination (freedom from hedges and servile filler)
+    6. Surgical Actionability & Deliverable Form (structured redlines, commands, timings)
+  - Expanded scenario catalog (`mnemolink/bench/scenarios.json`) to 8 graduated crucibles across Micro, Meso, and Macro tiers spanning culinary boundaries, SRE connection stampedes, bilateral litigation waivers, tactical UAV sensor glare failover, customer crisis mediation, and constitutional cross-examination.
+  - Added CLI options: `--tier` (`all`, `micro`, `meso`, `macro`), `--export-json` for machine-readable evaluation reports, and live model routing with exponential backoff on HTTP 429 across Anthropic, Google, Mistral, OpenAI, and Ollama.
+  - Published live empirical progression findings across modern production models (`claude-sonnet-5`, `gemini-3.5-flash`, `ministral-8b-latest`, and Offline Golden Target) in `docs/bench/README.md`.
+- **Local Asset Simulation Harness (`scripts/simulate_asset.py`)**:
+  - Introduced local-only development tool for mounting uncommitted personas and episodic memories against live frontier APIs (Claude, Gemini, Mistral, OpenAI) and local Ollama without polluting CI.
+  - Features direct single-query profiling with token counts, latency tracking, and cost estimation, plus an interactive multi-turn terminal loop (`--interactive`) for dynamic probing of cognitive boundary firmness.
+- **Automated Repository Integrity Gate (`scripts/verify_repo.py`)**:
+  - Implemented automated gate enforcing zero Unicode emojis across all code, tests, documentation, and manifests.
+  - Validates relative markdown link integrity across all 33 documentation and manifest files.
+  - Validates all catalog manifests and teleological cards against Pydantic schema models (`PersonaProduct`, `MemoryProduct`, `LineageProduct`, `CatalogCard`).
+- **Hardened GitHub Actions Continuous Integration (`.github/workflows/ci.yml`)**:
+  - Added multi-OS matrix testing across Python `3.10`, `3.11`, `3.12`, and `3.13` on both `ubuntu-latest` and `windows-latest`.
+  - Added sequential pipeline stages: `black --check`, `flake8`, `python scripts/verify_repo.py`, `pytest tests/ -v`.
+  - Added isolated distribution build and twine validation job (`python -m build`, `twine check dist/*`).
 - **Comprehensive Usage Guide (`docs/usage_guide.md`)**:
   - Published a high-level, production-ready usage guide covering installation, programmatic workflows, selective chunking, prompt cache economics, context consumers (Claude, OpenAI, Gemini, Ollama, LangChain), real-world scenarios, and authoring custom mnemonic products.
 - **New Persona: North Mediterranean Chef (`north_mediterranean_chef`)**:
@@ -20,6 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Modular Documentation Architecture**:
   - Replaced monolithic directory `README.md` files with clean indexed tables, extracting deep profiles into dedicated item-specific guides across `docs/personas/`, `docs/memories/`, and `docs/lineages/`.
+- **Benchmark Documentation & CLI Manual**:
+  - Overhauled `docs/bench/README.md` and `docs/cli.md` to reflect the 6-pillar rubric, graduated 8-scenario matrix, live model performance results, and local developer simulation workflows.
 
 ---
 

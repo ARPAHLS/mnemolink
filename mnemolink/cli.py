@@ -293,7 +293,13 @@ def cmd_new(args):
 def cmd_bench(args):
     from mnemolink.bench.runner import run_benchmark
 
-    run_benchmark(model=args.model, mock=args.mock)
+    tier_val = None if getattr(args, "tier", "all") == "all" else args.tier
+    run_benchmark(
+        model=args.model,
+        mock=args.mock,
+        tier=tier_val,
+        export_json=getattr(args, "export_json", None),
+    )
 
 
 def main():
@@ -382,6 +388,17 @@ def main():
     )
     p_bench.add_argument(
         "--mock", action="store_true", help="Run offline with mock responses"
+    )
+    p_bench.add_argument(
+        "--tier",
+        choices=["all", "micro", "meso", "macro"],
+        default="all",
+        help="Filter scenarios by difficulty tier (default: all)",
+    )
+    p_bench.add_argument(
+        "--export-json",
+        default=None,
+        help="Export machine-readable JSON benchmark report to file path",
     )
     p_bench.set_defaults(func=cmd_bench)
 

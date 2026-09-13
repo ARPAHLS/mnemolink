@@ -23,6 +23,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+mnemolink-*/
 
 # Virtual Environments
 .venv/
@@ -40,6 +41,7 @@ env/
 .pytest_cache/
 .coverage
 htmlcov/
+results/
 
 # Local Environment & Secrets
 .env

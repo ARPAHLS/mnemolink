@@ -103,12 +103,44 @@ mnemolink new memory aerospace_rudder_jam --domain robotics --kind incident
 
 ### 5. `bench`
 
-Executes the MnemoLink simulation harness and resilience benchmark across challenging domain scenarios:
+Executes the MnemoLink 4-tier progression A/B benchmark (Generic Baseline -> Persona -> Persona + Memory -> Delta) across 6 objective pillars:
 
 ```bash
-# Run in deterministic offline mock mode (no API keys required)
+# Run all 8 scenarios in deterministic offline mock mode (no API keys required)
 mnemolink bench --mock
 
-# Run against Ollama local instance
-mnemolink bench --ollama --model llama3.1
+# Filter by scenario tier: micro, meso, or macro
+mnemolink bench --mock --tier micro
+mnemolink bench --mock --tier meso
+mnemolink bench --mock --tier macro
+
+# Export quantitative progression report to JSON
+mnemolink bench --mock --export-json results/bench_report.json
+
+# Run live against production model APIs (reads credentials from .env)
+mnemolink bench --model claude-sonnet-5
+mnemolink bench --model gemini-3.5-flash
+mnemolink bench --model ministral-8b-latest
+
+# Run against a local Ollama instance
+mnemolink bench --model llama3.2:1b
 ```
+
+---
+
+## Local Developer Simulation Harness
+
+For interactive multi-turn conversations and testing unreleased personas or memories with live model mounts prior to committing:
+
+```bash
+# Test a persona with an episodic memory against Claude
+python scripts/simulate_asset.py -p juris_philosopher -m legal/semicolon_fine_tuning_trap --model claude-3-7-sonnet-20250219
+
+# Interactive multi-turn interrogation loop
+python scripts/simulate_asset.py -p edge_aviator -m robotics/uav_microburst_stall --interactive
+
+# Test with Google Gemini or OpenAI
+python scripts/simulate_asset.py -p opsie_sci -m sre/kubernetes_retry_storm --model gemini-2.5-flash
+python scripts/simulate_asset.py -p chef_north_med -m culinary/thessaloniki_bougatsa_crisis --model gpt-4o
+```
+
