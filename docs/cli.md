@@ -20,6 +20,29 @@ mnemolink --help
 
 ---
 
+## Interactive Terminal Menu & Gradient Splash
+
+When executed without arguments on an interactive terminal (TTY):
+
+```bash
+mnemolink
+```
+
+MnemoLink launches an interactive navigation menu featuring a 3-stop RGB pastel gradient splash screen (`#efcefa` &rarr; `#bae6fd` &rarr; `#bbf7d0`), ratio-spaced command dispatch with heavy borders, and graceful keyboard navigation:
+- `[1] list` &mdash; Discover and display catalog assets with interactive filtering
+- `[2] inspect` &mdash; Interactively inspect archetype axioms, episodic scars, and teleology
+- `[3] compose` &mdash; Prompt-guided bundle composition with adapter format targeting
+- `[4] bench` &mdash; Run empirical benchmark crucibles (offline mock or live model APIs)
+- `[5] new` &mdash; Scaffold a new Persona, Memory, or Lineage template
+- `[6] help` &mdash; Interactive drill-down submenus for architecture, commands, and adapters
+- `[7] theme` &mdash; Switch CLI presentation palette (`pastel`, `ocean`, `mono`)
+- `0` / `q` &mdash; Exit cleanly with zero traceback spills
+- `b` &mdash; Step back to previous menu level
+
+In non-interactive environments (such as CI pipelines or pipes `mnemolink | cat`), the CLI automatically detects non-TTY mode, outputs standard usage instructions, and exits with code 0 without hanging.
+
+---
+
 ## Commands Reference
 
 ### 1. `list`
