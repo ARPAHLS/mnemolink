@@ -51,3 +51,6 @@ htmlcov/
 
 # Local drafts & scratch directories
 0_local_drafts/
+
+# Agent workspace customizations (local only)
+.agents/
