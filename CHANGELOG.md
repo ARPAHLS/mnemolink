@@ -9,18 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-09-13
+
 ### Added
 - **Persistent User Configuration Architecture (`~/.mnemolink/config.yaml`)**:
   - Global user configuration system storing active CLI theme (`pastel`, `ocean`, `mono`), preferred provider, active model, custom Ollama host, author name, and custom catalog directories.
   - Automatic directory resolution: custom catalog roots defined in `config.yaml` are discovered seamlessly across all search hierarchies (`Project Local` -> `User Cache` -> `Bundled Catalog`).
 - **Dynamic Unhardcoded Model Selection & Ollama Local Verification**:
   - Zero hardcoding: user explicitly chooses execution target (`Cloud Provider API` vs `Local Ollama`).
-  - Cloud APIs (Gemini, Claude, Mistral, OpenAI) display official documentation URLs in rich tooltips (`https://ai.google.dev/...`, `https://docs.anthropic.com/...`, etc.) and examples, prompting the user to type or paste the exact model string.
+  - Cloud APIs (Gemini, Claude, Mistral, OpenAI) display official documentation URLs in rich tooltips (`https://ai.google.dev/...`, `https://docs.anthropic.com/...`, etc.) and active 2026 models (`claude-sonnet-5`, `gemini-3.5-flash`, `gpt-5.6-luna`, `ministral-8b-latest`), prompting the user to type or paste the exact model string.
   - Local Ollama prompts for model name, queries the local daemon via `list_ollama_local_models()`, and if missing, issues a warning, lists installed models, provides `ollama pull <model>` instructions and `https://ollama.com/library` documentation, letting the user choose between `use`, `pick`, or `re-enter`.
 - **3-Tier Credential Precedence & Auto-Persistence (`~/.mnemolink/.env`)**:
   - Secure credential precedence: Workspace `.env` (`./.env`) -> User Global `.env` (`~/.mnemolink/.env`) -> Process Environment (`os.environ`) -> Interactive Secure Prompt.
   - Interactive prompts display direct API key console links (Google AI Studio, Anthropic Console, Mistral Console, OpenAI Platform, Groq, DeepSeek) and automatically persist entered keys to `~/.mnemolink/.env`.
-- **Interactive AI Mnemonic Wizard & Authoring Studio (`mnemolink wizard` / `mnemolink author`)**:
+- **Interactive AI Mnemonic Wizard & Authoring Studio (`mnemolink wizard` / `mnemolink author`, [PR #4](https://github.com/ARPAHLS/mnemolink/pull/4))**:
   - Unified Authoring Hub (`mnemolink author` / `mnemolink wizard` and interactive menu option `[5] author`) providing three creation paths: conversational AI scar elicitation, guided manual interview, and fast scaffolding.
   - Architectural role clarity: `author` / `wizard` handles asset manufacturing (writing `.yaml` and `card.json` to catalog disk), whereas `compose` handles prompt assembly (compiling catalog assets into target-model prompts).
   - Guided conversational scar elicitation extracting genuine operational failure modes, cognitive boundaries, sensory cues, and philosophical reflections.
@@ -32,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `mnemolink config` / `mnemolink config show`: View active settings, configuration paths, and API credential status.
   - `mnemolink config set <key> <value>`: Programmatically update user preferences from terminal.
   - Interactive menu option `[8] config` for managing settings and credentials directly in the interactive splash menu.
+- **Expanded Test Suite (93 Passing Tests)**:
+  - Added 39 new unit and integration tests across `tests/test_config.py` (12 tests), `tests/test_wizard.py` (27 tests), and `tests/test_cli.py` covering persistent configuration, 3-tier credentials, Ollama tags, and dual-track authoring flows.
 
 ## [0.2.2] - 2026-09-13
 
@@ -183,7 +187,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive `README.md`, `COMPARISON.md`, `CONTRIBUTING.md`, `CITATION.cff`, `SECURITY.md`.
   - Runnable examples in `examples/`.
 
-[Unreleased]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.3...HEAD
+[0.2.3]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ARPAHLS/mnemolink/compare/v0.1.0...v0.2.0

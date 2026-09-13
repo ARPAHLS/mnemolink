@@ -14,7 +14,7 @@ abstract: >-
   UAVs, robotics, appliances, and BMIs. It decouples experiential context from weights,
   providing standardized 5-kind memory taxonomy, teleological discovery, and prefix-cache-friendly
   mnemonic chunks.
-version: "0.2.2"
+version: "0.2.3"
 date-released: "2026-09-13"
 license: MIT
 repository-code: "https://github.com/ARPAHLS/mnemolink"
