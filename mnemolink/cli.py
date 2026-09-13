@@ -11,6 +11,7 @@ import builtins
 import sys
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+import json
 import yaml
 from rich import box
 from rich.console import Console
@@ -102,14 +103,18 @@ def _hex_to_rgb(hex_code: str) -> Tuple[int, int, int]:
 
 
 def _rgb_to_hex(rgb: Tuple[int, int, int]) -> str:
-    r, g, b = rgb
+    r, g, b = (max(0, min(255, int(v))) for v in rgb)
     return f"#{r:02x}{g:02x}{b:02x}"
 
 
 def _lerp_rgb(
     start: Tuple[int, int, int], end: Tuple[int, int, int], t: float
 ) -> Tuple[int, int, int]:
-    return tuple(int(start[i] + (end[i] - start[i]) * t) for i in range(3))
+    clamped_t = max(0.0, min(1.0, float(t)))
+    return tuple(
+        max(0, min(255, int(start[i] + (end[i] - start[i]) * clamped_t)))
+        for i in range(3)
+    )
 
 
 def _splash_gradient_color(column: int, width: int) -> str:
@@ -149,7 +154,8 @@ def _read_line(
     if input_fn is None:
         input_fn = builtins.input
     try:
-        return input_fn(prompt).strip()
+        val = input_fn(prompt)
+        return val.strip() if val is not None else None
     except (KeyboardInterrupt, EOFError):
         return None
 
@@ -472,7 +478,7 @@ def cmd_new(
         "author": "Community Contributor",
     }
     (target_dir / "card.json").write_text(
-        yaml.dump(card, sort_keys=False), encoding="utf-8"
+        json.dumps(card, indent=2) + "\n", encoding="utf-8"
     )
 
     c.print(

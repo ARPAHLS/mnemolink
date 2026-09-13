@@ -64,6 +64,7 @@ def test_cli_compose(capsys):
 
 
 def test_cli_new(tmp_path):
+    import json
     target_dir = tmp_path / "custom_persona"
     args = MagicMock()
     args.kind = "persona"
@@ -72,7 +73,11 @@ def test_cli_new(tmp_path):
     cmd_new(args)
 
     assert (target_dir / "persona.yaml").is_file()
-    assert (target_dir / "card.json").is_file()
+    card_path = target_dir / "card.json"
+    assert card_path.is_file()
+    card_data = json.loads(card_path.read_text(encoding="utf-8"))
+    assert card_data["id"] == "custom_scaffold"
+    assert card_data["kind"] == "persona"
 
 
 def test_lerp_rgb_and_gradient_colors():
@@ -85,6 +90,11 @@ def test_lerp_rgb_and_gradient_colors():
     assert _lerp_rgb(start, end, 0.0) == (10, 20, 30)
     assert _lerp_rgb(start, end, 0.5) == (60, 70, 80)
     assert _lerp_rgb(start, end, 1.0) == (110, 120, 130)
+
+    # Out of bounds t clamping
+    assert _lerp_rgb(start, end, -0.5) == (10, 20, 30)
+    assert _lerp_rgb(start, end, 2.5) == (110, 120, 130)
+    assert _rgb_to_hex((300, -10, 128)) == "#ff0080"
 
     # Gradient boundary checks
     assert _splash_gradient_color(0, 1) == THEMES["pastel"]["gradient_start"]
@@ -140,6 +150,9 @@ def test_read_line_exceptions():
         return "  hello world  "
 
     assert _read_line("prompt", input_fn=normal_input) == "hello world"
+
+    # None return from input_fn handled safely without AttributeError
+    assert _read_line("prompt", input_fn=lambda _p: None) is None
 
 
 def test_theme_switching():
