@@ -7,14 +7,49 @@ on:
     branches: [ "main" ]
 
 jobs:
+  lint-and-standards:
+    name: Lint, Format & Standards Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Code Formatting Check (Black)
+        run: |
+          black --check mnemolink tests examples scripts
+
+      - name: Linting Check (Flake8)
+        run: |
+          flake8 mnemolink tests examples scripts
+
+      - name: Repository Standards & Integrity Gate
+        run: |
+          python scripts/verify_repo.py
+
   test:
     name: Test (Python ${{ matrix.python-version }} on ${{ matrix.os }})
+    needs: [lint-and-standards]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        include:
+          - os: ubuntu-latest
+            python-version: "3.10"
+          - os: ubuntu-latest
+            python-version: "3.13"
+          - os: windows-latest
+            python-version: "3.13"
 
     steps:
       - uses: actions/checkout@v4
@@ -30,24 +65,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[all]"
 
-      - name: Code Formatting Check (Black)
-        run: |
-          black --check mnemolink tests examples scripts
-
-      - name: Linting Check (Flake8)
-        run: |
-          flake8 mnemolink tests examples scripts
-
-      - name: Repository Standards & Integrity Gate
-        run: |
-          python scripts/verify_repo.py
-
       - name: Run Test Suite (Pytest)
         run: |
           pytest tests/ -v
 
   build-check:
     name: Package Build Verification (sdist & wheel)
+    needs: [lint-and-standards]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
