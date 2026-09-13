@@ -33,7 +33,8 @@ pip install -e ".[all]"
 ### Verification
 Verify that the CLI and library are operational:
 ```bash
-# Check CLI installation
+# Interactive splash menu (TTY) or standard usage when piped
+mnemolink
 mnemolink --help
 
 # Verify Python package import
