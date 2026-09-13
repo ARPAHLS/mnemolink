@@ -206,3 +206,90 @@ def test_north_mediterranean_chef_and_thessaloniki_breakfasts():
 
     mem_cards = find_cards(needs=["egg_cookery"])
     assert any(c.id == "culinary/thessaloniki_breakfasts" for c in mem_cards)
+
+
+def test_bladez_persona():
+    """Verify that bladez persona loads, validates, decomposes, and composes cleanly."""
+    bladez = load_persona("bladez")
+    assert bladez.id == "bladez"
+    assert bladez.domain == "security"
+    assert any("ice-skate uphill" in a for a in bladez.axioms)
+    assert any("Trust the silver" in a for a in bladez.axioms)
+
+    chunks = bladez.to_chunks()
+    assert len(chunks) >= 4
+    chunk_types = {c.chunk_type for c in chunks}
+    assert "philosophy" in chunk_types
+    assert "axiom" in chunk_types
+    assert "boundary" in chunk_types
+
+    # Teleological discovery
+    cards = find_cards(drives=["existential_vigilance"])
+    assert any(c.id == "bladez" for c in cards)
+
+    # Compose bundle
+    bundle = compose(
+        persona="bladez",
+        memories=["robotics/uav_microburst_stall"],
+    )
+    rendered = bundle.render_markdown()
+    assert "Bladez" in rendered
+    assert "Coastal Cliff Microburst Stall Recovery" in rendered
+
+
+def test_bald_accountant_persona():
+    """Verify that bald_accountant loads, decomposes, and composes cleanly."""
+    acct = load_persona("bald_accountant")
+    assert acct.id == "bald_accountant"
+    assert acct.domain == "finance"
+    assert "choreography" in acct.core_philosophy.lower()
+    assert any("omerta" in a.lower() for a in acct.axioms)
+
+    chunks = acct.to_chunks()
+    assert len(chunks) >= 4
+    chunk_types = {c.chunk_type for c in chunks}
+    assert "philosophy" in chunk_types
+    assert "axiom" in chunk_types
+    assert "boundary" in chunk_types
+
+    # Teleological discovery
+    cards = find_cards(drives=["jurisdictional_insulation"])
+    assert any(c.id == "bald_accountant" for c in cards)
+
+    # Compose bundle
+    bundle = compose(
+        persona="bald_accountant",
+        memories=["legal/clause_ambiguity_scar"],
+    )
+    rendered = bundle.render_markdown()
+    assert "Bald Accountant" in rendered
+    assert "Warranty Indemnity Trial Loss" in rendered
+
+
+def test_kpop_celeb_persona():
+    """Verify that kpop_celeb loads, decomposes, and composes cleanly."""
+    kpop = load_persona("kpop_celeb")
+    assert kpop.id == "kpop_celeb"
+    assert kpop.domain == "entertainment"
+    assert any("three seconds" in a for a in kpop.axioms)
+    assert any("parasocial" in a.lower() for a in kpop.axioms)
+
+    chunks = kpop.to_chunks()
+    assert len(chunks) >= 4
+    chunk_types = {c.chunk_type for c in chunks}
+    assert "philosophy" in chunk_types
+    assert "axiom" in chunk_types
+    assert "boundary" in chunk_types
+
+    # Teleological discovery
+    cards = find_cards(drives=["viral_momentum"])
+    assert any(c.id == "kpop_celeb" for c in cards)
+
+    # Compose bundle
+    bundle = compose(
+        persona="kpop_celeb",
+        memories=["culinary/thessaloniki_breakfasts"],
+    )
+    rendered = bundle.render_markdown()
+    assert "K-Pop Celebrity" in rendered
+    assert "Unforgettable Breakfasts and Brunches" in rendered

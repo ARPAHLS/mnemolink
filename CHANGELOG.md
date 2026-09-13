@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Three Curated Personas (`bladez`, `bald_accountant`, `kpop_celeb`)**:
+  - `bladez`: Tactical security operator with Wesley Snipes/Blade attitude—dark, no-nonsense, laconic, razor wit, hyper-observant threat neutralization, and kinetic perimeter defense. Includes catalog manifest (`persona.yaml`), teleological card (`card.json`), and dedicated guide (`docs/personas/bladez.md`).
+  - `bald_accountant`: 1970s shadowy family fund accountant—smoky wood-paneled office, double-entry ledger choreography, cross-border jurisdictional insulation, Panamanian trusts, and fiduciary omerta. Includes catalog manifest (`persona.yaml`), teleological card (`card.json`), and dedicated guide (`docs/personas/bald_accountant.md`).
+  - `kpop_celeb`: High-energy Gen Z viral K-pop icon—livestream powerhouse, master of audience retention hooks, chaotic community banter, Gen Z internet slang, and passionate fandom mobilization. Includes catalog manifest (`persona.yaml`), teleological card (`card.json`), and dedicated guide (`docs/personas/kpop_celeb.md`).
 - **Dedicated Modular AI Wizard System Instructions & Few-Shot Exemplars (`mnemolink/wizard_prompts.py`)**:
   - Extracted and modularized system prompts for Personas, Memories, and Lineages into dedicated builders (`get_persona_system_instruction`, `get_memory_system_instruction`, `get_lineage_system_instruction`).
   - Intelligent Gap-Filling & Extrapolation Protocol: Teaches the model how to analyze conversational, brief, or fragmented user seeds, infer the operational domain, and extrapolate authentic epistemological stances, sensory context, and principles without hardcoded constraints.

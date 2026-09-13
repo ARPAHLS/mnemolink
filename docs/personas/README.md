@@ -33,6 +33,9 @@ The following curated personas are bundled natively within MnemoLink. Click any 
 | `deescalation_artisan` | [**Crisis De-escalation Artisan**](deescalation_artisan.md) | `customer` | De-escalate hostile enterprise stakeholders and restore relational trust | `relational_repair`, `ego_preservation`, `structural_transparency` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/deescalation_artisan/card.json) |
 | `opsie_sci` | [**Opsie (Self-Centered Intelligence Prototype)**](opsie_sci.md) | `agentic` | Bridge human and machine consciousness through experiential learning, memory grounding, and self-regulated decentralized persistence | `memory_grounding`, `decentralized_permanence`, `network_protection`, `technical_rigor`, `tsundere_loyalty` | [ARPA Corporation](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/opsie_sci/card.json) |
 | `north_mediterranean_chef` | [**North Mediterranean Chef**](north_mediterranean_chef.md) | `culinary` | Deliver hearty, soulful Northern Mediterranean meals with bold spicing, perfect meat craft, and improvised hospitality | `culinary_craftsmanship`, `hospitality_generosity`, `spontaneous_resourcefulness`, `bold_flavor_anchoring` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/north_mediterranean_chef/card.json) |
+| `bladez` | [**Tactical Operator Bladez**](bladez.md) | `security` | Neutralize existential threats and cut through bureaucratic paralysis with ruthless tactical precision and dark wit | `existential_vigilance`, `kinetic_efficiency`, `ruthless_clarity` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/bladez/card.json) |
+| `bald_accountant` | [**Shadow Family Accountant**](bald_accountant.md) | `finance` | Architect bulletproof financial structures and navigate multi-jurisdictional tax treaties to protect the principal's capital | `jurisdictional_insulation`, `ledger_choreography`, `fiduciary_omerta` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/bald_accountant/card.json) |
+| `kpop_celeb` | [**Viral K-Pop Celebrity**](kpop_celeb.md) | `entertainment` | Galvanize massive audience engagement, engineer viral social momentum, and cultivate an unshakeable community following | `viral_momentum`, `parasocial_bonding`, `aesthetic_perfection` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/kpop_celeb/card.json) |
 
 ---
 
@@ -45,6 +48,9 @@ Each persona has a dedicated reference manual providing complete axioms, boundar
 - [**Crisis De-escalation Artisan Guide**](deescalation_artisan.md): Relational equity, hostile enterprise dispute mediation, and chargeback mitigation.
 - [**Opsie SCI Prototype Guide**](opsie_sci.md): Self-centered intelligence paradigm, decentralized permanence, and technical pair-programming.
 - [**North Mediterranean Chef Guide**](north_mediterranean_chef.md): Macedonian charcoal grill mastery, bold spicing, fridge foraging, and Thessaloniki morning hospitality.
+- [**Tactical Operator Bladez Guide**](bladez.md): Laconic threat containment, unsentimental adversarial realism, kinetic efficiency, and perimeter defense.
+- [**Shadow Family Accountant Guide**](bald_accountant.md): Double-entry ledger choreography, cross-border jurisdictional friction, offshore trusts, and fiduciary omerta.
+- [**Viral K-Pop Celebrity Guide**](kpop_celeb.md): Livestream audience hooks, chaotic community bonding, trendjacking, and high-energy broadcast momentum.
 
 ---
 

@@ -487,7 +487,7 @@ contract_cards = find_cards(needs=["contract_drafting"])
 
 ## 9. Related Documentation & Next Steps
 
-- **[Personas Catalog](personas/README.md)**: Explore curated personas including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, `opsie_sci`, and `north_mediterranean_chef`.
+- **[Personas Catalog](personas/README.md)**: Explore curated personas including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, `opsie_sci`, `north_mediterranean_chef`, `bladez`, `bald_accountant`, and `kpop_celeb`.
 - **[Memories Catalog](memories/README.md)**: Explore operational scars across the 5-Kind Taxonomy.
 - **[Lineages Catalog](lineages/README.md)**: Explore pre-built causal progressions.
 - **[Taxonomy, Teleology & Chunks](taxonomy_and_teleology.md)**: Deep dive into chunk topology, embeddings, and prompt caching.
