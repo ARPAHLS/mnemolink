@@ -8,6 +8,21 @@ This document clarifies how MnemoLink compares to other approaches in the AI mem
 
 ---
 
+## The Memory Paradigm Split: Search Database vs. Context Firmware
+
+Most memory frameworks treat agent memory as an external search database: extracting conversational factoids, generating dense embeddings, and querying a vector index via background daemon processes.
+
+MnemoLink approaches memory from an entirely different direction: **as a version-controlled, composable firmware layer compiled directly into KV-cache**.
+
+| Paradigm | Architecture & Footprint | Primary Failure Mode | Best Suited For |
+| :--- | :--- | :--- | :--- |
+| **Vector RAG Memory**<br/>*(Mem0, Zep)* | Background DB server, dynamic embedding extraction, top-$k$ similarity queries | Semantic drift, query latency, irrelevant context injection | Conversational user fact tracking (*"User prefers coffee"*) |
+| **Virtual OS Memory**<br/>*(Letta / MemGPT)* | Agent self-editing paging via continuous tool-calling | Hallucinatory self-modification, runaway token bloat | Long-running open-ended research agents |
+| **Flat System Prompts**<br/>*(Character Cards)* | Static string literals (*"You are an expert litigator..."*) | Sycophancy, capitulation under adversarial pressure | Conversational roleplay and casual chatbots |
+| **Mnemonic Firmware**<br/>*(MnemoLink)* | Pure Python, zero daemons, deterministic prefix-cache assembly | Static context; cannot autonomously acquire ad-hoc user preferences at runtime without explicit re-composition | High-stakes operational agents (legal, SRE, UAVs, robotics) |
+
+---
+
 ## Architectural Dimension Comparison
 
 | Dimension | **MnemoLink** | **Mem0** | **Letta / MemGPT** | **Zep** | **Character Cards V2** | **LangChain Memory** |

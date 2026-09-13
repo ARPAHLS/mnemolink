@@ -46,6 +46,15 @@ Every memory is further atomized into discrete **Mnemonic Chunks** (`story`, `sc
 ### 3. Lineage
 A Lineage is a chronological sequence of memories linked by **dynamic causal bridges**. Like interlocking lego bricks, the `LineageBuilder` identifies how memory A shaped the mindset that navigated memory B, producing a cumulative tower of background context that guides decisions organically without brittle if-else logic. Explore pre-composed lineages in the **[Lineages Library](lineages/README.md)**.
 
+### Core Architecture & Operating Principles
+
+In production systems, MnemoLink operates as a **structured prompt-composition and context-injection engine**:
+
+1. **Persona as Invariant Prefix**: Core identity, boundaries, and axioms are placed at the prompt head as a static prefix, anchoring behavior and maximizing KV-cache hit rates across requests.
+2. **Memory as Negative Priors ("Scars")**: Rather than generic roleplay prompts telling models *what to be*, memories inject concrete operational debriefs of *what has failed* (trial-and-error traps, edge-case bugs, costly outages) along with specific prevention lessons.
+3. **Lineage as Causal Connective Tissue**: Memory sequences are linked chronologically by associative bridges, establishing how surviving earlier failures forged subsequent operational reflexes.
+4. **Universal Adapters as Zero-Middleware Compilers**: Bundles compile deterministically into target prompt structures (Anthropic XML, OpenAI JSON, Gemini instructions, Ollama Modelfiles, or chunk objects) with zero background server daemons and zero external network dependencies.
+
 ---
 
 ## Further Reading

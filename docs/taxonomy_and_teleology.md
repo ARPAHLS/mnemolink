@@ -113,6 +113,14 @@ Personas are similarly decomposed into chunk types:
 
 See the **[Personas Library](personas/README.md)** for all bundled persona manifests and chunk specifications.
 
+### Chunks as Composable Context Blocks
+
+Instead of treating an operational debrief as an indivisible monolithic text block, MnemoLink atomizes memory into discrete functional units to optimize token budgets and context composition:
+
+- **Targeted Negative Priors**: In token-constrained prompts, developers can inject only `scars` and `lessons` chunks, grounding the model in failure avoidance without expending context on narrative backstory (`story`).
+- **Sensory & Anomaly Early Warning**: Autonomous systems and edge robotics can route `triggers` directly into perception and anomaly-detection loops to flag environmental precursors before an incident repeats.
+- **Granular Composition**: Applications can selectively request specific chunk combinations (e.g. `memory_specs=[{"id": ..., "chunks": ["scars", "lessons"]}]`), maintaining strict token efficiency while retaining firm operational guardrails.
+
 ---
 
 ## Prefix Prompt Caching and Context Topology

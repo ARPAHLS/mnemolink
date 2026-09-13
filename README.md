@@ -298,7 +298,18 @@ MnemoLink is an integral pillar of the **ARPA Hellenic Logical Systems** open-so
 
 ## Comparison
 
-For a rigorous analysis against **Mem0**, **Letta / MemGPT**, **Zep**, **Character Card V2**, and **LangChain Memory**, see **[COMPARISON.md](COMPARISON.md)**.
+Most existing agent memory approaches fall into three patterns:
+- **Vector RAG Memory (e.g. Mem0, Zep)**: Probabilistic extraction into background vector databases. Introduces daemon overhead, query latency, and noisy top-$k$ semantic drift.
+- **Virtual OS Memory (e.g. Letta / MemGPT)**: Continuous tool-calling self-edits that risk context bloat and hallucination loops.
+- **Flat System Prompts (`"You are an expert..."`)**: Static and brittle strings lacking chronological depth, operational boundaries, and negative priors.
+
+**MnemoLink treats agent memory not as an external search database, but as a composable, version-controlled firmware layer loaded directly into KV-cache:**
+
+1. **Negative Priors ("Scars")**: Standard prompts tell models *what to be*; MnemoLink grounds them in *what has failed* (trial-and-error traps, syntax ambushes, costly operational outages).
+2. **Deterministic Context over Probabilistic RAG**: Pure Python, zero background daemons, and zero network calls. Agents receive exact episodic priors deterministically tied to the operational task.
+3. **Prefix-Cache KV Optimization**: Formats static identity axioms at the prompt head to maximize cache hits across Anthropic, Google Gemini, OpenAI, and vLLM, slashing token costs and prefill latency.
+
+For a comprehensive feature matrix and breakdown against **Mem0**, **Letta / MemGPT**, **Zep**, **Character Cards V2**, and **LangChain Memory**, see **[COMPARISON.md](COMPARISON.md)**.
 
 ---
 
