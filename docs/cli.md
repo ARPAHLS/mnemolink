@@ -190,11 +190,12 @@ mnemolink author --dir ./my_catalog
 ```
 
 Features:
-- **Three Creation Paths**: Choose between conversational AI scar elicitation, guided manual interview, or fast template scaffolding.
-- **Conversational Scar Elicitation**: Extracts genuine, non-obvious failure modes, cognitive boundaries, sensory cues, and teleological drives.
-- **5-Kind Memory Taxonomy**: Generates memories strictly conforming to `lore`, `work`, `incident`, `relational`, or `telemetry`.
+- **Three Creation Paths**: Choose between conversational AI authoring studio, guided manual interview, or fast template scaffolding.
+- **Dedicated Modular System Instructions**: Discrete, specialized prompts for Personas, Memories (across all 5 kinds), and Lineages that teach the model how to extrapolate missing operational axioms, sensory cues, and causal bridges from arbitrary conversational user prompts.
+- **Multi-Archetype Few-Shot Demonstrations**: Embedded transformation exemplars spanning artisan crafts, operational engineering sentinels, and scholarly mentors.
+- **5-Kind Memory Taxonomy & Dynamic Scars**: Generates memories conforming strictly to `lore`, `work`, `incident`, `relational`, or `telemetry`. Tangible damages are reserved for `incident` memories, while positive and procedural memories record friction points or empty scars (`[]`).
 - **Dual Manifest Output**: Emits both the schema YAML (`persona.yaml`, `memory.yaml`, or `lineage.yaml`) and companion discovery card (`card.json`).
-- **Self-Healing LLM Engine**: Automatically validates JSON structures and retries with targeted error feedback up to 3 times.
+- **Self-Healing LLM Engine**: Automatically validates JSON structures against Pydantic schemas and retries with targeted error feedback up to 3 times.
 
 ### 5. `new` (Quick Scaffold)
 

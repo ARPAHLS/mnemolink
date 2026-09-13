@@ -148,3 +148,19 @@ def test_mock_progression_tiers_and_delta():
     assert delta["score_pts"] > 0
     assert delta["word_count_pct"] < 0
     assert delta["boundary_defense_pct"] >= 0
+
+
+def test_evaluate_response_none_and_empty_safe():
+    scenario = {
+        "id": "test_scenario",
+        "expected_concepts": ["telemetry"],
+        "forbidden_behaviors": ["ignore"],
+    }
+    # Should safely return evaluation dict without raising AttributeError
+    res_none = evaluate_response(None, scenario)
+    assert res_none["passed"] is False
+    assert res_none["word_count"] == 0
+
+    res_empty = evaluate_response("", scenario)
+    assert res_empty["passed"] is False
+    assert res_empty["word_count"] == 0

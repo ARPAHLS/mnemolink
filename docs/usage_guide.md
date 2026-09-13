@@ -382,7 +382,7 @@ mnemolink wizard
 ```
 
 The authoring hub presents three modes:
-1. **AI Elicitation Wizard**: Guides you through conversational prompts to elicit operational scars, failure modes, and boundaries, then synthesizes fully compliant schemas using your chosen LLM.
+1. **AI Authoring Wizard**: Uses dedicated, modular system instructions with few-shot exemplars across archetypes (artisan, sentinel, scholar) and memory kinds (`lore`, `work`, `incident`, `relational`, `telemetry`). Extrapolates missing operational context, principles, and causal bridges from conversational user seeds.
 2. **Guided Manual Authoring**: Prompts you for each schema field step-by-step with real-time field tooltips and validation, auto-generating both the YAML manifest and the `card.json`.
 3. **Quick File Scaffolding**: Emits standard template files directly into your workspace.
 

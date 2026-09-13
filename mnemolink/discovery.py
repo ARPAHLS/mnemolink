@@ -53,6 +53,11 @@ def get_user_catalog_roots() -> List[Path]:
     if default_user.is_dir() and default_user not in roots:
         roots.append(default_user)
 
+    # Also include ~/mnemonics if existing (e.g. created by cli/wizard in user home)
+    user_mnemonics = Path.home() / "mnemonics"
+    if user_mnemonics.is_dir() and user_mnemonics not in roots:
+        roots.append(user_mnemonics)
+
     # Configured roots from ~/.mnemolink/config.yaml
     try:
         from mnemolink.config import load_config
@@ -75,6 +80,15 @@ def get_project_catalog_roots(cwd: Optional[Union[str, Path]] = None) -> List[Pa
         base / "mnemonics",
         base / "catalog",
     ]
+    # Check if base itself directly contains personas/, memories/, lineages/, or legacy memorys/
+    if (
+        (base / "personas").is_dir()
+        or (base / "memories").is_dir()
+        or (base / "lineages").is_dir()
+        or (base / "memorys").is_dir()
+    ):
+        candidates.append(base)
+
     return [c for c in candidates if c.is_dir()]
 
 
@@ -265,12 +279,19 @@ class MnemonicResolver:
         clean_id = identifier.replace("\\", "/").strip("/")
         if clean_id.startswith("memories/"):
             clean_id = clean_id[len("memories/") :]
+        elif clean_id.startswith("memorys/"):
+            clean_id = clean_id[len("memorys/") :]
 
         for _, root in self.get_search_hierarchy():
-            # Check root/memories/<clean_id>
+            # Check canonical root/memories/<clean_id>
             candidate_dir = root / "memories" / clean_id
             if candidate_dir.is_dir():
                 return self.load_memory_from_dir_or_file(candidate_dir)
+
+            # Check legacy/typo root/memorys/<clean_id>
+            candidate_dir_typo = root / "memorys" / clean_id
+            if candidate_dir_typo.is_dir():
+                return self.load_memory_from_dir_or_file(candidate_dir_typo)
 
             # Check root/<clean_id>
             direct_dir = root / clean_id
@@ -280,10 +301,15 @@ class MnemonicResolver:
             ):
                 return self.load_memory_from_dir_or_file(direct_dir)
 
-            # Check root/memories/<clean_id>.yaml
+            # Check canonical root/memories/<clean_id>.yaml
             candidate_file = root / "memories" / f"{clean_id}.yaml"
             if candidate_file.is_file():
                 return self.load_memory_from_dir_or_file(candidate_file)
+
+            # Check legacy/typo root/memorys/<clean_id>.yaml
+            candidate_file_typo = root / "memorys" / f"{clean_id}.yaml"
+            if candidate_file_typo.is_file():
+                return self.load_memory_from_dir_or_file(candidate_file_typo)
 
         raise FileNotFoundError(
             f"Memory '{identifier}' could not be resolved across search hierarchy: "
@@ -398,58 +424,63 @@ class MnemonicResolver:
                             except Exception:
                                 pass
 
-            # Scan memories (supports category subdirectories)
+            # Scan memories (supports category subdirectories across memories and memorys)
             if kind in (None, "memory", "memories"):
-                m_dir = root / "memories"
-                if m_dir.is_dir():
-                    for cat in m_dir.iterdir():
-                        if cat.is_dir():
-                            # Could be category dir or direct memory dir
-                            has_manifest = (cat / "memory.yaml").is_file() or (
-                                cat / "manifest.yaml"
-                            ).is_file()
-                            targets = (
-                                [cat]
-                                if has_manifest
-                                else [sub for sub in cat.iterdir() if sub.is_dir()]
-                            )
-                            for mem_entry in targets:
-                                try:
-                                    mem = self.load_memory_from_dir_or_file(mem_entry)
-                                    if mem.id not in seen_ids:
-                                        seen_ids.add(mem.id)
-                                        card_data = (
-                                            self._load_json_if_exists(
-                                                mem_entry / "card.json"
-                                            )
-                                            or {}
+                for m_folder in ("memories", "memorys"):
+                    m_dir = root / m_folder
+                    if m_dir.is_dir():
+                        for cat in m_dir.iterdir():
+                            if cat.is_dir():
+                                # Could be category dir or direct memory dir
+                                has_manifest = (cat / "memory.yaml").is_file() or (
+                                    cat / "manifest.yaml"
+                                ).is_file()
+                                targets = (
+                                    [cat]
+                                    if has_manifest
+                                    else [sub for sub in cat.iterdir() if sub.is_dir()]
+                                )
+                                for mem_entry in targets:
+                                    try:
+                                        mem = self.load_memory_from_dir_or_file(
+                                            mem_entry
                                         )
-                                        cards.append(
-                                            CatalogCard(
-                                                id=mem.id,
-                                                name=mem.name,
-                                                kind="memory",
-                                                domain=mem.domain,
-                                                summary=mem.summary
-                                                or mem.episode_debrief[:120],
-                                                version=mem.version,
-                                                tags=mem.tags,
-                                                memory_type=mem.memory_type,
-                                                teleology=mem.teleology
-                                                or (
-                                                    Teleology(**card_data["teleology"])
-                                                    if "teleology" in card_data
-                                                    else None
-                                                ),
-                                                chunk_manifest=card_data.get(
-                                                    "chunk_manifest"
-                                                ),
-                                                tier=tier.value,
-                                                path=str(mem_entry),
+                                        if mem.id not in seen_ids:
+                                            seen_ids.add(mem.id)
+                                            card_data = (
+                                                self._load_json_if_exists(
+                                                    mem_entry / "card.json"
+                                                )
+                                                or {}
                                             )
-                                        )
-                                except Exception:
-                                    pass
+                                            cards.append(
+                                                CatalogCard(
+                                                    id=mem.id,
+                                                    name=mem.name,
+                                                    kind="memory",
+                                                    domain=mem.domain,
+                                                    summary=mem.summary
+                                                    or mem.episode_debrief[:120],
+                                                    version=mem.version,
+                                                    tags=mem.tags,
+                                                    memory_type=mem.memory_type,
+                                                    teleology=mem.teleology
+                                                    or (
+                                                        Teleology(
+                                                            **card_data["teleology"]
+                                                        )
+                                                        if "teleology" in card_data
+                                                        else None
+                                                    ),
+                                                    chunk_manifest=card_data.get(
+                                                        "chunk_manifest"
+                                                    ),
+                                                    tier=tier.value,
+                                                    path=str(mem_entry),
+                                                )
+                                            )
+                                    except Exception:
+                                        pass
 
             # Scan lineages
             if kind in (None, "lineage", "lineages"):

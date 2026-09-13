@@ -25,6 +25,18 @@ from mnemolink.wizard import (
     _query_openai,
     query_llm_for_json,
 )
+from mnemolink.config import MnemoLinkConfig
+
+
+@pytest.fixture(autouse=True)
+def isolate_wizard_config(monkeypatch):
+    """Ensure wizard tests run with clean, unconfigured settings."""
+    clean_cfg = MnemoLinkConfig()
+    monkeypatch.setattr("mnemolink.wizard.load_config", lambda: clean_cfg)
+    monkeypatch.setattr("mnemolink.config.load_config", lambda: clean_cfg)
+    monkeypatch.setattr("mnemolink.config.save_config", lambda _: None)
+    monkeypatch.setattr("mnemolink.wizard.save_config", lambda _: None)
+
 
 # ==============================================================================
 # 1. JSON Cleaning and Response Parsing Tests
@@ -694,3 +706,254 @@ def test_cli_wizard_command_invocation(monkeypatch, tmp_path):
     main()
     assert len(called) == 1
     assert called[0] == tmp_path.resolve()
+
+
+def test_wizard_saves_to_canonical_memories_dir(tmp_path):
+    """Ensure memories are saved to 'memories/', NOT 'memorys/'."""
+    target_dir = tmp_path / "catalog_root"
+    wizard = MnemonicWizard(output_dir=target_dir)
+
+    manifest_data = {
+        "id": "startup/test_incident",
+        "name": "Test Incident",
+        "version": "1.0.0",
+        "domain": "startup",
+        "memory_type": "incident",
+        "summary": "Summary of incident",
+        "episode_debrief": "Full debrief",
+        "operational_scars": ["$10,000 lost"],
+        "lessons_learned": ["Always verify"],
+        "salience": 0.9,
+    }
+    card_data = {
+        "id": "startup/test_incident",
+        "name": "Test Incident",
+        "kind": "memory",
+        "domain": "startup",
+        "version": "1.0.0",
+        "summary": "Summary of incident",
+    }
+
+    saved = wizard._save_asset(
+        "memory", "startup/test_incident", manifest_data, card_data
+    )
+    assert saved.is_dir()
+    # Path must be target_dir / "memories" / "startup" / "test_incident"
+    assert "memories" in saved.parts
+    assert "memorys" not in saved.parts
+    assert (saved / "memory.yaml").is_file()
+    assert (saved / "card.json").is_file()
+
+
+def test_discovery_resolves_both_memories_and_legacy_memorys(tmp_path):
+    """Verify MnemonicResolver discovers assets in both memories/ and legacy memorys/."""
+    from mnemolink.discovery import MnemonicResolver
+
+    # 1. Setup canonical asset under memories/
+    can_dir = tmp_path / "memories" / "robotics" / "stall_incident"
+    can_dir.mkdir(parents=True)
+    (can_dir / "memory.yaml").write_text(
+        yaml.dump(
+            {
+                "id": "robotics/stall_incident",
+                "name": "Stall Incident",
+                "version": "1.0.0",
+                "domain": "robotics",
+                "memory_type": "incident",
+                "episode_debrief": "Debrief of canonical stall",
+                "operational_scars": ["1 airframe destroyed"],
+                "lessons_learned": ["Dive on stall"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # 2. Setup legacy asset under memorys/ (as created previously by typo)
+    leg_dir = tmp_path / "memorys" / "startup" / "fundraising_disillusionment"
+    leg_dir.mkdir(parents=True)
+    (leg_dir / "memory.yaml").write_text(
+        yaml.dump(
+            {
+                "id": "startup/fundraising_disillusionment",
+                "name": "Fundraising Disillusionment",
+                "version": "1.0.0",
+                "domain": "startup",
+                "memory_type": "incident",
+                "episode_debrief": "Debrief of legacy disillusionment",
+                "operational_scars": ["100 rejections"],
+                "lessons_learned": ["Build cashflow"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    resolver = MnemonicResolver(custom_roots=[tmp_path])
+
+    # Resolving canonical asset
+    mem_can = resolver.find_memory("robotics/stall_incident")
+    assert mem_can.id == "robotics/stall_incident"
+
+    # Resolving legacy typo asset
+    mem_leg = resolver.find_memory("startup/fundraising_disillusionment")
+    assert mem_leg.id == "startup/fundraising_disillusionment"
+
+    # Listing catalog discovers both
+    catalog = resolver.list_catalog(kind="memory")
+    found_ids = {c.id for c in catalog}
+    assert "robotics/stall_incident" in found_ids
+    assert "startup/fundraising_disillusionment" in found_ids
+
+
+def test_preview_memory_rendering():
+    """Verify that _preview_memory displays rich fields without errors."""
+    buf = io.StringIO()
+    console = Console(file=buf, force_terminal=False, width=120)
+    wizard = MnemonicWizard(console=console)
+
+    sample_memory = {
+        "id": "finance/bootstrapping_crucible",
+        "name": "Bootstrapping Crucible",
+        "domain": "finance",
+        "memory_type": "incident",
+        "salience": 0.95,
+        "summary": "Summary of crucible",
+        "episode_debrief": "Detailed narrative of cashflow emergency.",
+        "operational_scars": ["$25,000 personal savings deployed"],
+        "lessons_learned": ["Customer revenue precedes hiring"],
+        "sensory_context": "Late night glowing terminal with zero bank balance.",
+        "reflection": "Freedom from predatory venture capital is priceless.",
+        "teleology": {
+            "primary_goal": "achieve_profitability",
+            "agent_drives": ["sovereignty", "truth_anchoring"],
+            "applicable_needs": ["runway_planning"],
+        },
+        "tags": ["finance", "bootstrapping", "cashflow"],
+    }
+
+    wizard._preview_memory(sample_memory)
+    rendered = buf.getvalue()
+    assert "Bootstrapping Crucible" in rendered
+    assert "$25,000 personal savings deployed" in rendered
+    assert "Customer revenue precedes hiring" in rendered
+    assert "Late night glowing terminal" in rendered
+    assert "Freedom from predatory venture capital" in rendered
+    assert "achieve_profitability" in rendered
+    assert "#bootstrapping" in rendered
+
+
+def test_preview_memory_rendering_positive_lore_no_scars():
+    """Verify that _preview_memory correctly handles positive memories without scars."""
+    buf = io.StringIO()
+    console = Console(file=buf, force_terminal=False, width=120)
+    wizard = MnemonicWizard(console=console)
+
+    sample_lore = {
+        "id": "culinary/bougatsa_mastery",
+        "name": "Bougatsa Phyllo Mastery",
+        "domain": "culinary",
+        "memory_type": "lore",
+        "salience": 0.88,
+        "summary": "Mastering the aerial stretching of translucent phyllo dough.",
+        "episode_debrief": "Dawn practice under master baker Stefanos in Thessaloniki.",
+        "operational_scars": [],
+        "lessons_learned": [
+            "Flour gluten structure responds to patience, not hurried force.",
+            "Butter temperature must match ambient room humidity.",
+        ],
+        "sensory_context": "Sweet semolina custard aroma, warm clarified butter.",
+        "reflection": "True craftsmanship is passed hand-to-hand across generations.",
+        "teleology": {
+            "primary_goal": "perfect_phyllo_translucency",
+            "agent_drives": ["culinary_heritage", "artisan_discipline"],
+            "applicable_needs": ["pastry_crafting"],
+        },
+        "tags": ["culinary", "heritage", "pastry"],
+    }
+
+    wizard._preview_memory(sample_lore)
+    rendered = buf.getvalue()
+    assert "Bougatsa Phyllo Mastery" in rendered
+    assert "Dawn practice under master baker" in rendered
+    assert "Flour gluten structure responds to patience" in rendered
+    assert "Sweet semolina custard aroma" in rendered
+    assert "True craftsmanship is passed" in rendered
+    assert "Operational Scars" not in rendered
+
+
+def test_wizard_create_memory_ai_positive_lore(tmp_path):
+    """Verify AI authoring of positive lore memories without requiring operational scars."""
+    target_dir = tmp_path / "scaffolds"
+    buf = io.StringIO()
+    console = Console(file=buf, force_terminal=False, width=120)
+
+    mock_llm_result = {
+        "manifest": {
+            "id": "culinary/bougatsa_mastery",
+            "name": "Bougatsa Phyllo Mastery",
+            "version": "1.0.0",
+            "domain": "culinary",
+            "memory_type": "lore",
+            "summary": "Mastering the aerial stretching of translucent phyllo dough.",
+            "episode_debrief": (
+                "Dawn apprenticeships in Ano Poli kneading semolina dough by hand."
+            ),
+            "operational_scars": [],
+            "lessons_learned": [
+                "Gluten strands require gentle cadence rather than brute force."
+            ],
+            "sensory_context": "Warm butter, powdered cinnamon, marble rolling tables.",
+            "reflection": "Craft is an unbroken lineage of dedicated teachers.",
+            "salience": 0.85,
+            "author": "MnemoLink Wizard",
+            "tags": ["culinary", "mastery", "lore"],
+            "teleology": {
+                "primary_goal": "pastry_perfection",
+                "agent_drives": ["artisan_excellence"],
+                "applicable_needs": ["baking_precision"],
+            },
+        },
+        "card": {
+            "id": "culinary/bougatsa_mastery",
+            "name": "Bougatsa Phyllo Mastery",
+            "kind": "memory",
+            "domain": "culinary",
+            "version": "1.0.0",
+            "summary": "Mastering the aerial stretching of translucent phyllo dough.",
+            "tags": ["culinary", "mastery", "lore"],
+            "author": "MnemoLink Wizard",
+            "teleology": {
+                "primary_goal": "pastry_perfection",
+                "agent_drives": ["artisan_excellence"],
+                "applicable_needs": ["baking_precision"],
+            },
+            "chunks": ["story", "lessons", "reflection"],
+        },
+    }
+
+    responses = iter(["Mastering authentic bougatsa pastry in Thessaloniki", "y"])
+
+    wizard = MnemonicWizard(
+        console=console,
+        input_fn=lambda _: next(responses),
+        output_dir=target_dir,
+    )
+
+    with patch.object(
+        wizard,
+        "setup_ai_model",
+        return_value=("gemini", "gemini-3.5-flash", "mock_key"),
+    ):
+        with patch("mnemolink.wizard.query_llm_for_json", return_value=mock_llm_result):
+            saved_path = wizard.create_memory_ai()
+            assert saved_path is not None
+            assert (saved_path / "memory.yaml").is_file()
+            assert (saved_path / "card.json").is_file()
+
+            raw_manifest = yaml.safe_load(
+                (saved_path / "memory.yaml").read_text("utf-8")
+            )
+            mem = MemoryProduct(**raw_manifest)
+            assert mem.memory_type == "lore"
+            assert mem.domain == "culinary"
+            assert mem.operational_scars == []
+            assert len(mem.lessons_learned) == 1
