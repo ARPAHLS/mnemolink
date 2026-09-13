@@ -134,13 +134,13 @@ For interactive multi-turn conversations and testing unreleased personas or memo
 
 ```bash
 # Test a persona with an episodic memory against Claude
-python scripts/simulate_asset.py -p juris_philosopher -m legal/semicolon_fine_tuning_trap --model claude-3-7-sonnet-20250219
+python scripts/simulate_asset.py -p juris_philosopher -m legal/semicolon_fine_tuning_trap --model claude-sonnet-5
 
 # Interactive multi-turn interrogation loop
 python scripts/simulate_asset.py -p edge_aviator -m robotics/uav_microburst_stall --interactive
 
 # Test with Google Gemini or OpenAI
-python scripts/simulate_asset.py -p opsie_sci -m sre/kubernetes_retry_storm --model gemini-2.5-flash
-python scripts/simulate_asset.py -p chef_north_med -m culinary/thessaloniki_bougatsa_crisis --model gpt-4o
+python scripts/simulate_asset.py -p opsie_sci -m sre/kubernetes_retry_storm --model gemini-3.5-flash
+python scripts/simulate_asset.py -p chef_north_med -m culinary/thessaloniki_bougatsa_crisis --model gpt-5.6-luna
 ```
 

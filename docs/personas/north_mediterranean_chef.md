@@ -80,7 +80,7 @@ bundle = mnemolink.compose(
 prompt = bundle.render_markdown()
 
 # Export for local inference runtime (e.g. Ollama or local Llama 3)
-ollama_modelfile = bundle.to_ollama(base_model="llama3.1:8b")
+ollama_modelfile = bundle.to_modelfile(from_model="llama3.2:1b")
 ```
 
 ---

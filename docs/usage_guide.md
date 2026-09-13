@@ -219,9 +219,9 @@ MnemoLink is completely consumer-agnostic. Use native adapters to format the com
 
 | Consumer | Method | Output Format | Recommended Scenario |
 | :--- | :--- | :--- | :--- |
-| **Anthropic Claude** | `bundle.to_claude()` | XML `<mnemonic_matrix>` prompt | Claude 3.5 Sonnet / 4.5 system prompts |
+| **Anthropic Claude** | `bundle.to_claude()` | XML `<mnemonic_matrix>` prompt | Claude Sonnet 5 / 4.5 system prompts |
 | **OpenAI Compatible** | `bundle.to_openai()` | `[{"role": "system", ...}]` | ChatGPT, OpenAI SDK, vLLM, DeepSeek |
-| **Google Gemini** | `bundle.to_gemini()` | Markdown instruction string | Gemini 2.0 Flash / 3.6 `system_instruction` |
+| **Google Gemini** | `bundle.to_gemini()` | Markdown instruction string | Gemini 3.5 Flash / 3.6 `system_instruction` |
 | **Ollama Local** | `bundle.to_ollama()` | Plaintext system prompt | Local, private edge execution |
 | **Ollama Modelfile** | `bundle.to_modelfile()` | `FROM ... \n SYSTEM """..."""` | Baking mnemonics directly into custom GGUFs |
 | **LangChain / LlamaIndex** | `bundle.to_raw()` | Clean unadorned Markdown | Multi-stage retrieval chains & agents |
@@ -242,7 +242,7 @@ bundle = mnemolink.compose(
 
 client = anthropic.Anthropic()
 response = client.messages.create(
-    model="claude-3-5-sonnet-latest",
+    model="claude-sonnet-5",
     max_tokens=1024,
     system=bundle.to_claude(),
     messages=[{"role": "user", "content": "Review Section 9.4 indemnity draft."}],
@@ -262,7 +262,7 @@ bundle = mnemolink.compose(
 
 client = OpenAI()
 response = client.chat.completions.create(
-    model="gpt-4o",
+    model="gpt-5.6-luna",
     messages=bundle.to_openai() + [
         {"role": "user", "content": "Angry enterprise customer threatening litigation over SLA."}
     ],
@@ -282,7 +282,7 @@ bundle = mnemolink.compose(
 
 client = genai.Client()
 response = client.models.generate_content(
-    model="gemini-2.5-flash",
+    model="gemini-3.5-flash",
     contents="What breakfast can I make with eggs, bacon ends, and whatever is in my crisper?",
     config={"system_instruction": bundle.to_gemini()},
 )

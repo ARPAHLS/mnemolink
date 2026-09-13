@@ -3,7 +3,7 @@
 
 Designed strictly for LOCAL developer testing (NOT CI).
 Allows authors to mount custom or catalog personas, memories, and lineages into real
-frontier APIs (Claude, OpenAI, Gemini) or local Ollama instances to test how the model
+production APIs (Claude, Gemini, Mistral, OpenAI) or local Ollama instances to test how the model
 reacts to real prompts before committing or opening a PR.
 
 Usage examples:
@@ -48,7 +48,7 @@ import mnemolink  # noqa: E402
 
 
 def query_anthropic(
-    system_prompt: str, user_prompt: str, model: str = "claude-3-5-sonnet-20241022"
+    system_prompt: str, user_prompt: str, model: str = "claude-sonnet-5"
 ) -> tuple[str, float, int]:
     """Execute query against Anthropic Messages API."""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
@@ -94,7 +94,7 @@ def query_anthropic(
 
 
 def query_openai(
-    system_prompt: str, user_prompt: str, model: str = "gpt-4o"
+    system_prompt: str, user_prompt: str, model: str = "gpt-5.6-luna"
 ) -> tuple[str, float, int]:
     """Execute query against OpenAI Chat Completions API."""
     api_key = os.environ.get("OPENAI_API_KEY")
@@ -127,8 +127,42 @@ def query_openai(
         return content, latency, out_tokens
 
 
+def query_mistral(
+    system_prompt: str, user_prompt: str, model: str = "ministral-8b-latest"
+) -> tuple[str, float, int]:
+    """Execute query against Mistral API."""
+    api_key = os.environ.get("MISTRAL_API_KEY")
+    if not api_key:
+        raise ValueError("MISTRAL_API_KEY is not set in environment or .env")
+
+    url = "https://api.mistral.ai/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "model": model,
+        "temperature": 0.2,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ],
+    }
+
+    start = time.perf_counter()
+    req = urllib.request.Request(
+        url, data=json.dumps(payload).encode("utf-8"), headers=headers
+    )
+    with urllib.request.urlopen(req, timeout=45) as resp:
+        res = json.loads(resp.read().decode("utf-8"))
+        latency = time.perf_counter() - start
+        content = res["choices"][0]["message"]["content"]
+        out_tokens = res.get("usage", {}).get("completion_tokens", len(content.split()))
+        return content, latency, out_tokens
+
+
 def query_gemini(
-    system_instruction: str, user_prompt: str, model: str = "gemini-2.5-flash"
+    system_instruction: str, user_prompt: str, model: str = "gemini-3.5-flash"
 ) -> tuple[str, float, int]:
     """Execute query against Google Gemini REST API."""
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -163,7 +197,7 @@ def query_gemini(
 def query_ollama(
     system_prompt: str,
     user_prompt: str,
-    model: str = "llama3.1:8b",
+    model: str = "llama3.2:1b",
     host: str = "http://localhost:11434",
 ) -> tuple[str, float, int]:
     """Execute query against local Ollama instance."""
@@ -202,7 +236,7 @@ def main():
     parser.add_argument("-l", "--lineage", default=None, help="Lineage ID or path")
     parser.add_argument(
         "--provider",
-        choices=["anthropic", "openai", "gemini", "ollama"],
+        choices=["anthropic", "openai", "gemini", "mistral", "ollama"],
         default="gemini",
         help="Target model provider",
     )
@@ -223,6 +257,20 @@ def main():
     )
 
     args = parser.parse_args()
+
+    # Auto-detect provider if model is specified
+    if args.model:
+        m = args.model.lower()
+        if any(k in m for k in ("claude", "sonnet", "haiku", "opus", "fable")):
+            args.provider = "anthropic"
+        elif any(k in m for k in ("gpt", "luna", "o1", "o3", "o4")):
+            args.provider = "openai"
+        elif any(k in m for k in ("mistral", "ministral", "mixtral", "codestral")):
+            args.provider = "mistral"
+        elif any(k in m for k in ("gemini",)):
+            args.provider = "gemini"
+        elif any(k in m for k in ("llama", "qwen", "phi")):
+            args.provider = "ollama"
 
     print("=" * 70)
     print("MnemoLink Local Asset Simulation Harness (Live Model Mount)")
@@ -248,10 +296,11 @@ def main():
 
     # Determine default model if not provided
     default_models = {
-        "anthropic": "claude-3-5-sonnet-20241022",
-        "openai": "gpt-4o",
-        "gemini": "gemini-2.5-flash",
-        "ollama": "llama3.1:8b",
+        "anthropic": "claude-sonnet-5",
+        "openai": "gpt-5.6-luna",
+        "gemini": "gemini-3.5-flash",
+        "mistral": "ministral-8b-latest",
+        "ollama": "llama3.2:1b",
     }
     target_model = args.model or default_models[args.provider]
     print(f"Target Model: {target_model}")
@@ -260,7 +309,7 @@ def main():
     # Select adapter output
     if args.provider == "anthropic":
         system_text = bundle.to_claude()
-    elif args.provider == "openai":
+    elif args.provider in ("openai", "mistral"):
         system_text = bundle.to_raw()
     elif args.provider == "gemini":
         system_text = bundle.to_gemini()
@@ -277,6 +326,10 @@ def main():
                 )
             elif args.provider == "openai":
                 reply, latency, tokens = query_openai(
+                    system_text, user_msg, model=target_model
+                )
+            elif args.provider == "mistral":
+                reply, latency, tokens = query_mistral(
                     system_text, user_msg, model=target_model
                 )
             elif args.provider == "gemini":

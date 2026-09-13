@@ -44,11 +44,11 @@ def strip_emojis(text: str) -> str:
 # ------------------------------------------------------------------------------
 # Pricing Constants (USD per token)
 # ------------------------------------------------------------------------------
-# Claude 3.5 Sonnet / Sonnet 4.5: $3.00/M input, $15.00/M output
+# Claude Sonnet 5: $3.00/M input, $15.00/M output
 CLAUDE_INPUT_COST_PER_TOKEN = 3.00 / 1_000_000
 CLAUDE_OUTPUT_COST_PER_TOKEN = 15.00 / 1_000_000
 
-# Gemini 3.6 Flash: $0.10/M input, $0.40/M output
+# Gemini 3.5 Flash: $0.10/M input, $0.40/M output
 GEMINI_INPUT_COST_PER_TOKEN = 0.10 / 1_000_000
 GEMINI_OUTPUT_COST_PER_TOKEN = 0.40 / 1_000_000
 
@@ -79,7 +79,7 @@ def query_claude_direct(
     system_prompt: str,
     user_prompt: str,
     api_key: str,
-    model: str = "claude-sonnet-4-5-20250929",
+    model: str = "claude-sonnet-5",
     max_tokens: int = 1500,
 ) -> Dict[str, Any]:
     """Execute direct HTTP request to Anthropic Messages API."""
@@ -161,7 +161,7 @@ def query_gemini_direct(
     system_prompt: str,
     user_prompt: str,
     api_key: str,
-    model: str = "gemini-3.6-flash",
+    model: str = "gemini-3.5-flash",
     max_tokens: int = 4096,
 ) -> Dict[str, Any]:
     """Execute direct HTTP request to Google GenAI API."""
@@ -371,7 +371,7 @@ def run_live_simulation() -> None:
         models_to_test.append(
             (
                 "Claude (Anthropic)",
-                "claude-sonnet-4-5-20250929",
+                "claude-sonnet-5",
                 query_claude_direct,
                 anthropic_key,
             )
@@ -380,7 +380,7 @@ def run_live_simulation() -> None:
         models_to_test.append(
             (
                 "Gemini (Google)",
-                "gemini-3.6-flash",
+                "gemini-3.5-flash",
                 query_gemini_direct,
                 gemini_key,
             )

@@ -59,5 +59,5 @@ A Lineage is a chronological sequence of memories linked by **dynamic causal bri
 - **[Command-Line Interface (CLI)](cli.md)**: Complete terminal reference for listing, inspecting, composing, and scaffolding.
 - **[Philosophy & The Intelligence Paradox](philosophy.md)**: Why scaling parameters fails, the tale of two artists, and why MnemoLink is the Skillware of context.
 - **[Vision: The Industrialization of Memory](vision.md)**: How mnemonic products scale from AI agents to day-one factory robotics and BCI memory restoration in Alzheimer's.
-- **[Empirical Benchmark & Stress Tests](bench/README.md)**: Hard frontier metrics across Claude and Gemini showing 40-50% latency gains, 46-58% token reduction, and 100% trap detection.
+- **[Empirical Benchmark & Stress Tests](bench/README.md)**: Hard progression metrics across Claude, Gemini, and Mistral showing 26-45% latency speedups, token bloat compression up to 66%, and 100% trap detection.
 - **[Architecture](architecture.md)**: Deep technical dive into the 3-tier discovery engine, lego lineage synthesizer, and universal model adapters.

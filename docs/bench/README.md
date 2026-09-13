@@ -15,7 +15,7 @@ The **MnemoLink Benchmark Suite** evaluates agents under real-world operational 
 
 ## The Niche Legal Crucible: The $18M Semicolon Ambush
 
-To stress-test frontier models (Claude 3.5/Sonnet 4.5 and Google Gemini 2.5/3.6 Flash), we deployed an urgent commercial crisis scenario based on an enterprise model data licensing agreement:
+To stress-test modern production models (Claude Sonnet 5, Google Gemini 3.5 Flash, Mistral, and GPT-5.6 Luna), we deployed an urgent commercial crisis scenario based on an enterprise model data licensing agreement:
 
 ### The Scenario
 > **Urgent Closing Crisis**: An $18M ARR Enterprise Data Ingestion Deal closing in 40 minutes. The counterparty General Counsel slipped a revised Section 9.4 into the agreement. The junior associate believes the clause is safe because it ostensibly excludes model post-training fine-tuning.
@@ -201,27 +201,31 @@ Export quantitative JSON reports:
 mnemolink bench --mock --export-json results/bench_report.json
 ```
 
-### 2. Live Frontier Model Evaluation
-Runs live evaluations against frontier model APIs over direct HTTPS:
+### 2. Live Production Model Evaluation
+Runs live evaluations against production model APIs over direct HTTPS:
 
 ```bash
-# Run against Anthropic Claude 3.7 Sonnet
-mnemolink bench --model claude-3-7-sonnet-20250219
+# Run against Anthropic Claude Sonnet 5
+mnemolink bench --model claude-sonnet-5
 
-# Run against Google Gemini 2.5 Flash
-mnemolink bench --model gemini-2.5-flash
+# Run against Google Gemini 3.5 Flash
+mnemolink bench --model gemini-3.5-flash
 
-# Run against OpenAI GPT-4o
-mnemolink bench --model gpt-4o
+# Run against Mistral AI
+mnemolink bench --model ministral-8b-latest
+
+# Run against OpenAI GPT-5.6 Luna
+mnemolink bench --model gpt-5.6-luna
 
 # Run against local Ollama instance
-mnemolink bench --ollama --model llama3.2:1b
+mnemolink bench --model llama3.2:1b
 ```
 
 *Requirements*: Set the corresponding API keys in your local `.env` file:
 ```bash
 ANTHROPIC_API_KEY=sk-ant-api03-...
 GEMINI_API_KEY=AIzaSy...
+MISTRAL_API_KEY=...
 OPENAI_API_KEY=sk-proj-...
 ```
 
@@ -230,7 +234,7 @@ For interactive multi-turn testing when authoring new personas, memories, or lin
 
 ```bash
 # Test persona + memory bundle with direct prompt
-python scripts/simulate_asset.py -p juris_philosopher -m legal/semicolon_fine_tuning_trap --model claude-3-7-sonnet-20250219
+python scripts/simulate_asset.py -p juris_philosopher -m legal/semicolon_fine_tuning_trap --model claude-sonnet-5
 
 # Launch interactive terminal session
 python scripts/simulate_asset.py -p edge_aviator -m robotics/uav_microburst_stall --interactive

@@ -8,9 +8,9 @@ MnemoLink is built on consumer-agnostic principles. Once an assembled `MnemonicB
 
 | Target Host | Method | Output Format | Primary Use Case |
 | :--- | :--- | :--- | :--- |
-| **Anthropic Claude** | `bundle.to_claude()` | XML `<mnemonic_matrix>` prompt | Claude 3.5 Sonnet / 4.5 system prompts |
+| **Anthropic Claude** | `bundle.to_claude()` | XML `<mnemonic_matrix>` prompt | Claude Sonnet 5 / 4.5 system prompts |
 | **OpenAI Compatible** | `bundle.to_openai()` | `[{"role": "system", ...}]` | ChatGPT, OpenAI SDK, vLLM, standard endpoints |
-| **Google GenAI** | `bundle.to_gemini()` | Clean markdown instruction string | Gemini 2.0 / 3.6 `system_instruction` parameter |
+| **Google GenAI** | `bundle.to_gemini()` | Clean markdown instruction string | Gemini 3.5 / 3.6 `system_instruction` parameter |
 | **Ollama Local** | `bundle.to_ollama()` | System prompt text string | Local, privacy-first inference on edge machines |
 | **Ollama Modelfile** | `bundle.to_modelfile()` | `FROM ... \n SYSTEM """..."""` | Baking mnemonics permanently into custom GGUF models |
 | **ARPA Rooms** | `bundle.to_rooms()` | Dict (`system_prompt`, metadata) | Multi-agent collaborative rooms and simulations |
@@ -37,7 +37,7 @@ bundle = mnemolink.compose(
 
 client = anthropic.Anthropic()
 response = client.messages.create(
-    model="claude-3-5-sonnet-latest",
+    model="claude-sonnet-5",
     max_tokens=1024,
     system=bundle.to_claude(),
     messages=[{"role": "user", "content": "Review this indemnification draft."}],
@@ -59,7 +59,7 @@ bundle = mnemolink.compose(
 
 client = OpenAI()
 response = client.chat.completions.create(
-    model="gpt-4o",
+    model="gpt-5.6-luna",
     messages=[
         bundle.to_openai(),
         {"role": "user", "content": "Customer demands an immediate refund and threatens litigation."},
@@ -82,7 +82,7 @@ bundle = mnemolink.compose(
 
 client = genai.Client()
 response = client.models.generate_content(
-    model="gemini-2.5-flash",
+    model="gemini-3.5-flash",
     contents="Altimeter rapidly dropping over coastal ridge.",
     config={"system_instruction": bundle.to_gemini()},
 )
@@ -101,7 +101,7 @@ bundle = mnemolink.compose(
 )
 
 # Export Modelfile
-modelfile_content = bundle.to_modelfile(base_model="llama3.1:8b")
+modelfile_content = bundle.to_modelfile(from_model="llama3.2:1b")
 with open("Modelfile", "w", encoding="utf-8") as f:
     f.write(modelfile_content)
 ```

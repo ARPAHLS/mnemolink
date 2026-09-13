@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added CLI options: `--tier` (`all`, `micro`, `meso`, `macro`), `--export-json` for machine-readable evaluation reports, and live model routing with exponential backoff on HTTP 429 across Anthropic, Google, Mistral, OpenAI, and Ollama.
   - Published live empirical progression findings across modern production models (`claude-sonnet-5`, `gemini-3.5-flash`, `ministral-8b-latest`, and Offline Golden Target) in `docs/bench/README.md`.
 - **Local Asset Simulation Harness (`scripts/simulate_asset.py`)**:
-  - Introduced local-only development tool for mounting uncommitted personas and episodic memories against live frontier APIs (Claude, Gemini, Mistral, OpenAI) and local Ollama without polluting CI.
+  - Introduced local-only development tool for mounting uncommitted personas and episodic memories against live production APIs (Claude, Gemini, Mistral, OpenAI) and local Ollama without polluting CI.
   - Features direct single-query profiling with token counts, latency tracking, and cost estimation, plus an interactive multi-turn terminal loop (`--interactive`) for dynamic probing of cognitive boundary firmness.
 - **Automated Repository Integrity Gate (`scripts/verify_repo.py`)**:
   - Implemented automated gate enforcing zero Unicode emojis across all code, tests, documentation, and manifests.

@@ -243,11 +243,14 @@ class MnemonicBundle:
         """Export formatted as an Ollama system prompt."""
         return self.render_markdown()
 
-    def to_modelfile(self, from_model: str = "llama3.3") -> str:
+    def to_modelfile(
+        self, from_model: str = "llama3.3", base_model: Optional[str] = None
+    ) -> str:
         """Generate a complete Ollama Modelfile with embedded mnemonics."""
+        target_base = base_model or from_model
         escaped_prompt = self.render_markdown().replace('"""', '\\"\\"\\"')
         return (
-            f"FROM {from_model}\n\n"
+            f"FROM {target_base}\n\n"
             f'SYSTEM """\n{escaped_prompt}\n"""\n\n'
             f"PARAMETER temperature 0.7\n"
         )
