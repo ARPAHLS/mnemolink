@@ -25,6 +25,7 @@
   <a href="docs/personas/README.md">Personas</a> •
   <a href="docs/memories/README.md">Memories</a> •
   <a href="docs/lineages/README.md">Lineages</a> •
+  <a href="docs/integrations/skillware_matrix.md">Skillware Matrix</a> •
   <a href="docs/bench/README.md">Benchmark</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#universal-adapters">Adapters</a> •
@@ -124,6 +125,7 @@ Explore our open-source, versioned libraries of curated mnemonic products:
 - **[Personas Library](docs/personas/README.md)**: Curated philosophical worldviews and cognitive priors.
 - **[Memories Library](docs/memories/README.md)**: Operational scars classified across the 5-Kind Taxonomy.
 - **[Lineages Library](docs/lineages/README.md)**: Dynamic lego-brick experiential progressions.
+- **[Skillware Matrix](docs/integrations/skillware_matrix.md)**: Flagship integration cutting context bloat by 50–84% and eliminating unconfirmed mutations.
 
 > These Mnemonic Products are provided for demonstration and integration purposes. It is intended as a starting point that you can adapt to your own data, schemas, and operational requirements. For enterprise-grade mnemonic products and customization, contact [mnemolink@arpacorp.net](mailto:mnemolink@arpacorp.net).
 
@@ -298,7 +300,7 @@ For implementation recipes and export formats, see **[Adapters Documentation](do
 
 MnemoLink is an integral pillar of the **ARPA Hellenic Logical Systems** open-source stack:
 
-- **[Skillware](https://github.com/ARPAHLS/skillware)**: *Capabilities* — "Don't prompt your agents, equip them." Executable tools, typed contracts, and deterministic runtime effects.
+- **[Skillware](https://github.com/ARPAHLS/skillware)**: *Capabilities* — "Don't prompt your agents, equip them." Executable tools, typed contracts, and deterministic runtime effects. See the [Skillware Matrix Integration Guide](docs/integrations/skillware_matrix.md).
 - **[AURA Harness](https://github.com/ARPAHLS/aura)**: *Governance* — Runtime coat for agent loops providing audit trails, policy enforcement, and compliance export.
 - **[Rooms](https://github.com/ARPAHLS/rooms)**: *Orchestration* — Secure, local-first multi-agent orchestration and dynamic conversational simulation.
 - **[MnemoLink](https://github.com/ARPAHLS/mnemolink)**: *Identity & Memory* — The mnemonic layer providing philosophical bedrock, operational scars, and lego lineages.

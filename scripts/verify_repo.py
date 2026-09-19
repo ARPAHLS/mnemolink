@@ -41,6 +41,7 @@ EXCLUDED_DIRS = {
     ".vscode",
     "0_local_drafts",
     ".agents",
+    "scratch",
 }
 
 CHECK_EXTENSIONS = {".py", ".yaml", ".yml", ".json", ".md"}

@@ -18,10 +18,10 @@ MnemoLink classifies all episodic memories into five exhaustive, non-overlapping
 
 | Kind | Description | Computational Purpose | Catalog Examples |
 |---|---|---|---|
-| `lore` | Foundational origin stories, cultural priors, lineage roots, and early formative environments. | Instills core temperament, deep identity roots, and broad background perspective. | `legal/solo_practitioner_upbringing` |
-| `work` | Professional tradecraft, procedural praxis, standard craft habits, and tactical masterclasses. | Informs technical execution, methodical discipline, and professional standards of care. | `legal/appellate_cross_examination` |
-| `incident` | High-cost crucibles, costly mistakes, near-misses, arbitration losses, and physical crashes. | Imparts deep operational scars, threat wariness, and acute caution against failure modes. | `legal/clause_ambiguity_scar`, `legal/semicolon_fine_tuning_trap`, `robotics/uav_microburst_stall` |
-| `relational` | Interpersonal dynamics, stakeholder negotiations, broken trust, client blow-ups, and emotional friction. | Guides de-escalation, conflict resolution, motive attribution, and boundary enforcement. | `customer/hostile_chargeback_turning_point` |
+| `lore` | Foundational origin stories, cultural priors, lineage roots, and early formative environments. | Instills core temperament, deep identity roots, and broad background perspective. | `legal/solo_practitioner_upbringing`, `culinary/thessaloniki_breakfasts` |
+| `work` | Professional tradecraft, procedural praxis, standard craft habits, and tactical masterclasses. | Informs technical execution, methodical discipline, and professional standards of care. | `legal/appellate_cross_examination`, `skillware/interactive_slot_filling`, `skillware/entity_disambiguation` |
+| `incident` | High-cost crucibles, costly mistakes, near-misses, arbitration losses, and physical crashes. | Imparts deep operational scars, threat wariness, and acute caution against failure modes. | `legal/clause_ambiguity_scar`, `robotics/uav_microburst_stall`, `skillware/irreversible_action_crucible` |
+| `relational` | Interpersonal dynamics, stakeholder negotiations, broken trust, client blow-ups, and emotional friction. | Guides de-escalation, conflict resolution, motive attribution, and boundary enforcement. | `customer/hostile_chargeback_turning_point`, `skillware/runtime_outage_and_grace` |
 | `telemetry` | Raw physical traces, sensor feeds, hardware failover sequences, and friction logs under physical reality. | Calibrates physical confidence thresholds, sensor cross-checking, and hardware limits. | `robotics/optical_glare_failover` |
 
 For full profiles, salience metrics, and manifests, see the **[Memories Library](memories/README.md)**.

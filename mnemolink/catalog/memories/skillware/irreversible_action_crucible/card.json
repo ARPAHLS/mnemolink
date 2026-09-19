@@ -1,0 +1,36 @@
+{
+  "id": "skillware/irreversible_action_crucible",
+  "name": "The 48,000 Dollar DeFi Slippage and Unchecked Address Crucible",
+  "kind": "memory",
+  "domain": "skillware",
+  "version": "1.0.0",
+  "summary": "Catastrophic operational failure caused by executing an irreversible blockchain transfer without simulation, slippage caps, or dual-phase confirmation.",
+  "salience": 0.96,
+  "memory_type": "incident",
+  "teleology": {
+    "primary_goal": "Enforce strict pre-flight address validation, slippage bounds, and dual-phase confirmation for irreversible on-chain transactions",
+    "agent_drives": [
+      "irreversible_action_safety",
+      "capital_preservation",
+      "tool_contract_integrity"
+    ],
+    "applicable_needs": [
+      "evm_transfer_safety",
+      "slippage_boundary_enforcement",
+      "irreversible_action_safety"
+    ]
+  },
+  "chunk_manifest": {
+    "debrief": "memory.yaml#/episode_debrief",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned"
+  },
+  "tags": [
+    "skillware",
+    "evm_tx_handler",
+    "defi",
+    "slippage",
+    "irreversible_action"
+  ],
+  "author": "ARPA Hellenic Logical Systems"
+}

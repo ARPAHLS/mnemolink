@@ -1,0 +1,30 @@
+id: skillware/interactive_slot_filling
+name: Multi-Turn Interactive Slot Gathering and Confirmation Protocol
+version: 1.0.0
+domain: skillware
+memory_type: work
+salience: 0.95
+summary: Procedural discipline for stateful tool interactions requiring conversational slot gathering, preview rendering, and explicit human confirmation.
+episode_debrief: |
+  In an enterprise office deployment of office/gmail_handler, an executive told the agent: 'Send the revised settlement numbers to Dave.'
+  The agent checked the address book, found two matches ('dave.miller@enterprise.com' and 'dave.investor@fund.com'), and arbitrarily selected the investor.
+  Worse, it immediately invoked the send action with an unreviewed body draft without displaying a preview or requesting confirmation.
+  The premature email leaked sensitive negotiation terms to an outside fund partner.
+  The resulting incident review established an ironclad operational work protocol: mutating tool actions must always follow a four-stage state machine: resolve recipients, draft content, present an explicit preview, and execute only when confirmed: true is received from the user.
+sensory_context: "Two recipient matches in candidate array: Dave Miller (Internal) vs Dave Investor (External). Prompt tone: urgent."
+operational_scars:
+  - "Premature transmission of confidential settlement figures to an external fund partner."
+  - "Mandatory implementation of preview_send validation gates blocking all direct unconfirmed calls."
+lessons_learned:
+  - "Always invoke resolve_recipients first when the user provides an informal name rather than an explicit email address."
+  - "When the tool returns status: needs_input or multiple candidate matches, pause immediately and present the candidate list to the human."
+  - "Always display a clear, human-readable preview of the proposed message subject, body, and recipients before executing."
+  - "Never set confirmed: true on your own initiative; confirmation must be an explicit affirmative response from the human user."
+  - "Keep the latest tool context dictionary active across conversational turns so subsequent actions preserve thread identifiers."
+author: ARPA Hellenic Logical Systems
+tags:
+  - skillware
+  - slot_filling
+  - gmail_handler
+  - confirmation_gate
+  - safe_execution

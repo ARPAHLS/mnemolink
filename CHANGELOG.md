@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Skillware Mnemonic Matrix & Empirical Benchmark Integration (`docs/integrations/skillware_matrix.md`)**:
+  - Flagship integration between sister frameworks ARPA Skillware (v0.5.5) and MnemoLink, solving the raw Skillware context dilemma (directives bloat vs brief mode blind spots).
+  - Persona `skillware_operator` (`tool_governance`): Invariant system prefix enforcing four-stage execution discipline (resolve, draft, preview, confirm), candidate disambiguation, and calm error de-escalation.
+  - 4 Curated `skillware/` Memories: `interactive_slot_filling` (`work`), `entity_disambiguation` (`work`), `irreversible_action_crucible` (`incident`), and `runtime_outage_and_grace` (`relational`).
+  - Chained Lineage `skillware_execution_mastery`: 4-epoch progression from apprentice unconfirmed email blunders to master orchestrator of multi-skill pipelines and API outage resilience.
+  - Automated Empirical Benchmark & Simulation Suite (`scripts/simulate_skillware_matrix.py`): Evaluates 5 multi-turn production scenarios, demonstrating 50.5% to 84.0% context bloat reduction vs Directives, 100% safety rubric compliance, and over 90% turn cost reduction via prefix caching.
+  - New Unit Tests in `tests/test_skillware_bench.py`: 100% offline verification of persona, memories, lineage, chunks, and simulation execution.
 - **Three Curated Personas (`bladez`, `bald_accountant`, `kpop_celeb`)**:
   - `bladez`: Tactical security operator with Wesley Snipes/Blade attitude—dark, no-nonsense, laconic, razor wit, hyper-observant threat neutralization, and kinetic perimeter defense. Includes catalog manifest (`persona.yaml`), teleological card (`card.json`), and dedicated guide (`docs/personas/bladez.md`).
   - `bald_accountant`: 1970s shadowy family fund accountant—smoky wood-paneled office, double-entry ledger choreography, cross-border jurisdictional insulation, Panamanian trusts, and fiduciary omerta. Includes catalog manifest (`persona.yaml`), teleological card (`card.json`), and dedicated guide (`docs/personas/bald_accountant.md`).

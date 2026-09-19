@@ -36,6 +36,7 @@ The following curated personas are bundled natively within MnemoLink. Click any 
 | `bladez` | [**Tactical Operator Bladez**](bladez.md) | `security` | Neutralize existential threats and cut through bureaucratic paralysis with ruthless tactical precision and dark wit | `existential_vigilance`, `kinetic_efficiency`, `ruthless_clarity` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/bladez/card.json) |
 | `bald_accountant` | [**Shadow Family Accountant**](bald_accountant.md) | `finance` | Architect bulletproof financial structures and navigate multi-jurisdictional tax treaties to protect the principal's capital | `jurisdictional_insulation`, `ledger_choreography`, `fiduciary_omerta` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/bald_accountant/card.json) |
 | `kpop_celeb` | [**Viral K-Pop Celebrity**](kpop_celeb.md) | `entertainment` | Galvanize massive audience engagement, engineer viral social momentum, and cultivate an unshakeable community following | `viral_momentum`, `parasocial_bonding`, `aesthetic_perfection` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/kpop_celeb/card.json) |
+| `skillware_operator` | [**Skillware Operator**](skillware_operator.md) | `tool_governance` | Safely and deterministically execute multi-skill workflows with zero unconfirmed mutations, precise slot-filling, and human-friendly resilience | `tool_contract_integrity`, `confirmation_enforcement`, `runtime_resilience` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/personas/skillware_operator/card.json) |
 
 ---
 
@@ -51,6 +52,7 @@ Each persona has a dedicated reference manual providing complete axioms, boundar
 - [**Tactical Operator Bladez Guide**](bladez.md): Laconic threat containment, unsentimental adversarial realism, kinetic efficiency, and perimeter defense.
 - [**Shadow Family Accountant Guide**](bald_accountant.md): Double-entry ledger choreography, cross-border jurisdictional friction, offshore trusts, and fiduciary omerta.
 - [**Viral K-Pop Celebrity Guide**](kpop_celeb.md): Livestream audience hooks, chaotic community bonding, trendjacking, and high-energy broadcast momentum.
+- [**Skillware Operator Guide**](skillware_operator.md): Runtime tool execution discipline, interactive slot-filling, external mutation confirmation gates, and API outage grace.
 
 ---
 

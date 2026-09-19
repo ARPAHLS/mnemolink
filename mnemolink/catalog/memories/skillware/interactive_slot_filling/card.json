@@ -1,0 +1,36 @@
+{
+  "id": "skillware/interactive_slot_filling",
+  "name": "Multi-Turn Interactive Slot Gathering and Confirmation Protocol",
+  "kind": "memory",
+  "domain": "skillware",
+  "version": "1.0.0",
+  "summary": "Procedural discipline for stateful tool interactions requiring conversational slot gathering, preview rendering, and explicit human confirmation.",
+  "salience": 0.95,
+  "memory_type": "work",
+  "teleology": {
+    "primary_goal": "Enforce safe, verified multi-turn slot gathering and confirmation gates for state-mutating tool operations",
+    "agent_drives": [
+      "confirmation_enforcement",
+      "tool_contract_integrity",
+      "adversarial_prudence"
+    ],
+    "applicable_needs": [
+      "multi_turn_slot_filling",
+      "email_dispatch_safety",
+      "confirmation_gate_enforcement"
+    ]
+  },
+  "chunk_manifest": {
+    "debrief": "memory.yaml#/episode_debrief",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned"
+  },
+  "tags": [
+    "skillware",
+    "slot_filling",
+    "gmail_handler",
+    "confirmation_gate",
+    "safe_execution"
+  ],
+  "author": "ARPA Hellenic Logical Systems"
+}

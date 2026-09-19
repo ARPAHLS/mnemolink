@@ -60,9 +60,10 @@ In production systems, MnemoLink operates as a **structured prompt-composition a
 ## Further Reading
 
 - **[Usage Guide](usage_guide.md)**: Comprehensive, end-to-end guide on installation, personas, memories, chunks, lineages, context consumers, edge cases, and authoring custom mnemonic assets.
-- **[Curated Personas Library](personas/README.md)**: Catalog of philosophical anchors including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, `opsie_sci`, `north_mediterranean_chef`, `bladez`, `bald_accountant`, and `kpop_celeb`.
+- **[Curated Personas Library](personas/README.md)**: Catalog of philosophical anchors including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, `opsie_sci`, `north_mediterranean_chef`, `bladez`, `bald_accountant`, `kpop_celeb`, and `skillware_operator`.
 - **[Curated Memories Library](memories/README.md)**: Catalog of operational scars across the 5-Kind Taxonomy.
 - **[Curated Lineages Library](lineages/README.md)**: Catalog of dynamic lego-brick experiential progressions.
+- **[ARPA Skillware Integration Matrix](integrations/skillware_matrix.md)**: Flagship integration with sister framework ARPA Skillware, featuring empirical benchmarks cutting context bloat by 50-84% and eliminating unconfirmed state mutations.
 - **[Taxonomy, Teleology & Chunking](taxonomy_and_teleology.md)**: Deep dive into the 5-kind memory taxonomy, teleological routing, mnemonic chunks, and prefix caching economics.
 - **[Universal Adapters](adapters.md)**: Export specifications for Anthropic Claude, OpenAI, Gemini, Ollama, LangChain, and vector databases.
 - **[Command-Line Interface (CLI)](cli.md)**: Complete terminal reference for listing, inspecting, composing, and scaffolding.

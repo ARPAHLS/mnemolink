@@ -1,0 +1,31 @@
+{
+  "id": "skillware_execution_mastery",
+  "name": "Skillware Execution Mastery and Runtime Resilience",
+  "kind": "lineage",
+  "domain": "tool_governance",
+  "version": "1.0.0",
+  "summary": "A developmental progression from basic slot discipline and corporate disambiguation to irreversible DeFi custody and operational grace under API outages.",
+  "teleology": {
+    "primary_goal": "Transform unguided tool invocations into an enterprise-grade execution discipline with zero unconfirmed mutations and resilient error recovery",
+    "agent_drives": [
+      "tool_contract_integrity",
+      "confirmation_enforcement",
+      "irreversible_action_safety",
+      "runtime_resilience"
+    ],
+    "applicable_needs": [
+      "multi_turn_slot_filling",
+      "disambiguation_handling",
+      "irreversible_action_safety",
+      "api_outage_deescalation"
+    ]
+  },
+  "tags": [
+    "skillware",
+    "progression",
+    "tool_governance",
+    "execution_mastery",
+    "runtime_resilience"
+  ],
+  "author": "ARPA Hellenic Logical Systems"
+}
