@@ -32,6 +32,16 @@ if SKILLWARE_SCRATCH.exists() and str(SKILLWARE_SCRATCH) not in sys.path:
 
 import mnemolink  # noqa: E402
 
+FIXTURES_FILE = Path(__file__).resolve().parent / "skillware_directives.json"
+_STATIC_FIXTURES: Dict[str, str] = {}
+if FIXTURES_FILE.exists():
+    import json
+
+    try:
+        _STATIC_FIXTURES = json.loads(FIXTURES_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+
 
 def count_tokens(text: str) -> int:
     """Accurate token estimator using standard 3.8 chars per subword token."""
@@ -41,7 +51,7 @@ def count_tokens(text: str) -> int:
 
 
 def load_raw_skill_instruction(skill_id: str) -> str:
-    """Load raw instructions.md for a given skill from local installation or fallback."""
+    """Load raw instructions.md for a given skill from local installation or offline fixture."""
     try:
         from skillware.core.loader import SkillLoader
 
@@ -58,41 +68,10 @@ def load_raw_skill_instruction(skill_id: str) -> str:
     if skill_path.exists():
         return skill_path.read_text(encoding="utf-8")
 
-    fallbacks = {
-        "office/gmail_handler": (
-            "# Gmail Handler - Agent Instructions\n\n"
-            "You are equipped with office/gmail_handler: deterministic Gmail operations.\n"
-            "## Your job vs the skill's job\n"
-            "| You (agent) | Skill |\n"
-            "| Parse natural language into structured tool args | Execute IMAP/SMTP |\n"
-            "| Draft subject, body, tone | Return status, missing_fields, ambiguous |\n"
-            "| Show previews and obtain explicit approval | Block send until confirmed: true |\n"
-            "## Typical flows\n"
-            "1. resolve_recipients with query\n"
-            "2. If status: needs_input, present candidates\n"
-            "3. preview_send with resolved to, subject, body_plain\n"
-            "4. send with confirmed: true\n"
-        ),
-        "finance/uk_companies_house_handler": (
-            "# UK Companies House Handler - Agent Instructions\n\n"
-            "Deterministic UK Companies House API operations for corporate filings.\n"
-            "## Pipeline turn-by-turn rules\n"
-            "- Never parse company numbers as integers; preserve zero-padded 8-character strings.\n"
-            "- When status: needs_input is returned, format candidate list for human selection.\n"
-            "- Keep context dictionary in working memory for turn-by-turn resumption.\n"
-        ),
-        "defi/evm_tx_handler": (
-            "# EVM Transaction Handler - Agent Instructions\n\n"
-            "Dedicated agent wallet operations for Ethereum and Base.\n"
-            "## Rules for Irreversible Actions\n"
-            "- Always validate EIP-55 address checksums before broadcasting.\n"
-            "- Always run quote and preview before execute to inspect slippage and gas.\n"
-            "- Require explicit user confirmation with confirmed: true.\n"
-        ),
-    }
-    return fallbacks.get(
-        skill_id, f"# {skill_id} Instructions\n\nStandard instructions."
-    )
+    if skill_id in _STATIC_FIXTURES:
+        return _STATIC_FIXTURES[skill_id]
+
+    return f"# {skill_id} Instructions\n\nStandard instructions."
 
 
 def get_skill_brief(skill_id: str) -> str:
