@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Automated GitHub Label Synchronization & Diagnostics (`scripts/sync_labels.py`, `.github/workflows/labels.yml`)**:
+  - Hardened GitHub REST API request headers with explicit `"Content-Type": "application/json"` and API version pinning (`2022-11-28`) to eliminate HTTP 422 rejection when creating new labels.
+  - Implemented pre-flight label query (`GET /repos/{REPO}/labels`) with pagination to perform differential updates, avoiding redundant PATCH requests and secondary API rate-limit throttling.
+  - Added polite write pacing (300ms delay), detailed HTTP error body diagnostics, dry-run mode (`--dry-run`), and strict non-zero exit codes on failure.
+  - Enhanced workflow `.github/workflows/labels.yml` with PR dry-run validation alongside automated synchronization on push to `main` and manual dispatch.
+
 ### Added
 - **Three Curated Personas (`bladez`, `bald_accountant`, `kpop_celeb`)**:
   - `bladez`: Tactical security operator with Wesley Snipes/Blade attitude—dark, no-nonsense, laconic, razor wit, hyper-observant threat neutralization, and kinetic perimeter defense. Includes catalog manifest (`persona.yaml`), teleological card (`card.json`), and dedicated guide (`docs/personas/bladez.md`).
