@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mnemolink"
-version = "0.2.3"
-description = "Curated, injectable personas and artificial memories for AI agents."
+version = "0.2.4"
+description = "Curated, injectable personas, artificial memories, and dynamic lego lineages for AI agents, UAVs, and robotics."
 readme = "README.md"
 authors = [
   { name = "ARPA Hellenic Logical Systems", email = "mnemolink@arpacorp.net" },

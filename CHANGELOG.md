@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-09-19
+
 ### Fixed
 - **Automated GitHub Label Synchronization & Diagnostics (`scripts/sync_labels.py`, `.github/workflows/labels.yml`)**:
   - Hardened GitHub REST API request headers with explicit `"Content-Type": "application/json"` and API version pinning (`2022-11-28`) to eliminate HTTP 422 rejection when creating new labels.
@@ -215,7 +217,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive `README.md`, `COMPARISON.md`, `CONTRIBUTING.md`, `CITATION.cff`, `SECURITY.md`.
   - Runnable examples in `examples/`.
 
-[Unreleased]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.4...HEAD
+[0.2.4]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/ARPAHLS/mnemolink/compare/v0.2.0...v0.2.1
