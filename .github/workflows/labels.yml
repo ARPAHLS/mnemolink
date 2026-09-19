@@ -7,6 +7,12 @@ on:
       - ".github/labels.yml"
       - ".github/workflows/labels.yml"
       - "scripts/sync_labels.py"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - ".github/labels.yml"
+      - ".github/workflows/labels.yml"
+      - "scripts/sync_labels.py"
   workflow_dispatch:
 
 permissions:
@@ -28,7 +34,14 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Run sync_labels.py
+      - name: Validate and Dry Run (Pull Request)
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/sync_labels.py --dry-run
+
+      - name: Run sync_labels.py (Push to Main or Manual Dispatch)
+        if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/sync_labels.py
