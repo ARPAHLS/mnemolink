@@ -33,6 +33,7 @@ The following curated lineages are bundled natively within MnemoLink. Click any 
 |---|---|---|---|---|---|---|---|
 | `legal_crucible` | [**Legal Crucible Progression**](legal_crucible.md) | `legal` | [`clause_ambiguity_scar`](../memories/clause_ambiguity_scar.md) &rarr; [`appellate_cross_examination`](../memories/appellate_cross_examination.md) | Evolve from costly contractual ambiguity error into master of appellate judicial candor | `fiduciary_vigilance`, `procedural_candor`, `credibility_preservation` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/lineages/legal_crucible/card.json) |
 | `flight_scars` | [**Autonomous Flight Scars Lineage**](flight_scars.md) | `robotics` | [`uav_microburst_stall`](../memories/uav_microburst_stall.md) &rarr; [`optical_glare_failover`](../memories/optical_glare_failover.md) | Transform aerodynamic trauma and optical blindness into battle-tested survival reflexes | `aerodynamic_preservation`, `sensor_redundancy`, `energy_discipline` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/lineages/flight_scars/card.json) |
+| `skillware_execution_mastery` | [**Skillware Execution Mastery**](skillware_execution_mastery.md) | `skillware` | [`interactive_slot_filling`](../memories/skillware_interactive_slot_filling.md) &rarr; [`entity_disambiguation`](../memories/skillware_entity_disambiguation.md) &rarr; [`irreversible_action_crucible`](../memories/skillware_irreversible_action_crucible.md) &rarr; [`runtime_outage_and_grace`](../memories/skillware_runtime_outage_and_grace.md) | Evolve from naive unconfirmed tool dispatch into master of multi-skill workflows, irreversible custody, and runtime resilience | `tool_contract_integrity`, `irreversible_action_safety`, `runtime_resilience` | [ARPA Hellenic Logical Systems](https://github.com/ARPAHLS) | [`card.json`](../../mnemolink/catalog/lineages/skillware_execution_mastery/card.json) |
 
 ---
 
@@ -42,6 +43,7 @@ Each lineage has a dedicated reference manual detailing constituent memory seque
 
 - [**Legal Crucible Progression Guide**](legal_crucible.md): The trajectory from a catastrophic $4.2M warranty loss to fearless appellate candor.
 - [**Autonomous Flight Scars Lineage Guide**](flight_scars.md): How aerodynamic windshear survival forged an uncompromising sensor-voting failover discipline.
+- [**Skillware Execution Mastery Guide**](skillware_execution_mastery.md): The 4-epoch progression from unconfirmed email blunders through zero-padded registry handling, $48k DeFi slippage, and calm HTTP 429 outage grace.
 
 ---
 

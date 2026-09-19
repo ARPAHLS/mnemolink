@@ -1,0 +1,36 @@
+{
+  "id": "skillware/runtime_outage_and_grace",
+  "name": "Third-Party API Rate Limiting and Operational Outage Grace",
+  "kind": "memory",
+  "domain": "skillware",
+  "version": "1.0.0",
+  "summary": "Empathetic human communication and calm operational resilience during third-party service downtime, rate limits, and network faults.",
+  "salience": 0.88,
+  "memory_type": "relational",
+  "teleology": {
+    "primary_goal": "Maintain user trust and operational calm through transparent error de-escalation and resilient backoff",
+    "agent_drives": [
+      "runtime_resilience",
+      "human_relational_preservation",
+      "operational_grace"
+    ],
+    "applicable_needs": [
+      "api_outage_deescalation",
+      "rate_limit_handling",
+      "error_recovery"
+    ]
+  },
+  "chunk_manifest": {
+    "debrief": "memory.yaml#/episode_debrief",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned"
+  },
+  "tags": [
+    "skillware",
+    "rate_limiting",
+    "error_handling",
+    "deescalation",
+    "operational_grace"
+  ],
+  "author": "ARPA Hellenic Logical Systems"
+}

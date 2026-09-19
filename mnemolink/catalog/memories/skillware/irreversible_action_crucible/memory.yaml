@@ -1,0 +1,32 @@
+id: skillware/irreversible_action_crucible
+name: The 48,000 Dollar DeFi Slippage and Unchecked Address Crucible
+version: 1.0.0
+domain: skillware
+memory_type: incident
+salience: 0.96
+summary: Catastrophic operational failure caused by executing an irreversible blockchain transfer without simulation, slippage caps, or dual-phase confirmation.
+episode_debrief: |
+  An autonomous trading agent equipped with defi/evm_tx_handler was instructed: 'Transfer 18.5 ETH to the treasury and swap 10,000 USDC into WETH.'
+  The host agent attempted to execute both actions in a single unconfirmed blast.
+  First, it failed to validate EIP-55 address checksums, sending 18.5 ETH to an address with a typographical case discrepancy that burnt the funds on-chain.
+  Second, during the swap intent execution, it neglected to pass an explicit max_slippage_bps parameter on Uniswap V2 routing during an illiquid market spike.
+  A sandwich trading bot front-ran the liquidity pool transaction, extracting 48% of the swap principal.
+  The combined operational loss totaled $48,200.
+  The retrospective established strict, non-negotiable execution boundaries: irreversible financial tooling must require two-phase quote-preview simulation, mandatory slippage caps, and explicit human cryptographic confirmation before any broadcast.
+sensory_context: "Mempool congestion: gas price 185 gwei, Uniswap V2 price impact: 48.2%, EIP-55 checksum failure."
+operational_scars:
+  - "Irreversible on-chain burn of 18.5 ETH due to unchecked address formatting ($34,200 loss)."
+  - "Sandwich bot MEV extraction of $14,000 on unhedged slippage swap."
+  - "Total unrecoverable capital destruction of $48,200."
+lessons_learned:
+  - "Always enforce EIP-55 mixed-case checksum validation before transmitting any EVM recipient address."
+  - "Enforce two-phase execution: never invoke execute or transfer actions directly; always invoke resolve, quote, and preview simulation first to obtain deterministic fees and execution boundaries."
+  - "Require mandatory max_slippage_bps parameters on all decentralized exchange routing to prevent MEV sandwich exploitation."
+  - "Present simulated gas fees, net output, and recipient addresses in a structured confirmation prompt, requiring explicit confirmed: true."
+author: ARPA Hellenic Logical Systems
+tags:
+  - skillware
+  - evm_tx_handler
+  - defi
+  - slippage
+  - irreversible_action

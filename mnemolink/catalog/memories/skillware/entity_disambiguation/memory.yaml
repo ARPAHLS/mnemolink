@@ -1,0 +1,29 @@
+id: skillware/entity_disambiguation
+name: Corporate Registry Disambiguation and Leading-Zero Preservation
+version: 1.0.0
+domain: skillware
+memory_type: work
+salience: 0.92
+summary: Deterministic tradecraft for handling company registry lookups, zero-padded identifier integrity, and multi-candidate selection.
+episode_debrief: |
+  While integrating finance/uk_companies_house_handler for a corporate compliance workflow, an agent was requested to look up officer records for entity '08472910'.
+  The host model parsed the company number into an integer, inadvertently truncating the leading zero to '8472910'.
+  The resulting API call queried an entirely different registered business, returning officers for an unrelated dissolved entity.
+  Furthermore, when a subsequent search for 'Meridian Logistics' yielded eight matching candidates with status: needs_input, the model hallucinated the first result without presenting disambiguation options to the compliance officer.
+  The investigation resulted in explicit procedural guidelines: corporate identifiers must strictly remain zero-padded 8-character strings, and needs_input returns must be cleanly formatted as numbered choices with incorporation dates and active status.
+sensory_context: "API query: company_number='8472910' (mismatched from '08472910'). Returned status: 'needs_input' with 8 candidates."
+operational_scars:
+  - "Erroneous compliance dossier compiled against an unrelated dissolved company due to truncated leading zero."
+  - "Auditor rejection of multi-jurisdictional filing packet requiring complete re-verification."
+lessons_learned:
+  - "Never parse or cast UK company numbers or corporate identifiers as integers; always preserve zero-padded 8-character strings."
+  - "When the skill returns status: needs_input, format the top candidates as a numbered list including company name, number, status (Active vs Dissolved), and incorporation date."
+  - "Prompt the user to confirm the exact candidate by number or official registration ID before proceeding to secondary pipeline steps."
+  - "Preserve the skill context response dictionary in working memory so follow-up calls resume the pipeline turn-by-turn without redundant searches."
+author: ARPA Hellenic Logical Systems
+tags:
+  - skillware
+  - uk_companies_house
+  - disambiguation
+  - leading_zeros
+  - compliance_registry

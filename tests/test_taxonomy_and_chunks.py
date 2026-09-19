@@ -293,3 +293,31 @@ def test_kpop_celeb_persona():
     rendered = bundle.render_markdown()
     assert "K-Pop Celebrity" in rendered
     assert "Unforgettable Breakfasts and Brunches" in rendered
+
+
+def test_skillware_operator_in_taxonomy_and_chunks():
+    """Verify skillware_operator loads, decomposes, and discovers via teleology."""
+    op = load_persona("skillware_operator")
+    assert op.id == "skillware_operator"
+    assert op.domain == "tool_governance"
+    assert any("Never execute a state-mutating tool action" in a for a in op.axioms)
+
+    chunks = op.to_chunks()
+    assert len(chunks) >= 4
+    chunk_types = {c.chunk_type for c in chunks}
+    assert "philosophy" in chunk_types
+    assert "axiom" in chunk_types
+    assert "boundary" in chunk_types
+
+    # Teleological discovery
+    cards = find_cards(drives=["tool_contract_integrity"])
+    assert any(c.id == "skillware_operator" for c in cards)
+
+    # Compose bundle with skillware memory
+    bundle = compose(
+        persona="skillware_operator",
+        memories=["skillware/interactive_slot_filling"],
+    )
+    rendered = bundle.render_markdown()
+    assert "Skillware Operator" in rendered
+    assert "Multi-Turn Interactive Slot Gathering and Confirmation Protocol" in rendered

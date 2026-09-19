@@ -487,9 +487,10 @@ contract_cards = find_cards(needs=["contract_drafting"])
 
 ## 9. Related Documentation & Next Steps
 
-- **[Personas Catalog](personas/README.md)**: Explore curated personas including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, `opsie_sci`, `north_mediterranean_chef`, `bladez`, `bald_accountant`, and `kpop_celeb`.
+- **[Personas Catalog](personas/README.md)**: Explore curated personas including `juris_philosopher`, `edge_aviator`, `deescalation_artisan`, `opsie_sci`, `north_mediterranean_chef`, `bladez`, `bald_accountant`, `kpop_celeb`, and `skillware_operator`.
 - **[Memories Catalog](memories/README.md)**: Explore operational scars across the 5-Kind Taxonomy.
 - **[Lineages Catalog](lineages/README.md)**: Explore pre-built causal progressions.
+- **[ARPA Skillware Integration Matrix](integrations/skillware_matrix.md)**: Flagship integration guide, JIT chunk injection recipes, and empirical benchmark tables.
 - **[Taxonomy, Teleology & Chunks](taxonomy_and_teleology.md)**: Deep dive into chunk topology, embeddings, and prompt caching.
 - **[Adapters Reference](adapters.md)**: Detailed export specifications for all target hosts.
 - **[CLI Reference](cli.md)**: Full terminal command options, flags, and outputs.

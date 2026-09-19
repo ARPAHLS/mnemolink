@@ -1,0 +1,36 @@
+{
+  "id": "skillware/entity_disambiguation",
+  "name": "Corporate Registry Disambiguation and Leading-Zero Preservation",
+  "kind": "memory",
+  "domain": "skillware",
+  "version": "1.0.0",
+  "summary": "Deterministic tradecraft for handling company registry lookups, zero-padded identifier integrity, and multi-candidate selection.",
+  "salience": 0.92,
+  "memory_type": "work",
+  "teleology": {
+    "primary_goal": "Preserve identifier string integrity and cleanly disambiguate corporate registry entities without guessing",
+    "agent_drives": [
+      "tool_contract_integrity",
+      "disambiguation_rigor",
+      "forensic_accuracy"
+    ],
+    "applicable_needs": [
+      "disambiguation_handling",
+      "corporate_registry_lookup",
+      "uk_companies_house_pipeline"
+    ]
+  },
+  "chunk_manifest": {
+    "debrief": "memory.yaml#/episode_debrief",
+    "scars": "memory.yaml#/operational_scars",
+    "lessons": "memory.yaml#/lessons_learned"
+  },
+  "tags": [
+    "skillware",
+    "uk_companies_house",
+    "disambiguation",
+    "leading_zeros",
+    "compliance_registry"
+  ],
+  "author": "ARPA Hellenic Logical Systems"
+}

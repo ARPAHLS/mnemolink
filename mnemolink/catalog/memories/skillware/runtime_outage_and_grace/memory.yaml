@@ -1,0 +1,30 @@
+id: skillware/runtime_outage_and_grace
+name: Third-Party API Rate Limiting and Operational Outage Grace
+version: 1.0.0
+domain: skillware
+memory_type: relational
+salience: 0.88
+summary: Empathetic human communication and calm operational resilience during third-party service downtime, rate limits, and network faults.
+episode_debrief: |
+  During an active trading and market intelligence session, an upstream Ethereum JSON-RPC provider experienced heavy network load and returned HTTP 429 Too Many Requests followed by HTTP 503 Service Unavailable.
+  The client agent panicked, dumped raw JSON tracebacks into the user chat, and announced: 'FATAL: Wallet transport failed. Process aborted.'
+  The human user interpreted this message as an unrecoverable system crash or account compromise, frantically calling executive support and threatening to terminate the enterprise software agreement.
+  In reality, the upstream node had merely throttled requests for 15 seconds.
+  The post-incident review mandated an emotional and operational redesign of tool failure handling: third-party transport issues must never be treated as fatal software bugs.
+  The agent must shield raw HTTP error dumps, reassure the user in clear language, implement jittered exponential backoff, and suggest constructive alternatives.
+sensory_context: "HTTP 429 Too Many Requests (retry-after: 15s). Raw traceback length: 42 lines. User sentiment: high anxiety."
+operational_scars:
+  - "Four hours of emergency executive escalation and client relationship repair caused by an alarming raw 429 error dump."
+  - "Temporary operational suspension of automated tooling while client trust was re-established."
+lessons_learned:
+  - "Never output raw Python stack traces, connection errors, or JSON transport dumps to end users."
+  - "Translate HTTP 429 and 503 codes into calm, transparent operational updates explaining that the upstream service is momentarily busy."
+  - "Inform the user that their request is safely held in memory and will be retried automatically with polite exponential backoff."
+  - "If an external outage persists, provide constructive next steps, alternative data paths, or manual verification links rather than helpless dead ends."
+author: ARPA Hellenic Logical Systems
+tags:
+  - skillware
+  - rate_limiting
+  - error_handling
+  - deescalation
+  - operational_grace
