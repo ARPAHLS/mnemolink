@@ -483,6 +483,16 @@ for c in cards:
 contract_cards = find_cards(needs=["contract_drafting"])
 ```
 
+### 8.6 Static Security & Delimiter Verification (`mnemolink lint`)
+Before distributing custom mnemonic packs or opening a pull request, run the offline static security scanner:
+
+```bash
+# Verify your contribution with strict validation
+mnemolink lint ./memories/my_domain/my_memory/ --strict
+```
+
+The scanner verifies delimiter escape containment, ensures zero hidden unicode evasion characters or homoglyphs, validates salience ranges (`0.0 <= salience <= 1.0`), and verifies companion `card.json` teleology bindings.
+
 ---
 
 ## 9. Related Documentation & Next Steps

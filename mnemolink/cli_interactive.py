@@ -91,6 +91,18 @@ HELP_GROUPS: List[Tuple[str, List[Tuple[str, str]], str]] = [
         ],
         _DOCS_CLI,
     ),
+    (
+        "Security",
+        [
+            ("mnemolink lint", "static AST & delimiter scanner for catalog"),
+            (
+                "mnemolink lint <path> --strict",
+                "verify custom pack with strict exit code",
+            ),
+            ("mnemolink lint --json", "export machine-readable JSON security report"),
+        ],
+        _DOCS_CLI,
+    ),
 ]
 
 _HELP_MENU: List[Tuple[str, str, str, Union[int, str]]] = [
@@ -99,8 +111,9 @@ _HELP_MENU: List[Tuple[str, str, str, Union[int, str]]] = [
     ("3", "bench", "mock and live crucibles", 2),
     ("4", "authoring", "new persona / memory / lineage", 3),
     ("5", "general", "menu, help, version", 4),
-    ("6", "docs", "CLI and usage guides online", "docs"),
-    ("7", "interactive", "numbered splash menu", "interactive"),
+    ("6", "security", "static linter & delimiter scanner", 5),
+    ("7", "docs", "CLI and usage guides online", "docs"),
+    ("8", "interactive", "numbered splash menu", "interactive"),
 ]
 
 _CLI_USAGE_EXAMPLES: Tuple[str, ...] = (
@@ -110,6 +123,7 @@ _CLI_USAGE_EXAMPLES: Tuple[str, ...] = (
     "mnemolink compose -p edge_aviator -m robotics/uav_microburst_stall -f claude",
     "mnemolink bench --mock --tier micro",
     "mnemolink new persona quantum_physicist",
+    "mnemolink lint --strict",
     "mnemolink --version",
 )
 
@@ -264,7 +278,7 @@ def _print_help_static_topic(console: Console, topic: str) -> None:
     elif topic == "interactive":
         console.print(Text("Interactive mode", style=p.heading_style))
         console.print("  mnemolink — open splash menu (TTY only)", style=p.menu_style)
-        console.print("  1-7 or command name — run a command", style="dim")
+        console.print("  1-8 or command name — run a command", style="dim")
         console.print("  0 / q — exit from any menu level", style="dim")
         console.print("  b — back from a submenu", style="dim")
     console.print()

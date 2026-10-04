@@ -188,7 +188,7 @@ def test_main_non_tty_prints_help(monkeypatch, capsys):
     assert exc.value.code == 0
     out = capsys.readouterr().out
     assert "usage:" in out.lower()
-    assert "{list,inspect,compose,new,bench,wizard,author,config}" in out
+    assert "{list,inspect,compose,new,bench,wizard,author,config,lint}" in out
 
 
 def test_main_tty_launches_interactive(monkeypatch):
