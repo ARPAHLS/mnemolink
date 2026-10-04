@@ -229,6 +229,26 @@ def verify_catalog_schemas() -> int:
     return 0
 
 
+def verify_security_linting() -> int:
+    """Run static security linter and delimiter injection scanner across catalog."""
+    print("\nChecking Static Mnemonic Security & Delimiter Scanners...")
+    from mnemolink.security import MnemonicLinter
+
+    linter = MnemonicLinter(strict=True)
+    res = linter.lint_catalog()
+    if not res.passed or res.warning_count > 0:
+        print(f"FAILED: Found {len(res.issues)} security/lint issue(s):")
+        for iss in res.issues:
+            print(f"  [{iss.severity.value.upper()}] {iss.file_path}: {iss.message}")
+        return 1
+
+    print(
+        f"PASSED: Catalog security & containment verified cleanly "
+        f"({res.scanned_products} products, {res.scanned_files} files scanned, 0 issues)."
+    )
+    return 0
+
+
 def main() -> int:
     print("=" * 70)
     print("MnemoLink Automated Repository Integrity & Standards Gate")
@@ -238,6 +258,7 @@ def main() -> int:
     exit_code |= verify_zero_emojis()
     exit_code |= verify_markdown_links()
     exit_code |= verify_catalog_schemas()
+    exit_code |= verify_security_linting()
 
     print("=" * 70)
     if exit_code == 0:

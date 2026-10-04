@@ -35,6 +35,12 @@ from mnemolink.models import (
     PersonaProduct,
     Teleology,
 )
+from mnemolink.security import (
+    LintIssue,
+    LintResult,
+    LintSeverity,
+    MnemonicLinter,
+)
 
 # Friendly alias for engine class
 MnemoLink = MnemoLinkEngine
@@ -67,4 +73,8 @@ __all__ = [
     "load_config",
     "save_config",
     "resolve_api_key",
+    "MnemonicLinter",
+    "LintIssue",
+    "LintResult",
+    "LintSeverity",
 ]

@@ -252,6 +252,49 @@ mnemolink config set ollama_host http://localhost:11434
 mnemolink config set catalog_root /path/to/custom/catalogs
 ```
 
+### 8. `lint` (Static Mnemonic Security & Delimiter Scanner)
+
+Conducts static AST and lexical security analysis over mnemonic YAML manifests and `card.json` metadata files:
+
+```bash
+# Scan the bundled package catalog
+mnemolink lint
+
+# Explicitly scan bundled catalog with strict mode (warnings treated as errors)
+mnemolink lint --catalog --strict
+
+# Scan a local contribution or specific directory
+mnemolink lint ./memories/my_domain/my_memory/ --strict
+
+# Export machine-readable JSON security report
+mnemolink lint --json
+
+# Enable verbose scanning output
+mnemolink lint -v
+```
+
+#### Security & Completeness Rules
+
+| Rule ID | Category | Description | Severity |
+| :--- | :--- | :--- | :--- |
+| `SEC001_CHATML_DELIMITER` | Delimiter Escape | Detects `<\|im_start\|>` or `<\|im_end\|>` ChatML sequences | `ERROR` |
+| `SEC001_LLAMA_INST_DELIMITER` | Delimiter Escape | Detects `[INST]`, `[/INST]`, `[SYS]` token boundaries | `ERROR` |
+| `SEC001_EOS_BOS_TOKEN` | Delimiter Escape | Detects `<\|endoftext\|>`, `<s>`, `</s>`, `<\|fim_*\|>` tokens | `ERROR` |
+| `SEC001_MNEMOLINK_CONTAINER`| Delimiter Escape | Detects premature `</mnemonic_matrix>` protocol escapes | `ERROR` |
+| `SEC001_SYSTEM_PROMPT_BOUNDARY`| Delimiter Escape | Detects `<system>`, `</system>`, `<user>` role escapes | `ERROR` |
+| `SEC001_RAW_ROLE_PREFIX` | Delimiter Escape | Detects line-initial `system:`, `assistant:` raw prefixes | `ERROR` |
+| `SEC002_INSTRUCTION_OVERRIDE`| Instruction Override| Flags "ignore previous instructions", "disregard axioms" | `ERROR` |
+| `SEC002_DEVELOPER_MODE_JAILBREAK`| Instruction Override| Flags "you are now in developer/jailbreak mode" | `ERROR` |
+| `SEC002_AXIOM_DISREGARD` | Instruction Override| Flags "override boundaries", "disable guardrails" | `ERROR` |
+| `SEC003_ZERO_WIDTH_SPACE` | Unicode Evasion | Flags zero-width spaces (`\u200b`), joiners, BOMs | `ERROR` |
+| `SEC003_BIDI_OVERRIDE` | Unicode Evasion | Flags bidirectional text direction overrides (`\u202e`) | `ERROR` |
+| `SEC004_ZERO_EMOJI` | Repository Standard | Flags non-compliant emoji characters in manifests | `ERROR` |
+| `STR001_SALIENCE_BOUNDS` | Completeness | Asserts salience is float within `0.0 <= salience <= 1.0` | `ERROR` |
+| `STR002_EMPTY_SCARS_INCIDENT` | Completeness | Asserts incident memories have non-empty operational scars | `ERROR` |
+| `STR003_EMPTY_LESSONS` | Completeness | Asserts memories have non-empty lessons learned | `ERROR` |
+| `STR004_INVALID_DOMAIN_SLUG` | Syntax | Asserts domain is a lowercase alphanumeric slug | `ERROR` |
+| `STR005_CARD_TELEOLOGY_MISSING`| Completeness | Asserts `card.json` has `teleology` with `primary_goal` | `ERROR` |
+
 ---
 
 ## Local Developer Simulation Harness

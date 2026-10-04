@@ -9,7 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.4] - 2026-09-19
+### Added
+- **Static Mnemonic Linter & Delimiter Injection Scanner (`mnemolink lint`, `mnemolink.security`, Issue #7)**:
+  - Extensible `MnemonicLinter` offline static security scanner in `mnemolink.security` with AST, regex, and lexical rules.
+  - Frontier model delimiter escape scanner detecting ChatML (`<|im_start|>`), Llama/Mistral (`[INST]`), EOS/BOS tokens (`<|endoftext|>`, `<s>`), and MnemoLink container escapes (`</mnemonic_matrix>`).
+  - Adversarial instruction override heuristics detecting prompt injection patterns ("ignore previous instructions", "disregard axioms", "you are now in developer mode").
+  - Unicode evasion scanner detecting invisible zero-width spaces (`\u200b`, `\u200c`, `\u200d`, `\ufeff`) and bidirectional overrides (`\u202e`, `\u2066`).
+  - Structural completeness asserting salience bounds (`0.0 <= salience <= 1.0`), non-empty operational scars for incident memories under the 5-Kind Taxonomy, non-empty lessons, slug syntax, and companion `card.json` teleology bindings.
+  - Dedicated CLI command `mnemolink lint [target] [--strict] [--catalog] [--json] [-v]` with themed Rich tables, panels, and strict exit codes.
+  - Integrated repository integrity gate in `scripts/verify_repo.py` and GitHub Actions CI gate (`.github/workflows/lint_catalog.yml`, `.github/workflows/ci.yml`).
+  - Unit and integration tests in `tests/test_security_linter.py` (24 test scenarios covering malicious payloads, Unicode evasion, salience boundaries, and CLI executions).
 
 ### Fixed
 - **Automated GitHub Label Synchronization & Diagnostics (`scripts/sync_labels.py`, `.github/workflows/labels.yml`)**:

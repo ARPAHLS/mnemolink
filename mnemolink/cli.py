@@ -419,6 +419,118 @@ def cmd_config(args):
     console.print(cred_table)
 
 
+def cmd_lint(args):
+    """Run static security linter and delimiter injection scanner."""
+    from mnemolink.discovery import get_bundled_catalog_root
+    from mnemolink.security import LintResult, LintSeverity, MnemonicLinter
+
+    linter = MnemonicLinter(strict=args.strict, verbose=args.verbose)
+    p = palette()
+
+    # Determine targets to lint
+    if args.catalog:
+        target_path = get_bundled_catalog_root()
+    elif args.target:
+        target_path = Path(args.target).resolve()
+    else:
+        # Default: scan bundled catalog
+        target_path = get_bundled_catalog_root()
+
+    if target_path.is_file():
+        issues = linter.lint_file(target_path)
+        is_yaml = target_path.suffix.lower() in (".yaml", ".yml")
+        result = LintResult(
+            target=str(target_path),
+            scanned_files=1,
+            scanned_products=1 if is_yaml else 0,
+            issues=issues,
+        )
+    else:
+        result = linter.lint_directory(target_path)
+
+    if args.json:
+        console.print(result.to_json())
+        if not result.is_clean(strict=args.strict):
+            sys.exit(1)
+        return
+
+    table = Table(
+        title="MnemoLink Static Mnemonic Linter & Security Scanner",
+        title_style=f"bold {p.pink}",
+        header_style=f"bold {p.blue}",
+        border_style=p.lavender,
+        box=box.SIMPLE_HEAVY,
+    )
+    table.add_column("Severity", width=10)
+    table.add_column("Rule ID", style="bold white", width=28)
+    table.add_column("File", style="cyan")
+    table.add_column("Line/Field", style="dim", width=14)
+    table.add_column("Details", style="white")
+
+    if result.issues:
+        for issue in result.issues:
+            sev_badge = (
+                "[bold red]ERROR[/]"
+                if issue.severity == LintSeverity.ERROR
+                else "[bold yellow]WARNING[/]"
+            )
+            rel_file = issue.file_path
+            try:
+                rel_file = rel_file.relative_to(Path.cwd())
+            except Exception:
+                pass
+            loc = (
+                f"L{issue.line_number}"
+                if issue.line_number
+                else (issue.field_path or "-")
+            )
+            table.add_row(
+                sev_badge,
+                issue.rule_id,
+                str(rel_file),
+                loc,
+                issue.message,
+            )
+        console.print(table)
+    else:
+        console.print(
+            Panel(
+                "[bold green]No security violations or structural deficiencies detected.[/]\n"
+                "All scanned assets conform to strict containment, salience, and taxonomy "
+                "requirements.",
+                title="[bold green]Scan Clean[/]",
+                border_style="green",
+            )
+        )
+
+    is_passed = result.is_clean(strict=args.strict)
+    status_label = "[bold green]PASSED[/]" if is_passed else "[bold red]FAILED[/]"
+    mode_label = (
+        "[bold red]Strict (Warnings treated as errors)[/]"
+        if args.strict
+        else "[dim]Standard[/]"
+    )
+    summary_text = (
+        f"Target: [cyan]{result.target}[/]\n"
+        f"Scanned Files: [bold]{result.scanned_files}[/] | "
+        f"Scanned Products: [bold]{result.scanned_products}[/]\n"
+        f"Errors: [bold red]{result.error_count}[/] | "
+        f"Warnings: [bold yellow]{result.warning_count}[/]\n"
+        f"Mode: {mode_label}\n"
+        f"Result: {status_label}"
+    )
+    console.print(
+        Panel(
+            summary_text,
+            title="Linter Verification Summary",
+            border_style="green" if is_passed else "red",
+        )
+    )
+
+    if not is_passed:
+        sys.exit(1)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="mnemolink",
@@ -545,6 +657,40 @@ def main():
     )
     p_config_set.add_argument("value", help="Setting value")
     p_config.set_defaults(func=cmd_config)
+
+    # lint
+    p_lint = subparsers.add_parser(
+        "lint",
+        help="Static mnemonic security linter and delimiter injection scanner",
+    )
+    p_lint.add_argument(
+        "target",
+        nargs="?",
+        default=None,
+        help="Target file or directory to scan (default: bundled catalog)",
+    )
+    p_lint.add_argument(
+        "--strict",
+        action="store_true",
+        help="Treat warnings as errors (exit code 1)",
+    )
+    p_lint.add_argument(
+        "--catalog",
+        action="store_true",
+        help="Explicitly scan the bundled package catalog",
+    )
+    p_lint.add_argument(
+        "--json",
+        action="store_true",
+        help="Output machine-readable JSON report",
+    )
+    p_lint.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Enable verbose output",
+    )
+    p_lint.set_defaults(func=cmd_lint)
 
     # Bare invocation: interactive menu on a TTY; argparse help when piped / CI.
     if len(sys.argv) == 1 and sys.stdout.isatty():

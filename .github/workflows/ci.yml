@@ -32,6 +32,10 @@ jobs:
         run: |
           flake8 mnemolink tests examples scripts
 
+      - name: Static Mnemonic Security Scan (Strict)
+        run: |
+          mnemolink lint --catalog --strict
+
       - name: Repository Standards & Integrity Gate
         run: |
           python scripts/verify_repo.py
