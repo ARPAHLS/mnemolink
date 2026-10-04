@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Integrated repository integrity gate in `scripts/verify_repo.py` and GitHub Actions CI gate (`.github/workflows/lint_catalog.yml`, `.github/workflows/ci.yml`).
   - Unit and integration tests in `tests/test_security_linter.py` (24 test scenarios covering malicious payloads, Unicode evasion, salience boundaries, and CLI executions).
 
+## [0.2.4] - 2026-09-19
+
 ### Fixed
 - **Automated GitHub Label Synchronization & Diagnostics (`scripts/sync_labels.py`, `.github/workflows/labels.yml`)**:
   - Hardened GitHub REST API request headers with explicit `"Content-Type": "application/json"` and API version pinning (`2022-11-28`) to eliminate HTTP 422 rejection when creating new labels.
